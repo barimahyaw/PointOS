@@ -9,7 +9,9 @@ namespace PointOS.DataAccess
     {
         public AppDbContext(DbContextOptions options)
             : base(options)
-        { }
+        {
+
+        }
 
         public DbSet<ProductCategory> ProductCategories { get; set; }
     }
