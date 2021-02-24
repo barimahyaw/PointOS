@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using System.Security.Cryptography.X509Certificates;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using PointOS.DataAccess.Entities;
 
@@ -9,6 +10,9 @@ namespace PointOS.DataAccess
         public AppDbContext(DbContextOptions options)
             : base(options)
         {
+
         }
+
+        public DbSet<ProductCategory> ProductCategories { get; set; }
     }
 }
