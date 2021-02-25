@@ -13,5 +13,10 @@ namespace PointOS.DataAccess.Entities
         public bool Status { get; set; }
         [Required]
         public Guid GuidId { get; set; }
+        [Required]
+        public string CreatedUserId { get; set; }
+        public ApplicationUser CreatedUser { get; set; }
+        [Required]
+        public DateTime CreatedOn { get; set; }
     }
 }
