@@ -23,7 +23,7 @@ namespace PointOS.BusinessLogic
         /// </summary>
         /// <param name="request"></param>
         /// <returns>number of records affected</returns>
-        public async Task<int> SaveAsync(ProductCategoryRequest request)
+        public async Task<ResponseHeader> SaveAsync(ProductCategoryRequest request)
         {
             var entity = new ProductCategory
             {
@@ -34,7 +34,10 @@ namespace PointOS.BusinessLogic
                 CreatedUserId = request.CreatedBy
             };
             await _unitOfWork.ProductCategoryRepository.AddAsync(entity);
-            return await _unitOfWork.SaveChangesAsync();
+            var result = await _unitOfWork.SaveChangesAsync();
+
+            return result != 0 ? new ResponseHeader { StatusCode = 201, Message = $"Record create for {request.ProductName}", Success = true }
+                : new ResponseHeader { Message = "" };
         }
 
         /// <summary>
@@ -62,6 +65,26 @@ namespace PointOS.BusinessLogic
         public async Task<SingleResponse<ProductCategoryResponse>> FindByIdAsync(Guid id)
         {
             var entity = await _unitOfWork.ProductCategoryRepository.FindByIdAsync(id);
+
+            if (entity == null) return new SingleResponse<ProductCategoryResponse>(
+                new ResponseHeader { Message = "No record found." }, null);
+
+            var result = ProductCategoryResponseEntity(entity);
+
+            return new SingleResponse<ProductCategoryResponse>(new ResponseHeader { Success = true }, result);
+        }
+
+        /// <summary>
+        /// Select a record of product category by it's Guid Id or integer Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="guidValue"></param>
+        /// <returns>a single product category record</returns>
+        public async Task<SingleResponse<ProductCategoryResponse>> GetProductCategory(int? id, Guid? guidValue)
+        {
+            var entity = guidValue == Guid.Empty || string.IsNullOrWhiteSpace(guidValue.ToString())
+                ? await _unitOfWork.ProductCategoryRepository.FindByIdAsync(id.GetValueOrDefault())
+                : await _unitOfWork.ProductCategoryRepository.FindByIdAsync(guidValue.GetValueOrDefault());
 
             if (entity == null) return new SingleResponse<ProductCategoryResponse>(
                 new ResponseHeader { Message = "No record found." }, null);

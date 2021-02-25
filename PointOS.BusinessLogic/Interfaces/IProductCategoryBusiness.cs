@@ -1,7 +1,7 @@
-﻿using System;
-using System.Threading.Tasks;
-using PointOS.Common.DTO.Request;
+﻿using PointOS.Common.DTO.Request;
 using PointOS.Common.DTO.Response;
+using System;
+using System.Threading.Tasks;
 
 namespace PointOS.BusinessLogic.Interfaces
 {
@@ -12,7 +12,7 @@ namespace PointOS.BusinessLogic.Interfaces
         /// </summary>
         /// <param name="request"></param>
         /// <returns>number of records affected</returns>
-        Task<int> SaveAsync(ProductCategoryRequest request);
+        Task<ResponseHeader> SaveAsync(ProductCategoryRequest request);
 
         /// <summary>
         /// Select a record of product category by it's integer Id
@@ -27,6 +27,14 @@ namespace PointOS.BusinessLogic.Interfaces
         /// <param name="id"></param>
         /// <returns>a single product category record</returns>
         Task<SingleResponse<ProductCategoryResponse>> FindByIdAsync(Guid id);
+
+        /// <summary>
+        /// Select a record of product category by it's Guid Id or integer Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="guidValue"></param>
+        /// <returns>a single product category record</returns>
+        Task<SingleResponse<ProductCategoryResponse>> GetProductCategory(int? id, Guid? guidValue);
 
         /// <summary>
         /// Select all records of product category by a status
