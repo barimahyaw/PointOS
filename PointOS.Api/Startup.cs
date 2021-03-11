@@ -46,9 +46,9 @@ namespace PointOS.Api
             //Swagger documentation
             services.AddSwaggerGen(setupAction =>
             {
-                setupAction.SwaggerDoc("V1", new OpenApiInfo
+                setupAction.SwaggerDoc("PointOS", new OpenApiInfo
                 {
-                    Title = "NickSoft Solutions POS",
+                    Title = "NickSoft Solutions POS API",
                     Version = "1",
                     Description = "NickSoft Solutions POS API",
                     //TermsOfService = new Uri(""),
@@ -106,7 +106,7 @@ namespace PointOS.Api
             app.UseSwaggerUI(setupAction =>
             {
                 //setupAction.InjectStylesheet("/Assets/custom-ui.css");
-                setupAction.SwaggerEndpoint("/swagger/V1/swagger.json", "Nicksoft Solutions POS API");
+                setupAction.SwaggerEndpoint("/swagger/PointOS/swagger.json", "Nicksoft Solutions POS API");
                 setupAction.RoutePrefix = string.Empty; //so documentation will show on root url
                 setupAction.DefaultModelExpandDepth(2);
                 setupAction.DefaultModelRendering(Swashbuckle.AspNetCore.SwaggerUI.ModelRendering.Model);
