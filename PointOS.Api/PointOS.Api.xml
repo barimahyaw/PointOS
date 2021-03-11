@@ -1,0 +1,129 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>PointOS.Api</name>
+    </assembly>
+    <members>
+        <member name="T:PointOS.Api.Controllers.ProductCategoryController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:PointOS.Api.Controllers.ProductCategoryController.#ctor(PointOS.BusinessLogic.Interfaces.IProductCategoryBusiness)">
+            <summary>
+            
+            </summary>
+            <param name="productCategoryBusiness"></param>
+        </member>
+        <member name="M:PointOS.Api.Controllers.ProductCategoryController.GetProductCategory(System.Nullable{System.Guid},System.Nullable{System.Int32})">
+            <summary>
+            Select a record of product category by it's Guid Id or integer Id
+            </summary>
+            <param name="id"></param>
+            <param name="guidValue"></param>
+            <returns>a single product category record</returns>
+        </member>
+        <member name="M:PointOS.Api.Controllers.ProductCategoryController.GetProductCategories">
+            <summary>
+            Select all records of product category 
+            </summary>
+            <returns>a list of product category records</returns>
+        </member>
+        <member name="M:PointOS.Api.Controllers.ProductCategoryController.Post(PointOS.Common.DTO.Request.ProductCategoryRequest)">
+            <summary>
+            Saves a product category record
+            </summary>
+            <param name="request"></param>
+            <returns>number of records affected</returns>
+        </member>
+        <member name="T:PointOS.Api.Controllers.WeatherForecastController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:PointOS.Api.Controllers.WeatherForecastController.#ctor(Microsoft.Extensions.Logging.ILogger{PointOS.Api.Controllers.WeatherForecastController})">
+            <summary>
+            
+            </summary>
+            <param name="logger"></param>
+        </member>
+        <member name="M:PointOS.Api.Controllers.WeatherForecastController.Get">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:PointOS.Api.Program">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:PointOS.Api.Program.Main(System.String[])">
+            <summary>
+            
+            </summary>
+            <param name="args"></param>
+        </member>
+        <member name="M:PointOS.Api.Program.CreateHostBuilder(System.String[])">
+            <summary>
+            
+            </summary>
+            <param name="args"></param>
+            <returns></returns>
+        </member>
+        <member name="T:PointOS.Api.Startup">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:PointOS.Api.Startup.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            
+            </summary>
+            <param name="configuration"></param>
+        </member>
+        <member name="P:PointOS.Api.Startup.Configuration">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:PointOS.Api.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            
+            </summary>
+            <param name="services"></param>
+        </member>
+        <member name="M:PointOS.Api.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
+            <summary>
+            
+            </summary>
+            <param name="app"></param>
+            <param name="env"></param>
+        </member>
+        <member name="T:PointOS.Api.WeatherForecast">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:PointOS.Api.WeatherForecast.Date">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:PointOS.Api.WeatherForecast.TemperatureC">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:PointOS.Api.WeatherForecast.TemperatureF">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:PointOS.Api.WeatherForecast.Summary">
+            <summary>
+            
+            </summary>
+        </member>
+    </members>
+</doc>

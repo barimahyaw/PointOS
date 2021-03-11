@@ -7,12 +7,18 @@ using System.Threading.Tasks;
 
 namespace PointOS.Api.Controllers
 {
+    /// <summary>
+    /// 
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class ProductCategoryController : ControllerBase
     {
         private readonly IProductCategoryBusiness _productCategoryBusiness;
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="productCategoryBusiness"></param>
         public ProductCategoryController(IProductCategoryBusiness productCategoryBusiness)
         {
             _productCategoryBusiness = productCategoryBusiness;
@@ -45,6 +51,7 @@ namespace PointOS.Api.Controllers
         /// </summary>
         /// <param name="request"></param>
         /// <returns>number of records affected</returns>
+        [HttpPost]
         public async Task<ResponseHeader> Post(ProductCategoryRequest request)
         {
             return await _productCategoryBusiness.SaveAsync(request);
