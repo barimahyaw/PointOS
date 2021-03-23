@@ -19,31 +19,24 @@ namespace PointOS.DataAccess.Repositories
         /// Constructor for DI
         /// </summary>
         /// <param name="dbContext"></param>
-        public ProductCategoryRepository(AppDbContext dbContext)
-        {
-            _dbContext = dbContext;
-        }
+        public ProductCategoryRepository(AppDbContext dbContext) => _dbContext = dbContext;
 
         /// <summary>
         ///  Gets Product Categories as queryable with no tracking of changes
         /// </summary>
         /// <returns></returns>
         private IQueryable<ProductCategory> GetQueryable()
-        {
-            return _dbContext.ProductCategories.AsNoTrackingWithIdentityResolution();
-        }
+            => _dbContext.ProductCategories.AsNoTrackingWithIdentityResolution();
 
         /// <summary>
-        /// Saves a new product category's record
+        /// Add/Attach a new product category's record into repository
         /// </summary>
         /// <param name="productCategory"></param>
         public async Task AddAsync(ProductCategory productCategory)
-        {
-            await _dbContext.ProductCategories.AddAsync(productCategory);
-        }
+            => await _dbContext.ProductCategories.AddAsync(productCategory);
 
         /// <summary>
-        /// Saves changes made to a product category's record
+        /// Attach changes made to a product category's record into repository
         /// </summary>
         /// <param name="productCategory"></param>
         public Task UpdateAsync(ProductCategory productCategory)
@@ -58,9 +51,7 @@ namespace PointOS.DataAccess.Repositories
         /// <param name="id"></param>
         /// <returns>a record of product category</returns>
         public async Task<ProductCategory> FindByIdAsync(int id)
-        {
-            return await GetQueryable().FirstOrDefaultAsync(p => p.Id == id);
-        }
+            => await GetQueryable().FirstOrDefaultAsync(p => p.Id == id);
 
         /// <summary>
         /// Select a record of product category by it's Guid Id
@@ -68,9 +59,7 @@ namespace PointOS.DataAccess.Repositories
         /// <param name="id"></param>
         /// <returns>a record of product category</returns>
         public async Task<ProductCategory> FindByIdAsync(Guid id)
-        {
-            return await GetQueryable().FirstOrDefaultAsync(p => p.GuidId == id);
-        }
+            => await GetQueryable().FirstOrDefaultAsync(p => p.GuidId == id);
 
         /// <summary>
         /// Select all records of product category by a status
@@ -78,18 +67,13 @@ namespace PointOS.DataAccess.Repositories
         /// <param name="status"></param>
         /// <returns>a list of product category records</returns>
         public async Task<IList<ProductCategory>> FindAllByStatusAsync(bool status)
-        {
-            return await GetQueryable().Where(p => p.Status == status)
+            => await GetQueryable().Where(p => p.Status == status)
                 .ToListAsync();
-        }
 
         /// <summary>
         /// Select all records of product category 
         /// </summary>
         /// <returns>a list of product category records</returns>
-        public async Task<IList<ProductCategory>> FindAllAsync()
-        {
-            return await GetQueryable().ToListAsync();
-        }
+        public async Task<IList<ProductCategory>> FindAllAsync() => await GetQueryable().ToListAsync();
     }
 }
