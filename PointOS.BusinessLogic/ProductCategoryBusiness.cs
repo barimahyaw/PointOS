@@ -28,7 +28,7 @@ namespace PointOS.BusinessLogic
             var entity = new ProductCategory
             {
                 GuidId = Guid.NewGuid(),
-                ProductName = request.ProductName,
+                Name = request.Name,
                 CreatedOn = DateTime.UtcNow,
                 Status = true,
                 CreatedUserId = request.CreatedBy
@@ -36,7 +36,7 @@ namespace PointOS.BusinessLogic
             await _unitOfWork.ProductCategoryRepository.AddAsync(entity);
             var result = await _unitOfWork.SaveChangesAsync();
 
-            return result != 0 ? new ResponseHeader { StatusCode = 201, Message = $"Record create for {request.ProductName}", Success = true }
+            return result != 0 ? new ResponseHeader { StatusCode = 201, Message = $"Record create for {request.Name}", Success = true }
                 : new ResponseHeader { Message = "" };
         }
 
@@ -136,7 +136,7 @@ namespace PointOS.BusinessLogic
             {
                 Id = entity.Id,
                 GuidValue = entity.GuidId,
-                ProductName = entity.ProductName,
+                ProductName = entity.Name,
                 Status = entity.Status,
                 CreatedBy = entity.CreatedUserId,
                 CreatedOn = entity.CreatedOn
