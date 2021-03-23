@@ -8,7 +8,6 @@
     <Folder Include="Attributes\" />
     <Folder Include="Extensions\" />
     <Folder Include="Helpers\" />
-    <Folder Include="Settings\" />
   </ItemGroup>
 
   <ItemGroup>

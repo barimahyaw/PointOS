@@ -9,7 +9,7 @@ namespace PointOS.Common.DTO.Request
         [Required]
         [MaxLength(50)]
         [Display(Name = "Name")]
-        public string ProductName { get; set; }
+        public string Name { get; set; }
         public bool Status { get; set; }
         public Guid GuidId { get; set; }
     }

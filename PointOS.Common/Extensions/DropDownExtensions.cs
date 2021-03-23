@@ -13,7 +13,7 @@ namespace PointOS.Common.Extensions
         /// <param name="productCategory"></param>
         /// <param name="selected"></param>
         /// <returns></returns>
-        public static IEnumerable<SelectListItem> GetCompanies(this IEnumerable<ProductCategoryResponse> productCategory,
+        public static IEnumerable<SelectListItem> GetProductCategories(this IEnumerable<ProductCategoryResponse> productCategory,
             int selected)
         {
             var items = productCategory.OrderBy(x => x.Id).Select(c => new SelectListItem
