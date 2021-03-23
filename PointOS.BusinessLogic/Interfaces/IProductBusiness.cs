@@ -1,7 +1,7 @@
-﻿using System;
-using System.Threading.Tasks;
-using PointOS.Common.DTO.Request;
+﻿using PointOS.Common.DTO.Request;
 using PointOS.Common.DTO.Response;
+using System;
+using System.Threading.Tasks;
 
 namespace PointOS.BusinessLogic.Interfaces
 {
@@ -32,6 +32,6 @@ namespace PointOS.BusinessLogic.Interfaces
         /// Finds all Product records 
         /// </summary>
         /// <returns>list of products</returns>
-        Task<ListResponse<ProductResponse>> FindAllAsync(Guid id);
+        Task<ListResponse<ProductResponse>> FindAllAsync();
     }
 }

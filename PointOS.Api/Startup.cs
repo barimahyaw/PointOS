@@ -80,7 +80,7 @@ namespace PointOS.Api
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddTransient<IProductCategoryBusiness, ProductCategoryBusiness>();
-            services.AddTransient<IProductBusiness, ProductBusiness>();
+            services.AddTransient<IProductBusiness, ProductBusiness>(); 
         }
 
         /// <summary>

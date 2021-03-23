@@ -41,7 +41,33 @@
             Product Controller Class
             </summary>
         </member>
-        <member name="M:PointOS.Api.Controllers.ProductController.Post">
+        <member name="M:PointOS.Api.Controllers.ProductController.#ctor(PointOS.BusinessLogic.Interfaces.IProductBusiness)">
+            <summary>
+            Controller DI
+            </summary>
+            <param name="productBusiness"></param>
+        </member>
+        <member name="M:PointOS.Api.Controllers.ProductController.Get">
+            <summary>
+            Gets all Product records 
+            </summary>
+            <returns>a list of products</returns>
+        </member>
+        <member name="M:PointOS.Api.Controllers.ProductController.GetById(System.Int32)">
+            <summary>
+            Gets a product record by it's integer Id
+            </summary>
+            <param name="id"></param>
+            <returns>a record of product</returns>
+        </member>
+        <member name="M:PointOS.Api.Controllers.ProductController.GetById(System.Guid)">
+            <summary>
+            Gets a product record by it's Guid Id/Value
+            </summary>
+            <param name="id"></param>
+            <returns>a record of product</returns>
+        </member>
+        <member name="M:PointOS.Api.Controllers.ProductController.Post(PointOS.Common.DTO.Request.ProductRequest)">
             <summary>
             Saves a product record
             </summary>

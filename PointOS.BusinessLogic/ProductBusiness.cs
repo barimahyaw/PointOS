@@ -48,7 +48,7 @@ namespace PointOS.BusinessLogic
         /// Finds a product record by it's integer Id
         /// </summary>
         /// <param name="id"></param>
-        /// <returns></returns>
+        /// <returns>a record of product</returns>
         public async Task<SingleResponse<ProductResponse>> FindById(int id)
         {
             var entity = await _unitOfWork.ProductRepository.FindById(id);
@@ -67,7 +67,7 @@ namespace PointOS.BusinessLogic
         /// Finds a product record by it's Guid Id/Value
         /// </summary>
         /// <param name="id"></param>
-        /// <returns></returns>
+        /// <returns>a record of product</returns>
         public async Task<SingleResponse<ProductResponse>> FindById(Guid id)
         {
             var entity = await _unitOfWork.ProductRepository.FindById(id);
@@ -85,8 +85,8 @@ namespace PointOS.BusinessLogic
         /// <summary>
         /// Finds all Product records 
         /// </summary>
-        /// <returns>list of products</returns>
-        public async Task<ListResponse<ProductResponse>> FindAllAsync(Guid id)
+        /// <returns>a list of products</returns>
+        public async Task<ListResponse<ProductResponse>> FindAllAsync()
         {
             var entities = await _unitOfWork.ProductRepository.FindAllAsync();
 
