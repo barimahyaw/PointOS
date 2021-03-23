@@ -36,7 +36,7 @@ namespace PointOS.BusinessLogic
             await _unitOfWork.ProductCategoryRepository.AddAsync(entity);
             var result = await _unitOfWork.SaveChangesAsync();
 
-            return result != 0 ? new ResponseHeader { StatusCode = 201, Message = $"Record create for {request.Name}", Success = true }
+            return result != 0 ? new ResponseHeader { StatusCode = 201, Message = $"Record created for {request.Name}", Success = true }
                 : new ResponseHeader { Message = "" };
         }
 

@@ -27,7 +27,7 @@ namespace PointOS.Common.Enums
         /// <summary>
         /// A resource not found status
         /// </summary>
-        [StringValue("There is no record(s) found for {0}")]
+        [StringValue("There is/are no record(s) found for {0}")]
         NotFound = 404,
         /// <summary>
         /// Clock In Not Allowed

@@ -1,6 +1,3 @@
-using System;
-using System.IO;
-using System.Reflection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -13,6 +10,9 @@ using PointOS.BusinessLogic;
 using PointOS.BusinessLogic.Interfaces;
 using PointOS.DataAccess;
 using PointOS.DataAccess.Entities;
+using System;
+using System.IO;
+using System.Reflection;
 
 namespace PointOS.Api
 {
@@ -80,6 +80,7 @@ namespace PointOS.Api
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddTransient<IProductCategoryBusiness, ProductCategoryBusiness>();
+            services.AddTransient<IProductBusiness, ProductBusiness>();
         }
 
         /// <summary>
