@@ -25,7 +25,7 @@ namespace PointOS.DataAccess.Repositories
         }
 
         /// <summary>
-        ///  Gets Employee Attendance queryable with no tracking of changes
+        ///  Gets Product Categories as queryable with no tracking of changes
         /// </summary>
         /// <returns></returns>
         private IQueryable<ProductCategory> GetQueryable()

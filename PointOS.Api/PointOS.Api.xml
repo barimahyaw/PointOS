@@ -36,6 +36,17 @@
             <param name="request"></param>
             <returns>number of records affected</returns>
         </member>
+        <member name="T:PointOS.Api.Controllers.ProductController">
+            <summary>
+            Product Controller Class
+            </summary>
+        </member>
+        <member name="M:PointOS.Api.Controllers.ProductController.Post">
+            <summary>
+            Saves a product record
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:PointOS.Api.Controllers.WeatherForecastController">
             <summary>
             

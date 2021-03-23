@@ -8,6 +8,7 @@ namespace PointOS.DataAccess
     {
         #region Entity Framework Core Repositories
         public IProductCategoryRepository ProductCategoryRepository { get; }
+        public IProductRepository ProductRepository { get; }
         #endregion
 
         private readonly AppDbContext _dbContext;
@@ -19,7 +20,8 @@ namespace PointOS.DataAccess
         public UnitOfWork(AppDbContext dbContext)
         {
             _dbContext = dbContext;
-            ProductCategoryRepository = new ProductCategoryRepository(dbContext);
+            ProductCategoryRepository = new ProductCategoryRepository(_dbContext);
+            ProductRepository = new ProductRepository(_dbContext);
         }
 
         /// <summary>
