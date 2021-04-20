@@ -1,4 +1,4 @@
-﻿namespace eViSeM.Common.DTO.Validation
+﻿namespace PointOS.Common.DTO.Validation
 {
     public class ValidationResult
     {

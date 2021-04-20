@@ -1,4 +1,5 @@
 ﻿using PointOS.BusinessLogic.Interfaces;
+using PointOS.BusinessLogic.Validators.IValidators;
 using PointOS.Common.DTO.Request;
 using PointOS.Common.DTO.Response;
 using PointOS.Common.Enums;
@@ -14,10 +15,12 @@ namespace PointOS.BusinessLogic
     public class ProductBusiness : IProductBusiness
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IProductValidator _productValidator;
 
-        public ProductBusiness(IUnitOfWork unitOfWork)
+        public ProductBusiness(IUnitOfWork unitOfWork, IProductValidator productValidator)
         {
             _unitOfWork = unitOfWork;
+            _productValidator = productValidator;
         }
 
         /// <summary>
@@ -27,6 +30,9 @@ namespace PointOS.BusinessLogic
         /// <returns>number of records affected</returns>
         public async Task<ResponseHeader> SaveAsync(ProductRequest request)
         {
+            var valResult = await _productValidator.Validate(request);
+            if (valResult.IsError) return new ResponseHeader { Message = valResult.Message };
+
             var entity = new Product
             {
                 GuidId = Guid.NewGuid(),

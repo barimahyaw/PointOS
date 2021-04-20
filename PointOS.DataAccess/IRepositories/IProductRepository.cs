@@ -1,7 +1,7 @@
-﻿using System;
+﻿using PointOS.DataAccess.Entities;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using PointOS.DataAccess.Entities;
 
 namespace PointOS.DataAccess.IRepositories
 {
@@ -25,6 +25,14 @@ namespace PointOS.DataAccess.IRepositories
         /// <param name="id"></param>
         /// <returns>a record of product</returns>
         Task<Product> FindById(int id);
+
+        /// <summary>
+        /// Finds a product record by it's name and product category id
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="categoryId"></param>
+        /// <returns>a record of product</returns>
+        Task<Product> FindByNameAndCategoryIdAsync(string name, int categoryId);
 
         /// <summary>
         /// Finds a product record by it's Guid Id/Value

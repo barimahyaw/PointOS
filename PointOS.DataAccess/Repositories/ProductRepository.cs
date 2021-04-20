@@ -40,6 +40,15 @@ namespace PointOS.DataAccess.Repositories
         public async Task<Product> FindById(int id) => await GetQueryable().FirstOrDefaultAsync(p => p.Id == id);
 
         /// <summary>
+        /// Finds a product record by it's name and product category id
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="categoryId"></param>
+        /// <returns>a record of product</returns>
+        public async Task<Product> FindByNameAndCategoryIdAsync(string name, int categoryId) 
+            => await GetQueryable().FirstOrDefaultAsync(p => p.Name == name && p.ProductCategoryId == categoryId);
+
+        /// <summary>
         /// Finds a product record by it's Guid Id/Value
         /// </summary>
         /// <param name="id"></param>

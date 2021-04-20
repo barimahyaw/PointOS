@@ -8,6 +8,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using PointOS.BusinessLogic;
 using PointOS.BusinessLogic.Interfaces;
+using PointOS.BusinessLogic.Validators;
+using PointOS.BusinessLogic.Validators.IValidators;
 using PointOS.DataAccess;
 using PointOS.DataAccess.Entities;
 using System;
@@ -80,7 +82,9 @@ namespace PointOS.Api
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddTransient<IProductCategoryBusiness, ProductCategoryBusiness>();
-            services.AddTransient<IProductBusiness, ProductBusiness>(); 
+            services.AddTransient<IProductBusiness, ProductBusiness>();
+
+            services.AddScoped<IProductValidator, ProductValidator>();
         }
 
         /// <summary>
