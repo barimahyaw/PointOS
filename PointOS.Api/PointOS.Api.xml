@@ -54,6 +54,31 @@
             <param name="request"></param>
             <returns></returns>
         </member>
+        <member name="T:PointOS.Api.Controllers.v1.PricingController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:PointOS.Api.Controllers.v1.PricingController.#ctor(PointOS.BusinessLogic.Interfaces.IProductPricingBusiness)">
+            <summary>
+            
+            </summary>
+            <param name="productPricingBusiness"></param>
+        </member>
+        <member name="M:PointOS.Api.Controllers.v1.PricingController.Post(PointOS.Common.DTO.Request.ProductPricingRequest)">
+            <summary>
+            Saves a product pricing record
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PointOS.Api.Controllers.v1.PricingController.Put(PointOS.Common.DTO.Request.ProductPricingRequest)">
+            <summary>
+            Updates a product pricing record
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
         <member name="T:PointOS.Api.Controllers.v1.ProductCategoryController">
             <summary>
             
