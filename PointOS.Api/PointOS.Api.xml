@@ -4,6 +4,31 @@
         <name>PointOS.Api</name>
     </assembly>
     <members>
+        <member name="T:PointOS.Api.Controllers.v1.BranchController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:PointOS.Api.Controllers.v1.BranchController.#ctor(PointOS.BusinessLogic.Interfaces.IBranchBusiness)">
+            <summary>
+            
+            </summary>
+            <param name="businessBusiness"></param>
+        </member>
+        <member name="M:PointOS.Api.Controllers.v1.BranchController.Post(PointOS.Common.DTO.Request.BranchRequest)">
+            <summary>
+            Saves a company branch's record
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PointOS.Api.Controllers.v1.BranchController.Put(PointOS.Common.DTO.Request.BranchRequest)">
+            <summary>
+            Updates a company branch's record
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
         <member name="T:PointOS.Api.Controllers.v1.CompanyController">
             <summary>
             
