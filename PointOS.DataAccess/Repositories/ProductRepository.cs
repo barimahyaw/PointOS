@@ -11,6 +11,10 @@ namespace PointOS.DataAccess.Repositories
     public class ProductRepository : IProductRepository
     {
         private readonly AppDbContext _dbContext;
+        /// <summary>
+        /// Constructor for DI
+        /// </summary>
+        /// <param name="dbContext"></param>
 
         public ProductRepository(AppDbContext dbContext) => _dbContext = dbContext;
 
