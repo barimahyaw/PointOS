@@ -1,4 +1,4 @@
-﻿namespace eViSeM.Common.DTO.Sessions
+﻿namespace PointOS.Common.DTO.Sessions
 {
     public class UserSession
     {
