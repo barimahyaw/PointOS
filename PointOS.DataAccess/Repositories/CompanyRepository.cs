@@ -1,11 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PointOS.DataAccess.Entities;
+using PointOS.DataAccess.IRepositories;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace PointOS.DataAccess.Repositories
 {
-    public class CompanyRepository
+    public class CompanyRepository : ICompanyRepository
     {
         private readonly AppDbContext _dbContext;
 

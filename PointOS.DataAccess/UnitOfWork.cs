@@ -9,6 +9,9 @@ namespace PointOS.DataAccess
         #region Entity Framework Core Repositories
         public IProductCategoryRepository ProductCategoryRepository { get; }
         public IProductRepository ProductRepository { get; }
+        public IProductPricingRepository ProductPricingRepository { get; }
+        public ICompanyRepository CompanyRepository { get; }
+        public IBranchRepository BranchRepository { get; }
         #endregion
 
         private readonly AppDbContext _dbContext;
@@ -22,6 +25,9 @@ namespace PointOS.DataAccess
             _dbContext = dbContext;
             ProductCategoryRepository = new ProductCategoryRepository(_dbContext);
             ProductRepository = new ProductRepository(_dbContext);
+            ProductPricingRepository = new ProductPricingRepository(_dbContext);
+            CompanyRepository = new CompanyRepository(_dbContext);
+            BranchRepository = new BranchRepository(_dbContext);
         }
 
         /// <summary>

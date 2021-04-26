@@ -7,6 +7,9 @@ namespace PointOS.DataAccess
     {
         public IProductCategoryRepository ProductCategoryRepository { get; }
         public IProductRepository ProductRepository { get; }
+        public IProductPricingRepository ProductPricingRepository { get; }
+        public ICompanyRepository CompanyRepository { get; }
+        public IBranchRepository BranchRepository { get; }
 
         /// <summary>
         /// Saves all changes in the repository (memory) to database

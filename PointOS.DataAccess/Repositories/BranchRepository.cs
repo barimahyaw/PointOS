@@ -2,10 +2,11 @@
 using PointOS.DataAccess.Entities;
 using System.Linq;
 using System.Threading.Tasks;
+using PointOS.DataAccess.IRepositories;
 
 namespace PointOS.DataAccess.Repositories
 {
-    public class BranchRepository
+    public class BranchRepository : IBranchRepository
     {
         private readonly AppDbContext _dbContext;
         /// <summary>
