@@ -5,12 +5,12 @@ using PointOS.Common.DTO.Response;
 using System;
 using System.Threading.Tasks;
 
-namespace PointOS.Api.Controllers
+namespace PointOS.Api.Controllers.v1
 {
     /// <summary>
     /// 
     /// </summary>
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     public class ProductCategoryController : ControllerBase
     {

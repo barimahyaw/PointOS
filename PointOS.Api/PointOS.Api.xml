@@ -4,18 +4,43 @@
         <name>PointOS.Api</name>
     </assembly>
     <members>
-        <member name="T:PointOS.Api.Controllers.ProductCategoryController">
+        <member name="T:PointOS.Api.Controllers.v1.CompanyController">
             <summary>
             
             </summary>
         </member>
-        <member name="M:PointOS.Api.Controllers.ProductCategoryController.#ctor(PointOS.BusinessLogic.Interfaces.IProductCategoryBusiness)">
+        <member name="M:PointOS.Api.Controllers.v1.CompanyController.#ctor(PointOS.BusinessLogic.Interfaces.ICompanyBusiness)">
+            <summary>
+            
+            </summary>
+            <param name="companyBusiness"></param>
+        </member>
+        <member name="M:PointOS.Api.Controllers.v1.CompanyController.Post(PointOS.Common.DTO.Request.CompanyRequest)">
+            <summary>
+            Saves a company's record
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PointOS.Api.Controllers.v1.CompanyController.Put(PointOS.Common.DTO.Request.CompanyRequest)">
+            <summary>
+            Updates a company's record
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="T:PointOS.Api.Controllers.v1.ProductCategoryController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:PointOS.Api.Controllers.v1.ProductCategoryController.#ctor(PointOS.BusinessLogic.Interfaces.IProductCategoryBusiness)">
             <summary>
             
             </summary>
             <param name="productCategoryBusiness"></param>
         </member>
-        <member name="M:PointOS.Api.Controllers.ProductCategoryController.GetProductCategory(System.Nullable{System.Guid},System.Nullable{System.Int32})">
+        <member name="M:PointOS.Api.Controllers.v1.ProductCategoryController.GetProductCategory(System.Nullable{System.Guid},System.Nullable{System.Int32})">
             <summary>
             Select a record of product category by it's Guid Id or integer Id
             </summary>
@@ -23,51 +48,51 @@
             <param name="guidValue"></param>
             <returns>a single product category record</returns>
         </member>
-        <member name="M:PointOS.Api.Controllers.ProductCategoryController.GetProductCategories">
+        <member name="M:PointOS.Api.Controllers.v1.ProductCategoryController.GetProductCategories">
             <summary>
             Select all records of product category 
             </summary>
             <returns>a list of product category records</returns>
         </member>
-        <member name="M:PointOS.Api.Controllers.ProductCategoryController.Post(PointOS.Common.DTO.Request.ProductCategoryRequest)">
+        <member name="M:PointOS.Api.Controllers.v1.ProductCategoryController.Post(PointOS.Common.DTO.Request.ProductCategoryRequest)">
             <summary>
             Saves a product category record
             </summary>
             <param name="request"></param>
             <returns>number of records affected</returns>
         </member>
-        <member name="T:PointOS.Api.Controllers.ProductController">
+        <member name="T:PointOS.Api.Controllers.v1.ProductController">
             <summary>
             Product Controller Class
             </summary>
         </member>
-        <member name="M:PointOS.Api.Controllers.ProductController.#ctor(PointOS.BusinessLogic.Interfaces.IProductBusiness)">
+        <member name="M:PointOS.Api.Controllers.v1.ProductController.#ctor(PointOS.BusinessLogic.Interfaces.IProductBusiness)">
             <summary>
             Controller DI
             </summary>
             <param name="productBusiness"></param>
         </member>
-        <member name="M:PointOS.Api.Controllers.ProductController.Get">
+        <member name="M:PointOS.Api.Controllers.v1.ProductController.Get">
             <summary>
             Gets all Product records 
             </summary>
             <returns>a list of products</returns>
         </member>
-        <member name="M:PointOS.Api.Controllers.ProductController.GetById(System.Int32)">
+        <member name="M:PointOS.Api.Controllers.v1.ProductController.GetById(System.Int32)">
             <summary>
             Gets a product record by it's integer Id
             </summary>
             <param name="id"></param>
             <returns>a record of product</returns>
         </member>
-        <member name="M:PointOS.Api.Controllers.ProductController.GetById(System.Guid)">
+        <member name="M:PointOS.Api.Controllers.v1.ProductController.GetById(System.Guid)">
             <summary>
             Gets a product record by it's Guid Id/Value
             </summary>
             <param name="id"></param>
             <returns>a record of product</returns>
         </member>
-        <member name="M:PointOS.Api.Controllers.ProductController.Post(PointOS.Common.DTO.Request.ProductRequest)">
+        <member name="M:PointOS.Api.Controllers.v1.ProductController.Post(PointOS.Common.DTO.Request.ProductRequest)">
             <summary>
             Saves a product record
             </summary>
