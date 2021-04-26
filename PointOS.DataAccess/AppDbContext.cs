@@ -15,5 +15,6 @@ namespace PointOS.DataAccess
         public DbSet<ProductCategory> ProductCategories { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductPricing> ProductPricing { get; set; }
+        public DbSet<Company> Companies { get; set; }
     }
 }

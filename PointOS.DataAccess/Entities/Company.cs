@@ -4,24 +4,26 @@ using System.ComponentModel.DataAnnotations;
 
 namespace PointOS.DataAccess.Entities
 {
-    public class ProductCategory
+    public class Company
     {
         public int Id { get; set; }
         [Required]
-        [MaxLength(50)]
-        public string Name { get; set; }
-        [Required]
-        public bool Status { get; set; }
-        [Required]
         public Guid GuidId { get; set; }
         [Required]
+        [MaxLength(50)]
+        public string Name { get; set; }
+        [MaxLength(50)]
+        [Required]
+        public string EmailAddress { get; set; }
+        [Required]
+        [MaxLength(20)]
+        public string PhoneNumber { get; set; }
+        [MaxLength(20)]
+        public string AltPhoneNumber { get; set; }
         public string CreatedUserId { get; set; }
         public ApplicationUser CreatedUser { get; set; }
         [Required]
         public DateTime CreatedOn { get; set; }
-
-        public ICollection<Product> Products { get; set; }
-        public int CompanyId { get; set; }
-        public Company Company { get; set; }
+        public ICollection<ProductCategory> ProductCategories { get; set; }
     }
 }
