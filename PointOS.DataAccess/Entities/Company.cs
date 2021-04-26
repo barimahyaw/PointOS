@@ -25,5 +25,6 @@ namespace PointOS.DataAccess.Entities
         [Required]
         public DateTime CreatedOn { get; set; }
         public ICollection<ProductCategory> ProductCategories { get; set; }
+        public ICollection<Branch> Branches { get; set; }
     }
 }
