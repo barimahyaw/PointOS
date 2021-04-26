@@ -9,28 +9,26 @@ using System.Threading.Tasks;
 
 namespace PointOS.BusinessLogic
 {
-    public class CompanyBusiness : ICompanyBusiness
+    public class BranchBusiness : IBranchBusiness
     {
         private readonly IUnitOfWork _unitOfWork;
 
-        public CompanyBusiness(IUnitOfWork unitOfWork)
+        public BranchBusiness(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
 
         /// <summary>
-        /// Saves a company record
+        /// Saves a company branch's record
         /// </summary>
         /// <param name="request"></param>
         /// <returns>number of records affected</returns>
-        public async Task<ResponseHeader> SaveAsync(CompanyRequest request)
+        public async Task<ResponseHeader> SaveAsync(BranchRequest request)
         {
-            var entity = new Company
+            var entity = new Branch
             {
                 Name = request.Name,
-                PhoneNumber = request.PhoneNumber,
-                AltPhoneNumber = request.AltPhoneNumber,
-                EmailAddress = request.EmailAddress
+                CompanyId = request.CompanyId
             };
 
             switch (request.Operation)
@@ -39,10 +37,10 @@ namespace PointOS.BusinessLogic
                     entity.GuidId = Guid.NewGuid();
                     entity.CreatedOn = DateTime.UtcNow;
                     entity.CreatedUserId = request.CreatedBy;
-                    await _unitOfWork.CompanyRepository.AddAsync(entity);
+                    await _unitOfWork.BranchRepository.AddAsync(entity);
                     break;
                 case CrudOperation.Update:
-                    await _unitOfWork.CompanyRepository.UpdateAsync(entity);
+                    await _unitOfWork.BranchRepository.UpdateAsync(entity);
                     break;
                 case CrudOperation.Read:
                     break;

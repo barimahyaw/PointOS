@@ -1,5 +1,4 @@
-﻿using eViSeM.Common.DTO.Request;
-using eViSeM.Common.DTO.Response;
+﻿using eViSeM.Common.DTO.Response;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;

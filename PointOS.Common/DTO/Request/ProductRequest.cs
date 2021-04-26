@@ -14,7 +14,6 @@ namespace PointOS.Common.DTO.Request
         [Required]
         [Display(Name = "Product Category")]
         public int ProductCategoryId { get; set; }
-        public string CreatedUserId { get; set; }
 
         public IEnumerable<SelectListItem> ProductCategories { get; set; }
     }

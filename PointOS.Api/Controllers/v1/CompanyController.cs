@@ -10,7 +10,7 @@ namespace PointOS.Api.Controllers.v1
     /// <summary>
     /// 
     /// </summary>
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     public class CompanyController : ControllerBase
     {

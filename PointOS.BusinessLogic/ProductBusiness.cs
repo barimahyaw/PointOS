@@ -40,7 +40,7 @@ namespace PointOS.BusinessLogic
                 Status = true,
                 CreatedOn = DateTime.UtcNow,
                 ProductCategoryId = request.ProductCategoryId,
-                CreatedUserId = request.CreatedUserId
+                CreatedUserId = request.CreatedBy
             };
 
             await _unitOfWork.ProductRepository.AddAsync(entity);

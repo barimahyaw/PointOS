@@ -13,5 +13,9 @@ namespace PointOS.DataAccess.Entities
         [Required]
         [MaxLength(50)]
         public string Name { get; set; }
+        public DateTime CreatedOn { get; set; }
+        [Required]
+        public string CreatedUserId { get; set; }
+        public ApplicationUser CreatedUser { get; set; }
     }
 }

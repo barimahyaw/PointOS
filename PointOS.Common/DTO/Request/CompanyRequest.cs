@@ -13,7 +13,6 @@ namespace PointOS.Common.DTO.Request
         public string PhoneNumber { get; set; }
         [MaxLength(20)]
         public string AltPhoneNumber { get; set; }
-        public string CreatedUserId { get; set; }
         [Required]
         [EmailAddress]
         [MaxLength(50)]

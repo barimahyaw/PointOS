@@ -1,4 +1,4 @@
-﻿namespace eViSeM.Common.DTO.Request
+﻿namespace PointOS.Common.DTO.Request
 {
     public class UserRoleAssignmentRequest
     {

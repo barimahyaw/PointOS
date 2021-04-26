@@ -20,6 +20,7 @@ namespace PointOS.DataAccess.Entities
         public string PhoneNumber { get; set; }
         [MaxLength(20)]
         public string AltPhoneNumber { get; set; }
+        [Required]
         public string CreatedUserId { get; set; }
         public ApplicationUser CreatedUser { get; set; }
         [Required]
