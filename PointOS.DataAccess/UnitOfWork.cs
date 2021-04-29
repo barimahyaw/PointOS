@@ -12,6 +12,7 @@ namespace PointOS.DataAccess
         public IProductPricingRepository ProductPricingRepository { get; }
         public ICompanyRepository CompanyRepository { get; }
         public IBranchRepository BranchRepository { get; }
+        public ISalesRepository SalesRepository { get; }
         #endregion
 
         private readonly AppDbContext _dbContext;
@@ -28,6 +29,7 @@ namespace PointOS.DataAccess
             ProductPricingRepository = new ProductPricingRepository(_dbContext);
             CompanyRepository = new CompanyRepository(_dbContext);
             BranchRepository = new BranchRepository(_dbContext);
+            SalesRepository = new SalesRepository(_dbContext);
         }
 
         /// <summary>
