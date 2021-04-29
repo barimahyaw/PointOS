@@ -2,5 +2,6 @@
 {
     public class ConnectionStrings
     {
+        public string AppConnectionString { get; set; }
     }
 }

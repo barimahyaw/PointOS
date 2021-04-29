@@ -30,7 +30,7 @@ namespace PointOS.Common.Helpers.IHelpers
         /// Generate unique Ticket numbers
         /// </summary>
         /// <returns></returns>
-        public string GenerateTicket();
+        public string GenerateTransactionTicket();
 
         /// <summary>
         /// smtp email sender class
