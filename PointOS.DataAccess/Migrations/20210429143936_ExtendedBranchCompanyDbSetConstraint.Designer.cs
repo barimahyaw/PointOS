@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PointOS.DataAccess;
 
 namespace PointOS.DataAccess.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210429143936_ExtendedBranchCompanyDbSetConstraint")]
+    partial class ExtendedBranchCompanyDbSetConstraint
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -435,44 +437,6 @@ namespace PointOS.DataAccess.Migrations
                     b.ToTable("ProductPricing");
                 });
 
-            modelBuilder.Entity("PointOS.DataAccess.Entities.TransactionType", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreatedUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("ModifiedUserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CreatedUserId");
-
-                    b.HasIndex("ModifiedUserId");
-
-                    b.ToTable("TransactionTypes");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -618,23 +582,6 @@ namespace PointOS.DataAccess.Migrations
                     b.Navigation("CreatedUser");
 
                     b.Navigation("Product");
-                });
-
-            modelBuilder.Entity("PointOS.DataAccess.Entities.TransactionType", b =>
-                {
-                    b.HasOne("PointOS.DataAccess.Entities.ApplicationUser", "CreatedUser")
-                        .WithMany()
-                        .HasForeignKey("CreatedUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("PointOS.DataAccess.Entities.ApplicationUser", "ModifiedUser")
-                        .WithMany()
-                        .HasForeignKey("ModifiedUserId");
-
-                    b.Navigation("CreatedUser");
-
-                    b.Navigation("ModifiedUser");
                 });
 
             modelBuilder.Entity("PointOS.DataAccess.Entities.Company", b =>
