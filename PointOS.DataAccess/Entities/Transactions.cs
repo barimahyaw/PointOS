@@ -5,8 +5,9 @@ namespace PointOS.DataAccess.Entities
     public class Transactions
     {
         public int Id { get; set; }
-        public int TransactionTypeId { get; set; }
-        public TransactionType TransactionType { get; set; }
+        [Required]
+        [MaxLength(30)]
+        public string TransactionType { get; set; }
         [Required]
         [MaxLength(12)]
         public string TransactionId { get; set; }

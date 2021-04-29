@@ -9,8 +9,9 @@ namespace PointOS.DataAccess.Entities
         [Required]
         [MaxLength(20)]
         public string TransactionId { get; set; }
-        public int PaymentTypeId { get; set; }
-        public PaymentType PaymentType { get; set; }
+        [Required]
+        [MaxLength(30)]
+        public string PaymentType { get; set; }
         [Required]
         public string CreatedUserId { get; set; }
         public ApplicationUser CreatedUser { get; set; }
