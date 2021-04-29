@@ -10,6 +10,7 @@ using PointOS.BusinessLogic;
 using PointOS.BusinessLogic.Interfaces;
 using PointOS.BusinessLogic.Validators;
 using PointOS.BusinessLogic.Validators.IValidators;
+using PointOS.Common.Settings;
 using PointOS.DataAccess;
 using PointOS.DataAccess.Entities;
 using System;
@@ -73,10 +74,22 @@ namespace PointOS.Api
                 setupAction.IncludeXmlComments(xmlCommentsFullPath);
             });
 
+            var appConnectionString = Configuration.GetSection("ConnectionStrings");
+            services.Configure<ConnectionStrings>(appConnectionString);
+
             services.AddDbContextPool<AppDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("AppConnectionString")));
 
             services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>();
+
+            var emailSettings = Configuration.GetSection("EmailSettings");
+            services.Configure<EmailSettings>(emailSettings);
+
+            var antiVirusPath = Configuration.GetSection("StaticFilesPath");
+            services.Configure<StaticFilesPath>(antiVirusPath);
+
+            var documentSettings = Configuration.GetSection("UploadDocumentSettings");
+            services.Configure<UploadDocumentSettings>(documentSettings);
 
             // DI of interfaces
             services.AddScoped<IUnitOfWork, UnitOfWork>();
