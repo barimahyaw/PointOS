@@ -11,6 +11,7 @@ namespace PointOS.DataAccess
         public ICompanyRepository CompanyRepository { get; }
         public IBranchRepository BranchRepository { get; }
         public ISalesRepository SalesRepository { get; }
+        public ITransactionRepository TransactionRepository { get; }
 
         /// <summary>
         /// Saves all changes in the repository (memory) to database
