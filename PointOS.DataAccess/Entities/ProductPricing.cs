@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace PointOS.DataAccess.Entities
@@ -21,5 +22,6 @@ namespace PointOS.DataAccess.Entities
         [Required]
         public DateTime CreatedOn { get; set; }
 
+        public ICollection<Transactions> Transactions { get; set; }
     }
 }
