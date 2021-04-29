@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace PointOS.DataAccess.Entities
 {
@@ -9,12 +8,9 @@ namespace PointOS.DataAccess.Entities
         [Required]
         [MaxLength(20)]
         public string TransactionId { get; set; }
-        [Required]
-        [MaxLength(30)]
-        public string PaymentType { get; set; }
-        [Required]
-        public string CreatedUserId { get; set; }
-        public ApplicationUser CreatedUser { get; set; }
-        public DateTime CreatedOn { get; set; }
+        public Transactions Transaction { get; set; }
+        public int Quantity { get; set; }
+        public int ProductPricingId { get; set; }
+        public ProductPricing ProductPricing { get; set; }
     }
 }

@@ -18,8 +18,9 @@ namespace PointOS.DataAccess.Entities
         public ApplicationUser CreatedUser { get; set; }
         public int ProductCategoryId { get; set; }
         public ProductCategory ProductCategory { get; set; }
-        public ICollection<ProductPricing> ProductPricing { get; set; }
         [Required]
         public DateTime CreatedOn { get; set; }
+
+        public ICollection<ProductPricing> ProductPricing { get; set; }
     }
 }

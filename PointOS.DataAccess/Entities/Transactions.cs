@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace PointOS.DataAccess.Entities
 {
@@ -11,9 +13,15 @@ namespace PointOS.DataAccess.Entities
         [Required]
         [MaxLength(12)]
         public string TransactionId { get; set; }
-        public int Quantity { get; set; }
-        public int? ProductPricingId { get; set; }
-        public ProductPricing ProductPricing { get; set; }
+        [Required]
+        [MaxLength(30)]
+        public string PaymentType { get; set; }
         public double Amount { get; set; }
+        [Required]
+        public string CreatedUserId { get; set; }
+        public ApplicationUser CreatedUser { get; set; }
+        public DateTime CreatedOn { get; set; }
+
+        public ICollection<Sales> Sales { get; set; }
     }
 }
