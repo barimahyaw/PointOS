@@ -1,4 +1,5 @@
-﻿using PointOS.DataAccess.Entities;
+﻿using PointOS.Common.DTO.Response;
+using PointOS.DataAccess.Entities;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -23,6 +24,6 @@ namespace PointOS.DataAccess.IRepositories
         /// </summary>
         /// <param name="transactionId"></param>
         /// <returns></returns>
-        Task<IList<Sales>> FindByDate(string transactionId);
+        Task<IList<SalesResponse>> FindByTransactionId(string transactionId);
     }
 }

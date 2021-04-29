@@ -4,7 +4,7 @@ using PointOS.DataAccess.IRepositories;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
+using PointOS.Common.DTO.Response;
 
 namespace PointOS.DataAccess.Repositories
 {
@@ -46,7 +46,17 @@ namespace PointOS.DataAccess.Repositories
         /// </summary>
         /// <param name="transactionId"></param>
         /// <returns></returns>
-        public async Task<IList<Sales>> FindByDate(string transactionId)
-            => await GetQueryable().Where(s => s.TransactionId == transactionId).ToListAsync();
+        public async Task<IList<SalesResponse>> FindByTransactionId(string transactionId)
+            => await GetQueryable()
+                .Where(s => s.TransactionId == transactionId)
+                .Select(s => new SalesResponse
+                {
+                    Product = s.ProductPricing.Product.Name,
+                    CostPrice = s.ProductPricing.CostPrice,
+                    ProductCategory = s.ProductPricing.Product.ProductCategory.Name,
+                    Quantity = s.Quantity,
+                    RetailPrice = s.ProductPricing.RetailPrice
+                })
+                .ToListAsync();
     }
 }

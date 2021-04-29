@@ -18,6 +18,12 @@ namespace PointOS.BusinessLogic
             _unitOfWork = unitOfWork;
         }
 
+        //public async Task<TransactionRequest> Find(string transactionId)
+        //{
+        //    var tran = await _unitOfWork.SalesRepository.FindByTransactionId(DateTime.UtcNow);
+
+        //}
+
         /// <summary>
         /// Saves a company record
         /// </summary>

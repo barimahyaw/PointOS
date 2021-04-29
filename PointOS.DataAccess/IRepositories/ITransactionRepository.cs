@@ -1,5 +1,5 @@
-﻿using PointOS.DataAccess.Entities;
-using System.Collections.Generic;
+﻿using PointOS.Common.DTO.Response;
+using PointOS.DataAccess.Entities;
 using System.Threading.Tasks;
 
 namespace PointOS.DataAccess.IRepositories
@@ -23,6 +23,6 @@ namespace PointOS.DataAccess.IRepositories
         /// </summary>
         /// <param name="tranId"></param>
         /// <returns></returns>
-        Task<IList<Transactions>> FindByTransactionId(string tranId);
+        Task<TransactionResponse> FindByTransactionId(string tranId);
     }
 }
