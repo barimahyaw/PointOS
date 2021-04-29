@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace PointOS.Api.Controllers.v1
 {
     /// <summary>
-    /// 
+    /// Product pricing controller
     /// </summary>
     [Route("api/v1/[controller]")]
     [ApiController]

@@ -56,7 +56,7 @@
         </member>
         <member name="T:PointOS.Api.Controllers.v1.PricingController">
             <summary>
-            
+            Product pricing controller
             </summary>
         </member>
         <member name="M:PointOS.Api.Controllers.v1.PricingController.#ctor(PointOS.BusinessLogic.Interfaces.IProductPricingBusiness)">
