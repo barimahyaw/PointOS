@@ -18,5 +18,6 @@ namespace PointOS.DataAccess
         public DbSet<Company> Companies { get; set; }
         public DbSet<Branch> Branches { get; set; }
         public DbSet<TransactionType> TransactionTypes { get; set; }
+        public DbSet<Transactions> Transactions { get; set; }
     }
 }
