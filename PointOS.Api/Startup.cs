@@ -10,6 +10,8 @@ using PointOS.BusinessLogic;
 using PointOS.BusinessLogic.Interfaces;
 using PointOS.BusinessLogic.Validators;
 using PointOS.BusinessLogic.Validators.IValidators;
+using PointOS.Common.Helpers;
+using PointOS.Common.Helpers.IHelpers;
 using PointOS.Common.Settings;
 using PointOS.DataAccess;
 using PointOS.DataAccess.Entities;
@@ -99,8 +101,11 @@ namespace PointOS.Api
             services.AddTransient<ICompanyBusiness, CompanyBusiness>();
             services.AddTransient<IBranchBusiness, BranchBusiness>();
             services.AddTransient<IProductPricingBusiness, ProductPricingBusiness>();
+            services.AddTransient<ITransactionBusiness, TransactionBusiness>();
 
             services.AddScoped<IProductValidator, ProductValidator>();
+
+            services.AddScoped<IUtils, Utils>();
         }
 
         /// <summary>

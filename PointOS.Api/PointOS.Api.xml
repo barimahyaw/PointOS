@@ -148,6 +148,31 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="T:PointOS.Api.Controllers.v1.SalesController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:PointOS.Api.Controllers.v1.SalesController.#ctor(PointOS.BusinessLogic.Interfaces.ITransactionBusiness)">
+            <summary>
+            
+            </summary>
+            <param name="transactionBusiness"></param>
+        </member>
+        <member name="M:PointOS.Api.Controllers.v1.SalesController.Post(System.Collections.Generic.IList{PointOS.Common.DTO.Request.TransactionRequest})">
+            <summary>
+            Saves a sales transaction record(s)
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PointOS.Api.Controllers.v1.SalesController.Get(System.String)">
+            <summary>
+            Gets a sale transaction details by transaction Id
+            </summary>
+            <param name="transactionId"></param>
+            <returns></returns>
+        </member>
         <member name="T:PointOS.Api.Controllers.WeatherForecastController">
             <summary>
             

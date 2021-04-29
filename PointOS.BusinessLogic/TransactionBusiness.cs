@@ -1,4 +1,5 @@
-﻿using PointOS.Common.DTO.Request;
+﻿using PointOS.BusinessLogic.Interfaces;
+using PointOS.Common.DTO.Request;
 using PointOS.Common.DTO.Response;
 using PointOS.Common.Enums;
 using PointOS.Common.Extensions;
@@ -12,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace PointOS.BusinessLogic
 {
-    public class TransactionBusiness
+    public class TransactionBusiness : ITransactionBusiness
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IUtils _utils;
