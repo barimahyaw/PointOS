@@ -1,7 +1,6 @@
-﻿using System;
+﻿using PointOS.DataAccess.Entities;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using PointOS.DataAccess.Entities;
 
 namespace PointOS.DataAccess.IRepositories
 {
@@ -11,19 +10,19 @@ namespace PointOS.DataAccess.IRepositories
         /// Add/Attach a new sale's record into repository
         /// </summary>
         /// <param name="sales"></param>
-        Task AddAsync(Sales sales);
+        Task AddAsync(IList<Sales> sales);
 
         /// <summary>
         /// Attach changes made to a sale's record into repository
         /// </summary>
         /// <param name="sales"></param>
-        Task UpdateAsync(Sales sales);
+        Task UpdateAsync(IList<Sales> sales);
 
         /// <summary>
-        /// Gets all sales by date
+        /// Gets all sales by transaction Id
         /// </summary>
-        /// <param name="date"></param>
+        /// <param name="transactionId"></param>
         /// <returns></returns>
-        Task<IList<Sales>> FindByDate(DateTime date);
+        Task<IList<Sales>> FindByDate(string transactionId);
     }
 }

@@ -26,17 +26,17 @@ namespace PointOS.DataAccess.Repositories
         /// <summary>
         /// Add/Attach a new Transactions' record into repository
         /// </summary>
-        /// <param name="transactions"></param>
-        public async Task AddAsync(IList<Transactions> transactions)
-            => await _dbContext.Transactions.AddRangeAsync(transactions);
+        /// <param name="transaction"></param>
+        public async Task AddAsync(Transactions transaction)
+            => await _dbContext.Transactions.AddAsync(transaction);
 
         /// <summary>
         /// Attach changes made to a sale's record into repository
         /// </summary>
         /// <param name="transaction"></param>
-        public Task UpdateAsync(IList<Transactions> transaction)
+        public Task UpdateAsync(Transactions transaction)
         {
-            _dbContext.Transactions.UpdateRange(transaction);
+            _dbContext.Transactions.Update(transaction);
             return Task.FromResult(0);
         }
 

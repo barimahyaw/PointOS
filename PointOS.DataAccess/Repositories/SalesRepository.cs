@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PointOS.DataAccess.Entities;
 using PointOS.DataAccess.IRepositories;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace PointOS.DataAccess.Repositories
 {
@@ -28,25 +28,25 @@ namespace PointOS.DataAccess.Repositories
         /// Add/Attach a new sale's record into repository
         /// </summary>
         /// <param name="sales"></param>
-        public async Task AddAsync(Sales sales)
-            => await _dbContext.Sales.AddAsync(sales);
+        public async Task AddAsync(IList<Sales> sales)
+            => await _dbContext.Sales.AddRangeAsync(sales);
 
         /// <summary>
         /// Attach changes made to a sale's record into repository
         /// </summary>
         /// <param name="sales"></param>
-        public Task UpdateAsync(Sales sales)
+        public Task UpdateAsync(IList<Sales> sales)
         {
-            _dbContext.Sales.Update(sales);
+            _dbContext.Sales.UpdateRange(sales);
             return Task.FromResult(0);
         }
 
         /// <summary>
-        /// Gets all sales by date
+        /// Gets all sales by transaction Id
         /// </summary>
-        /// <param name="date"></param>
+        /// <param name="transactionId"></param>
         /// <returns></returns>
-        public async Task<IList<Sales>> FindByDate(DateTime date)
-            => await GetQueryable().Where(s => s.CreatedOn == date).ToListAsync();
+        public async Task<IList<Sales>> FindByDate(string transactionId)
+            => await GetQueryable().Where(s => s.TransactionId == transactionId).ToListAsync();
     }
 }
