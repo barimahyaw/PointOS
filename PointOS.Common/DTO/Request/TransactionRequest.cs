@@ -11,6 +11,6 @@ namespace PointOS.Common.DTO.Request
         [Required]
         [Display(Name = "Product")]
         public int ProductPricingId { get; set; }
-        public IEnumerable<SelectListItem> PProductPricing { get; set; }
+        public IEnumerable<SelectListItem> Products { get; set; }
     }
 }
