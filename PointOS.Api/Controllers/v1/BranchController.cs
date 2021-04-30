@@ -10,7 +10,8 @@ namespace PointOS.Api.Controllers.v1
     /// <summary>
     /// 
     /// </summary>
-    [Route("api/v1/[controller]")]
+    [ApiVersion("1.0")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     public class BranchController : ControllerBase
     {

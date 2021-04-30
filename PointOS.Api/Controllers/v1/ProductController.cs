@@ -10,7 +10,8 @@ namespace PointOS.Api.Controllers.v1
     /// <summary>
     /// Product Controller Class
     /// </summary>
-    [Route("api/v1/[controller]")]
+    [ApiVersion("1.0")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     public class ProductController : ControllerBase
     {
