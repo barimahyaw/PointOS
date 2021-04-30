@@ -51,11 +51,10 @@ namespace PointOS.BusinessLogic
         /// <returns></returns>
         private async Task<SingleResponse<SaleTransactionResponse>> FindSaleTransactions(string transactionId)
         {
-            var tranResponse = new SaleTransactionResponse
-            {
-                SalesResponses = await _unitOfWork.SalesRepository.FindByTransactionId(transactionId),
-                TransactionResponse = await _unitOfWork.TransactionRepository.FindByTransactionId(transactionId)
-            };
+            var sales = await _unitOfWork.SalesRepository.FindByTransactionId(transactionId);
+            var tran = await _unitOfWork.TransactionRepository.FindByTransactionId(transactionId);
+
+            var tranResponse = new SaleTransactionResponse { SalesResponses = sales, TransactionResponse = tran };
 
             return tranResponse.TransactionResponse != null
                 ? new SingleResponse<SaleTransactionResponse>(new ResponseHeader { Success = true }, tranResponse)
