@@ -1,4 +1,5 @@
-﻿using PointOS.DataAccess.IRepositories;
+﻿using Microsoft.EntityFrameworkCore.Storage;
+using PointOS.DataAccess.IRepositories;
 using PointOS.DataAccess.Repositories;
 using System.Threading.Tasks;
 
@@ -38,9 +39,12 @@ namespace PointOS.DataAccess
         /// Saves all changes in the repository (memory) to database
         /// </summary>
         /// <returns>number of rows affected</returns>
-        public async Task<int> SaveChangesAsync()
-        {
-            return await _dbContext.SaveChangesAsync();
-        }
+        public async Task<int> SaveChangesAsync() => await _dbContext.SaveChangesAsync();
+
+        /// <summary>
+        /// Performs db transactions on a two or more db write jobs
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IDbContextTransaction> TransactionAsync() => await _dbContext.Database.BeginTransactionAsync();
     }
 }

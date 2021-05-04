@@ -1,4 +1,5 @@
-﻿using PointOS.DataAccess.IRepositories;
+﻿using Microsoft.EntityFrameworkCore.Storage;
+using PointOS.DataAccess.IRepositories;
 using System.Threading.Tasks;
 
 namespace PointOS.DataAccess
@@ -18,5 +19,11 @@ namespace PointOS.DataAccess
         /// </summary>
         /// <returns>number of rows affected</returns>
         Task<int> SaveChangesAsync();
+
+        /// <summary>
+        /// Performs db transactions on a two or more db write jobs
+        /// </summary>
+        /// <returns></returns>
+        Task<IDbContextTransaction> TransactionAsync();
     }
 }
