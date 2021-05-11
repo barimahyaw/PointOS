@@ -1,7 +1,7 @@
 ﻿using eViSeM.Common.Enums;
 using Microsoft.AspNetCore.Http;
 
-namespace eViSeM.Common.Helpers.IHelpers
+namespace PointOS.Common.Helpers.IHelpers
 {
     public interface IScanner
     {
