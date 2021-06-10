@@ -25,19 +25,13 @@ namespace PointOS.Common.Helpers
         /// Get Connection String From appSettings
         /// </summary>
         /// <returns>Connection to Db as string</returns>
-        public string GetConnectionString()
-        {
-            return _connectionStrings.AppConnectionString;
-        }
+        public string GetConnectionString() => _connectionStrings.AppConnectionString;
 
         /// <summary>
         /// Gets the path of the physical static executable file of an anti-virus
         /// </summary>
         /// <returns></returns>
-        public string GetAntiVirusPath()
-        {
-            return _staticFilesPath.AntiVirus;
-        }
+        public string GetAntiVirusPath() => _staticFilesPath.AntiVirus;
 
         /// <summary>
         /// Upload documents/pictures and all kinds of files in a specify folder

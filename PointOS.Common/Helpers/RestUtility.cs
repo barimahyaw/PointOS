@@ -1,10 +1,13 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using PointOS.Common.Enums;
 using PointOS.Common.Helpers.IHelpers;
+using PointOS.Common.Settings;
 using System;
 using System.IO;
 using System.Net;
+using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,7 +16,14 @@ namespace PointOS.Common.Helpers
 {
     public class RestUtility : IRestUtility
     {
-        private const string BaseAddress = "";
+        private const string BaseAddress = "https://localhost:44302/api/v1/";
+        private readonly ApiBaseUrlSettings _apiBaseUrlSettings;
+
+        public RestUtility(IOptions<ApiBaseUrlSettings> apiBaseUrlSettings)
+        {
+            _apiBaseUrlSettings = apiBaseUrlSettings.Value;
+        }
+
         /// <summary>
         /// Generic wrapper class to make Rest API Calls
         /// </summary>
@@ -28,10 +38,13 @@ namespace PointOS.Common.Helpers
         {
             var apiUrl = baseUrl switch
             {
+                BaseUrl.PointOs => _apiBaseUrlSettings.PointOsUrl,
                 BaseUrl.NIA => "",
                 BaseUrl.Payment => "",
                 _ => BaseAddress
             };
+
+            if (string.IsNullOrWhiteSpace(apiUrl)) apiUrl = BaseAddress;
 
             apiUrl += url;
 
@@ -39,6 +52,7 @@ namespace PointOS.Common.Helpers
             {
                 BaseUrl.NIA => await CallHmacSha256AuthApi(apiUrl, token, param, requestBodyObject),
                 BaseUrl.Payment => await CallBasicAuthApi(apiUrl, token, requestBodyObject, param, method),
+                BaseUrl.PointOs => await BlazorClientHandler(apiUrl, token, requestBodyObject, param, method),
                 _ => await CallBearerAuthApi(apiUrl, token, requestBodyObject, param, method)
             };
         }
@@ -155,7 +169,7 @@ namespace PointOS.Common.Helpers
 
                 return result;
             }
-            catch (Exception e)
+            catch (WebException e)
             {
                 Console.WriteLine(e);
                 throw;
@@ -205,6 +219,32 @@ namespace PointOS.Common.Helpers
                 Console.WriteLine(e);
                 throw;
             }
+        }
+
+        private static async Task<object> BlazorClientHandler(string url, string authToken, object requestBodyObject, string param, Verb method)
+        {
+            if (!string.IsNullOrWhiteSpace(param)) url += param;
+            var client = new HttpClient();
+            client.DefaultRequestHeaders.Authorization = AuthenticationHeaderValue.Parse(authToken);
+
+            var response = "";
+
+            switch (method)
+            {
+                case Verb.Get:
+                    response = await client.GetStringAsync(url);
+                    break;
+                case Verb.Post:
+                    break;
+                case Verb.Put:
+                    break;
+                case Verb.Delete:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(method), method, null);
+            }
+
+            return response;
         }
     }
 }

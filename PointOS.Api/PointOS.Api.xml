@@ -90,7 +90,7 @@
             </summary>
             <param name="productCategoryBusiness"></param>
         </member>
-        <member name="M:PointOS.Api.Controllers.v1.ProductCategoryController.GetProductCategory(System.Nullable{System.Guid},System.Nullable{System.Int32})">
+        <member name="M:PointOS.Api.Controllers.v1.ProductCategoryController.Get(System.Nullable{System.Guid},System.Nullable{System.Int32})">
             <summary>
             Select a record of product category by it's Guid Id or integer Id
             </summary>
@@ -98,7 +98,7 @@
             <param name="guidValue"></param>
             <returns>a single product category record</returns>
         </member>
-        <member name="M:PointOS.Api.Controllers.v1.ProductCategoryController.GetProductCategories">
+        <member name="M:PointOS.Api.Controllers.v1.ProductCategoryController.Get">
             <summary>
             Select all records of product category 
             </summary>
@@ -128,18 +128,18 @@
             </summary>
             <returns>a list of products</returns>
         </member>
-        <member name="M:PointOS.Api.Controllers.v1.ProductController.GetById(System.Int32)">
+        <member name="M:PointOS.Api.Controllers.v1.ProductController.Get(System.Int32)">
             <summary>
             Gets a product record by it's integer Id
             </summary>
             <param name="id"></param>
             <returns>a record of product</returns>
         </member>
-        <member name="M:PointOS.Api.Controllers.v1.ProductController.GetById(System.Guid)">
+        <member name="M:PointOS.Api.Controllers.v1.ProductController.Get(System.Guid)">
             <summary>
             Gets a product record by it's Guid Id/Value
             </summary>
-            <param name="id"></param>
+            <param name="guidValue"></param>
             <returns>a record of product</returns>
         </member>
         <member name="M:PointOS.Api.Controllers.v1.ProductController.Post(PointOS.Common.DTO.Request.ProductRequest)">

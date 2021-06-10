@@ -2,7 +2,8 @@
 {
     public enum BaseUrl
     {
-        NIA = 1,
+        PointOs = 1,
+        NIA,
         Payment
     }
 }
