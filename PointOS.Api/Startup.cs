@@ -49,6 +49,23 @@ namespace PointOS.Api
         {
             services.AddControllers();
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy", builder =>
+                {
+                    builder.AllowAnyOrigin();
+                    builder.AllowAnyMethod();
+                    //builder.WithMethods("POST");
+                    builder.AllowAnyHeader();
+                });
+
+                //services.AddCors(options =>
+                //    options.AddPolicy("AllowSpecific", p => p.WithOrigins("http://localhost:1233")
+                //        .WithMethods("GET")
+                //        .WithHeaders("name")));
+
+            });
+
             services.AddApiVersioning(x =>
             {
                 x.DefaultApiVersion = new ApiVersion(1, 0);
@@ -100,6 +117,9 @@ namespace PointOS.Api
             var documentSettings = Configuration.GetSection("UploadDocumentSettings");
             services.Configure<UploadDocumentSettings>(documentSettings);
 
+            var apiBaseUrlSettings = Configuration.GetSection("ApiBaseUrlSettings");
+            services.Configure<ApiBaseUrlSettings>(apiBaseUrlSettings);
+
             // DI of interfaces
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
@@ -133,6 +153,8 @@ namespace PointOS.Api
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseCors("CorsPolicy");
 
             //Swagger
             app.UseSwagger();

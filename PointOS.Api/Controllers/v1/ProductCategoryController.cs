@@ -21,9 +21,7 @@ namespace PointOS.Api.Controllers.v1
         /// </summary>
         /// <param name="productCategoryBusiness"></param>
         public ProductCategoryController(IProductCategoryBusiness productCategoryBusiness)
-        {
-            _productCategoryBusiness = productCategoryBusiness;
-        }
+            => _productCategoryBusiness = productCategoryBusiness;
 
         /// <summary>
         /// Select a record of product category by it's Guid Id or integer Id
@@ -31,21 +29,17 @@ namespace PointOS.Api.Controllers.v1
         /// <param name="id"></param>
         /// <param name="guidValue"></param>
         /// <returns>a single product category record</returns>
-        [HttpGet("getProductCategory")]
-        public async Task<SingleResponse<ProductCategoryResponse>> GetProductCategory(Guid? guidValue, int? id)
-        {
-            return await _productCategoryBusiness.GetProductCategory(id, guidValue);
-        }
+        [HttpGet]
+        public async Task<SingleResponse<ProductCategoryResponse>> Get(Guid? guidValue, int? id)
+            => await _productCategoryBusiness.GetProductCategory(id, guidValue);
 
         /// <summary>
         /// Select all records of product category 
         /// </summary>
         /// <returns>a list of product category records</returns>
-        [HttpGet("getProductCategories")]
-        public async Task<ListResponse<ProductCategoryResponse>> GetProductCategories()
-        {
-            return await _productCategoryBusiness.FindAllAsync();
-        }
+        [HttpGet("get")]
+        public async Task<ListResponse<ProductCategoryResponse>> Get()
+            => await _productCategoryBusiness.FindAllAsync();
 
         /// <summary>
         /// Saves a product category record
@@ -54,8 +48,6 @@ namespace PointOS.Api.Controllers.v1
         /// <returns>number of records affected</returns>
         [HttpPost]
         public async Task<ResponseHeader> Post(ProductCategoryRequest request)
-        {
-            return await _productCategoryBusiness.SaveAsync(request);
-        }
+            => await _productCategoryBusiness.SaveAsync(request);
     }
 }

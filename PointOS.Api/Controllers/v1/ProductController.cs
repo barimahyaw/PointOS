@@ -29,7 +29,7 @@ namespace PointOS.Api.Controllers.v1
         /// Gets all Product records 
         /// </summary>
         /// <returns>a list of products</returns>
-        [HttpGet("get")]
+        [HttpGet]
         public async Task<ListResponse<ProductResponse>> Get() => await _productBusiness.FindAllAsync();
 
         /// <summary>
@@ -37,16 +37,16 @@ namespace PointOS.Api.Controllers.v1
         /// </summary>
         /// <param name="id"></param>
         /// <returns>a record of product</returns>
-        [HttpGet("getById")]
-        public async Task<SingleResponse<ProductResponse>> GetById(int id) => await _productBusiness.FindById(id);
+        [HttpGet("{id}")]
+        public async Task<SingleResponse<ProductResponse>> Get(int id) => await _productBusiness.FindById(id);
 
         /// <summary>
         /// Gets a product record by it's Guid Id/Value
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="guidValue"></param>
         /// <returns>a record of product</returns>
-        [HttpGet("getByValue")]
-        public async Task<SingleResponse<ProductResponse>> GetById(Guid id) => await _productBusiness.FindById(id);
+        [HttpGet("{guidValue}")]
+        public async Task<SingleResponse<ProductResponse>> Get(Guid guidValue) => await _productBusiness.FindById(guidValue);
 
         /// <summary>
         /// Saves a product record
