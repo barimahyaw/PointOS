@@ -221,28 +221,33 @@ namespace PointOS.Common.Helpers
             }
         }
 
+        /// <summary>
+        /// A generic wrapper class for blazor client project REST API calls 
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="authToken"></param>
+        /// <param name="requestBodyObject"></param>
+        /// <param name="param"></param>
+        /// <param name="method"></param>
+        /// <returns></returns>
         private static async Task<object> BlazorClientHandler(string url, string authToken, object requestBodyObject, string param, Verb method)
         {
             if (!string.IsNullOrWhiteSpace(param)) url += param;
+
             var client = new HttpClient();
             client.DefaultRequestHeaders.Authorization = AuthenticationHeaderValue.Parse(authToken);
 
-            var response = "";
+            var content = new StringContent(string.Empty);
+            if (requestBodyObject != null) content = new StringContent(requestBodyObject.ToString());
 
-            switch (method)
+            var response = method switch
             {
-                case Verb.Get:
-                    response = await client.GetStringAsync(url);
-                    break;
-                case Verb.Post:
-                    break;
-                case Verb.Put:
-                    break;
-                case Verb.Delete:
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(method), method, null);
-            }
+                Verb.Get => (object) await client.GetStringAsync(url),
+                Verb.Post => await client.PostAsync(url, content),
+                Verb.Put => await client.PutAsync(url, content),
+                Verb.Delete => await client.DeleteAsync(url),
+                _ => throw new ArgumentOutOfRangeException(nameof(method), method, null)
+            };
 
             return response;
         }
