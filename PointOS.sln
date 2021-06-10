@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30320.27
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PointOS.Common", "PointOS.Common\PointOS.Common.csproj", "{C4FEFB86-B9A9-4769-883F-5CD151ED10FD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PointOS.Common", "PointOS.Common\PointOS.Common.csproj", "{C4FEFB86-B9A9-4769-883F-5CD151ED10FD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PointOS.BusinessLogic", "PointOS.BusinessLogic\PointOS.BusinessLogic.csproj", "{73EA926F-9B93-4146-8375-40B159D97896}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PointOS.BusinessLogic", "PointOS.BusinessLogic\PointOS.BusinessLogic.csproj", "{73EA926F-9B93-4146-8375-40B159D97896}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PointOS.DataAccess", "PointOS.DataAccess\PointOS.DataAccess.csproj", "{BA452F10-502A-4F83-B697-620FCDFB017A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PointOS.DataAccess", "PointOS.DataAccess\PointOS.DataAccess.csproj", "{BA452F10-502A-4F83-B697-620FCDFB017A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PointOS.Api", "PointOS.Api\PointOS.Api.csproj", "{D570824E-65F3-4150-9B31-5A96EF3A973F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PointOS.Api", "PointOS.Api\PointOS.Api.csproj", "{D570824E-65F3-4150-9B31-5A96EF3A973F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PointOS", "PointOS\PointOS.csproj", "{04983291-5179-47F1-945F-3E4FF54DAA87}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{D570824E-65F3-4150-9B31-5A96EF3A973F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D570824E-65F3-4150-9B31-5A96EF3A973F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D570824E-65F3-4150-9B31-5A96EF3A973F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04983291-5179-47F1-945F-3E4FF54DAA87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04983291-5179-47F1-945F-3E4FF54DAA87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04983291-5179-47F1-945F-3E4FF54DAA87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04983291-5179-47F1-945F-3E4FF54DAA87}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
