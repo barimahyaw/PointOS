@@ -1,0 +1,37 @@
+﻿@page "/authentication/register"
+@layout LoginLayout
+
+
+@inherits AuthenticationBase
+
+<EditForm Model="@UserRegistrationRequest" OnValidSubmit="@Register">
+    <DataAnnotationsValidator></DataAnnotationsValidator>
+    <MudText Typo="Typo.h4" GutterBottom="true">Sign Up</MudText>
+    <MudText>Already have an account? <MudLink Href="/authentication/login">Sign In</MudLink></MudText>
+
+    @if (!string.IsNullOrWhiteSpace(ErrorMessage))
+    {
+<MudAlert Severity="Severity.Error" Class="mt-8 mud-width-full" Style="max-width: 500px;" Elevation="25">
+    @ErrorMessage
+</MudAlert>}
+
+    <MudTextField T="string" Label="Work Email" Variant="Variant.Outlined" Class="my-4" @bind-Value="@UserRegistrationRequest.EmailAddress" For="@(()=>UserRegistrationRequest.EmailAddress)"></MudTextField>
+
+    <MudTextField T="string" Label="First Name" Variant="Variant.Outlined" @bind-Value="@UserRegistrationRequest.FirstName" For="@(()=>UserRegistrationRequest.FirstName)"></MudTextField>
+    <MudTextField T="string" Label="Middle Name" Variant="Variant.Outlined" @bind-Value="@UserRegistrationRequest.MiddleName"></MudTextField>
+    <MudTextField T="string" Label="Surname" Variant="Variant.Outlined" @bind-Value="@UserRegistrationRequest.Surname" For="@(()=>UserRegistrationRequest.Surname)"></MudTextField>
+    <MudTextField T="string" Label="Phone Number" Variant="Variant.Outlined" @bind-Value="@UserRegistrationRequest.PhoneNumber" For="@(()=>UserRegistrationRequest.PhoneNumber)"></MudTextField>
+
+    <MudTextField @bind-Value="@UserRegistrationRequest.Password" Label="Password" Variant="Variant.Outlined" InputType="@PasswordInput" Adornment="Adornment.End"
+                  AdornmentIcon="@PasswordInputIcon" OnAdornmentClick="@TogglePasswordVisibility" Class="mt-4" For="@(()=>UserRegistrationRequest.Password)" />
+
+    <MudTextField @bind-Value="@UserRegistrationRequest.ConfirmPassword" Label="Confirm Password" Variant="Variant.Outlined" InputType="@PasswordInput" Adornment="Adornment.End" AdornmentIcon="@PasswordInputIcon" OnAdornmentClick="@TogglePasswordVisibility" Class="mt-4" For="@(()=>UserRegistrationRequest.ConfirmPassword)" />
+
+    <MudCheckBox @bind-Checked="@AgreeToTerms" Label="I agree to the terms and privacy" Color="Color.Primary" Class="ml-n1 my-3"></MudCheckBox>
+
+    @{ var submitBtnTxt = string.IsNullOrWhiteSpace(ButtonSubmitText) ? "Register" : ButtonSubmitText; }
+
+    <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Disabled="@(!AgreeToTerms)" Size="Size.Large" FullWidth="true">@submitBtnTxt</MudButton>
+</EditForm>
+
+@code { public bool AgreeToTerms { get; set; } }

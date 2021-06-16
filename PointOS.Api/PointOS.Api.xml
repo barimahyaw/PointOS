@@ -4,6 +4,31 @@
         <name>PointOS.Api</name>
     </assembly>
     <members>
+        <member name="T:PointOS.Api.Controllers.v1.AccountController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:PointOS.Api.Controllers.v1.AccountController.#ctor(PointOS.BusinessLogic.Interfaces.IUserAccountBusiness)">
+            <summary>
+            
+            </summary>
+            <param name="userAccountBusiness"></param>
+        </member>
+        <member name="M:PointOS.Api.Controllers.v1.AccountController.Authenticate(PointOS.Common.DTO.Request.AuthenticationRequest)">
+            <summary>
+            User Account Authentication
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PointOS.Api.Controllers.v1.AccountController.Register(PointOS.Common.DTO.Request.UserRegistrationRequest)">
+            <summary>
+            User Account Authentication
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
         <member name="T:PointOS.Api.Controllers.v1.BranchController">
             <summary>
             

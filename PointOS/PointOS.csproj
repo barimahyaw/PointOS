@@ -1,0 +1,48 @@
+<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <ServiceWorkerAssetsManifest>service-worker-assets.js</ServiceWorkerAssetsManifest>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Pages1\**" />
+    <Compile Remove="Shared1\**" />
+    <Compile Remove="wwwroot1\**" />
+    <Content Remove="Pages1\**" />
+    <Content Remove="Shared1\**" />
+    <Content Remove="wwwroot1\**" />
+    <EmbeddedResource Remove="Pages1\**" />
+    <EmbeddedResource Remove="Shared1\**" />
+    <EmbeddedResource Remove="wwwroot1\**" />
+    <None Remove="Pages1\**" />
+    <None Remove="Shared1\**" />
+    <None Remove="wwwroot1\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="5.0.7" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="5.0.7" PrivateAssets="all" />
+    <PackageReference Include="MudBlazor" Version="5.0.11" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="System.Net.Http.Json" Version="5.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PointOS.Common\PointOS.Common.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Microsoft.AspNetCore.Components">
+      <HintPath>C:\Program Files\dotnet\packs\Microsoft.AspNetCore.App.Ref\3.1.10\ref\netcoreapp3.1\Microsoft.AspNetCore.Components.dll</HintPath>
+    </Reference>
+    <Reference Include="MudBlazor.ThemeManager">
+      <HintPath>C:\Users\Issac Ayeh\.nuget\packages\mudblazor.thememanager\1.0.2\lib\net5.0\MudBlazor.ThemeManager.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ServiceWorker Include="wwwroot\service-worker.js" PublishedContent="wwwroot\service-worker.published.js" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,31 @@
+﻿@page "/"
+@page "/authentication/login"
+@layout LoginLayout
+
+@inherits AuthenticationBase
+
+<EditForm Model="@AuthenticationRequest" OnValidSubmit="@Authenticate">
+    <DataAnnotationsValidator />
+    <MudText Typo="Typo.h4" GutterBottom="true">Sign In</MudText>
+
+    <MudText>Don't have an account? <MudLink Href="/authentication/register">Sign Up</MudLink></MudText>
+    @if (!string.IsNullOrWhiteSpace(ErrorMessage))
+    {
+<MudAlert Severity="Severity.Error" Class="mt-8 mud-width-full" Style="max-width: 500px;" Elevation="25">
+    @ErrorMessage
+</MudAlert>}
+
+    <MudTextField T="string" For="@(() => AuthenticationRequest.UserName)" Label="E-mail" Variant="Variant.Outlined" Class="my-6" @bind-Value="@AuthenticationRequest.UserName"></MudTextField>
+
+    <MudTextField @bind-Value="@AuthenticationRequest.Password" Label="Password" Variant="Variant.Outlined" InputType="@PasswordInput" Adornment="Adornment.End" AdornmentIcon="@PasswordInputIcon" OnAdornmentClick="TogglePasswordVisibility" For="@(()=>AuthenticationRequest.Password)" />
+
+    <div Class="d-flex justify-space-between align-center">
+        <MudCheckBox T="bool" Label="Remember me?" Color="Color.Primary" Class="ml-n1 my-3" @bind-Value="@AuthenticationRequest.RememberMe"></MudCheckBox>
+        <MudLink Href="/authentication/forgot-password">Forgot pwd?</MudLink>
+    </div>
+
+    @{ var submitBtnTxt = string.IsNullOrWhiteSpace(ButtonSubmitText) ? "Sign In" : ButtonSubmitText; }
+
+    <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Large" FullWidth="true">@submitBtnTxt</MudButton>
+
+</EditForm>
