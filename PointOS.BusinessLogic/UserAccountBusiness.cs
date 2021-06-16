@@ -14,6 +14,7 @@ using System.Security.Claims;
 using System.Security.Principal;
 using System.Threading;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace PointOS.BusinessLogic
 {
@@ -56,11 +57,11 @@ namespace PointOS.BusinessLogic
 
             if (result.Succeeded)
             {
-                var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                //var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                 return new ResponseHeader
                 {
                     ReferenceNumber = user.Id,
-                    Message = token,
+                    Message = "Registered Successfully",
                     Success = true,
                     StatusCode = (int)Status.Created
                 };
@@ -176,6 +177,13 @@ namespace PointOS.BusinessLogic
                 //};
 
                 //return new ResponseHeader { Success = true, StatusCode = 200, Data = userSession };
+
+                return new ResponseHeader
+                {
+                    Message = "Successfully Logged in",
+                    StatusCode = 200,
+                    Success = true
+                };
             }
 
             if (result.IsLockedOut) return new ResponseHeader
