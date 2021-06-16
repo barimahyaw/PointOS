@@ -11,6 +11,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using static System.String;
 
 namespace PointOS.Common.Helpers
 {
@@ -34,7 +35,8 @@ namespace PointOS.Common.Helpers
         /// <param name="param"></param>
         /// <param name="method"></param>
         /// <returns></returns>
-        public async Task<object> ApiServiceAsync(BaseUrl baseUrl, string url, string token, object requestBodyObject, string param, Verb method)
+        public async Task<object> ApiServiceAsync(BaseUrl baseUrl, string url, string token, object requestBodyObject,
+            string param, Verb method)
         {
             var apiUrl = baseUrl switch
             {
@@ -44,7 +46,7 @@ namespace PointOS.Common.Helpers
                 _ => BaseAddress
             };
 
-            if (string.IsNullOrWhiteSpace(apiUrl)) apiUrl = BaseAddress;
+            if (IsNullOrWhiteSpace(apiUrl)) apiUrl = BaseAddress;
 
             apiUrl += url;
 
@@ -65,11 +67,12 @@ namespace PointOS.Common.Helpers
         /// <param name="param"></param>
         /// <param name="requestBodyObject"></param>
         /// <returns></returns>
-        private static async Task<object> CallHmacSha256AuthApi(string url, string authToken, string param, object requestBodyObject)
+        private static async Task<object> CallHmacSha256AuthApi(string url, string authToken, string param,
+            object requestBodyObject)
         {
             var text = "";
             // var json = "";
-            if (!string.IsNullOrWhiteSpace(param)) url += param;
+            if (!IsNullOrWhiteSpace(param)) url += param;
 
             // Create a request for the url
             try
@@ -140,11 +143,12 @@ namespace PointOS.Common.Helpers
         /// <param name="method">The method.</param>
         /// <param name="param">The username.</param>
         /// <returns></returns>
-        private static async Task<object> CallBasicAuthApi(string url, string authToken, object requestBodyObject, string param, Verb method)
+        private static async Task<object> CallBasicAuthApi(string url, string authToken, object requestBodyObject,
+            string param, Verb method)
         {
             try
             {
-                if (!string.IsNullOrWhiteSpace(param)) url += param;
+                if (!IsNullOrWhiteSpace(param)) url += param;
 
                 var webReq = (HttpWebRequest)WebRequest.Create(url);
                 webReq.Method = method.ToString();
@@ -163,7 +167,9 @@ namespace PointOS.Common.Helpers
                 }
 
                 using var response = webReq.GetResponse();
-                using var streamReader = new StreamReader(response.GetResponseStream() ?? throw new InvalidOperationException(), Encoding.UTF8);
+                using var streamReader =
+                    new StreamReader(response.GetResponseStream() ?? throw new InvalidOperationException(),
+                        Encoding.UTF8);
 
                 var result = await streamReader.ReadToEndAsync();
 
@@ -185,11 +191,12 @@ namespace PointOS.Common.Helpers
         /// <param name="method">The method.</param>
         /// <param name="param">The username.</param>
         /// <returns></returns>
-        private static async Task<object> CallBearerAuthApi(string url, string authToken, object requestBodyObject, string param, Verb method)
+        private static async Task<object> CallBearerAuthApi(string url, string authToken, object requestBodyObject,
+            string param, Verb method)
         {
             try
             {
-                if (!string.IsNullOrWhiteSpace(param)) url += param;
+                if (!IsNullOrWhiteSpace(param)) url += param;
 
                 var webReq = (HttpWebRequest)WebRequest.Create(url);
                 webReq.Method = method.ToString();
@@ -208,7 +215,9 @@ namespace PointOS.Common.Helpers
                 }
 
                 using var response = webReq.GetResponse();
-                using var streamReader = new StreamReader(response.GetResponseStream() ?? throw new InvalidOperationException(), Encoding.UTF8);
+                using var streamReader =
+                    new StreamReader(response.GetResponseStream() ?? throw new InvalidOperationException(),
+                        Encoding.UTF8);
 
                 var result = await streamReader.ReadToEndAsync();
 
@@ -230,24 +239,37 @@ namespace PointOS.Common.Helpers
         /// <param name="param"></param>
         /// <param name="method"></param>
         /// <returns></returns>
-        private static async Task<object> BlazorClientHandler(string url, string authToken, object requestBodyObject, string param, Verb method)
+        private static async Task<object> BlazorClientHandler(string url, string authToken, object requestBodyObject,
+            string param, Verb method)
         {
-            if (!string.IsNullOrWhiteSpace(param)) url += param;
+            if (!IsNullOrWhiteSpace(param)) url += param;
 
             var client = new HttpClient();
-            client.DefaultRequestHeaders.Authorization = AuthenticationHeaderValue.Parse(authToken);
 
-            var content = new StringContent(string.Empty);
-            if (requestBodyObject != null) content = new StringContent(requestBodyObject.ToString());
+            if (!IsNullOrWhiteSpace(authToken))
+                client.DefaultRequestHeaders.Authorization = AuthenticationHeaderValue.Parse(authToken);
+
+            var content = new StringContent(Empty);
+
+            if (requestBodyObject != null)
+            {
+                var request = JsonConvert.SerializeObject(requestBodyObject);
+                content = new StringContent(request, Encoding.UTF8, "application/json");
+            }
 
             var response = method switch
             {
-                Verb.Get => (object) await client.GetStringAsync(url),
+                Verb.Get => (object)await client.GetStringAsync(url),
                 Verb.Post => await client.PostAsync(url, content),
                 Verb.Put => await client.PutAsync(url, content),
                 Verb.Delete => await client.DeleteAsync(url),
                 _ => throw new ArgumentOutOfRangeException(nameof(method), method, null)
             };
+
+            if (method == Verb.Get) return response;
+
+            var httpResponse = (HttpResponseMessage)response;
+            response = await httpResponse.Content.ReadAsStringAsync();
 
             return response;
         }
