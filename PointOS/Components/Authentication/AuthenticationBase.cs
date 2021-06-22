@@ -22,14 +22,15 @@ namespace PointOS.Components.Authentication
         public AuthenticationRequest AuthenticationRequest { get; set; } = new AuthenticationRequest();
         protected UserRegistrationRequest UserRegistrationRequest { get; set; } = new UserRegistrationRequest();
         protected string ErrorMessage { get; set; }
-        protected string ButtonSubmitText { get; set; } 
-
+        protected string ButtonSubmitText { get; set; }
+        public bool IsOverlayVisible { get; set; }
         /// <summary>
         /// Authentication/Login Button Submit Handler
         /// </summary>
         /// <returns></returns>
         protected async Task Authenticate()
         {
+            IsOverlayVisible = true;
             ButtonSubmitText = "Loading...";
 
             var response = await RestUtility.ApiServiceAsync(BaseUrl.PointOs, "Account/Authenticate", null, AuthenticationRequest,
@@ -48,6 +49,7 @@ namespace PointOS.Components.Authentication
             else
             {
                 ButtonSubmitText = "Sign In";
+                IsOverlayVisible = false;
                 Snackbar.Add(result.Message, Severity.Error, config => config.ShowCloseIcon = true);
             }
         }
@@ -58,6 +60,7 @@ namespace PointOS.Components.Authentication
         /// <returns></returns>
         protected async Task Register()
         {
+            IsOverlayVisible = true;
             ButtonSubmitText = "Submitting...";
 
             var response = await RestUtility.ApiServiceAsync(BaseUrl.PointOs, "Account/Register", null, UserRegistrationRequest,
@@ -71,6 +74,7 @@ namespace PointOS.Components.Authentication
                 NavigationManager.NavigateTo("/");
             else
             {
+                IsOverlayVisible = false;
                 ButtonSubmitText = "Register";
                 Snackbar.Add(result.Message, Severity.Error, config => config.ShowCloseIcon = false);
             }

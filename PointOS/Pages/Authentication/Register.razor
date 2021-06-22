@@ -32,6 +32,13 @@
     @{ var submitBtnTxt = string.IsNullOrWhiteSpace(ButtonSubmitText) ? "Register" : ButtonSubmitText; }
 
     <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Disabled="@(!AgreeToTerms)" Size="Size.Large" FullWidth="true">@submitBtnTxt</MudButton>
+    
+    @if (IsOverlayVisible)
+    {
+        <MudOverlay Visible="true" LightBackground="true" Absolute="true">
+            <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
+        </MudOverlay>
+    }
 </EditForm>
 
 @code { public bool AgreeToTerms { get; set; } }

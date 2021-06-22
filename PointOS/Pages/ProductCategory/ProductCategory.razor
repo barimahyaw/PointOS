@@ -1,0 +1,30 @@
+﻿@page "/ProductCategory"
+@using PointOS.Common.DTO.Response
+@inherits PointOS.Components.ProductCategory.ProductCategoryBase
+
+ 
+
+<MudTable Items="@ProductCategoryResponse" Hover="true" Breakpoint="Breakpoint.Sm" Loading="@true" LoadingProgressColor="Color.Info">
+    <HeaderContent>
+        <MudTh>Nr</MudTh>
+        <MudTh>Sign</MudTh>
+        <MudTh>Name</MudTh>
+        <MudTh>Position</MudTh>
+        <MudTh>Molar mass</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Nr">@context.ProductName</MudTd>
+        <MudTd DataLabel="Sign">@context.CreatedOn</MudTd>
+        <MudTd DataLabel="Name">@context.ProductName</MudTd>
+        <MudTd DataLabel="Position" HideSmall="true">@context.ProductName</MudTd>
+        <MudTd DataLabel="Molar mass">@context.ProductName</MudTd>
+        @if (string.IsNullOrWhiteSpace(context.ProductName))
+        {
+            <MudOverlay Visible="true" LightBackground="true" Absolute="true">
+                <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
+            </MudOverlay>}
+        }
+    </RowTemplate>
+</MudTable>
+
+

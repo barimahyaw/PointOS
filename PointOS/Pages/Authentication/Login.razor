@@ -5,6 +5,7 @@
 @inherits AuthenticationBase
 
 <EditForm Model="@AuthenticationRequest" OnValidSubmit="@Authenticate">
+
     <DataAnnotationsValidator />
     <MudText Typo="Typo.h4" GutterBottom="true">Sign In</MudText>
 
@@ -27,5 +28,11 @@
     @{ var submitBtnTxt = string.IsNullOrWhiteSpace(ButtonSubmitText) ? "Sign In" : ButtonSubmitText; }
 
     <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Large" FullWidth="true">@submitBtnTxt</MudButton>
+
+    @if (IsOverlayVisible)
+    {
+<MudOverlay Visible="true" LightBackground="true" Absolute="true">
+    <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
+</MudOverlay>}
 
 </EditForm>
