@@ -17,7 +17,7 @@ namespace PointOS.Common.Helpers
 {
     public class RestUtility : IRestUtility
     {
-        private const string BaseAddress = "https://localhost:44302/api/v1/";
+        private const string BaseAddress = "https://localhost:44338/api/v1/";
         private readonly ApiBaseUrlSettings _apiBaseUrlSettings;
 
         public RestUtility(IOptions<ApiBaseUrlSettings> apiBaseUrlSettings)
@@ -38,6 +38,7 @@ namespace PointOS.Common.Helpers
         public async Task<object> ApiServiceAsync(BaseUrl baseUrl, string url, string token, object requestBodyObject,
             string param, Verb method)
         {
+           var checkUrl = _apiBaseUrlSettings.PointOsUrl;
             var apiUrl = baseUrl switch
             {
                 BaseUrl.PointOs => _apiBaseUrlSettings.PointOsUrl,
@@ -242,36 +243,54 @@ namespace PointOS.Common.Helpers
         private static async Task<object> BlazorClientHandler(string url, string authToken, object requestBodyObject,
             string param, Verb method)
         {
-            if (!IsNullOrWhiteSpace(param)) url += param;
-
-            var client = new HttpClient();
-
-            if (!IsNullOrWhiteSpace(authToken))
-                client.DefaultRequestHeaders.Authorization = AuthenticationHeaderValue.Parse(authToken);
-
-            var content = new StringContent(Empty);
-
-            if (requestBodyObject != null)
+            try
             {
-                var request = JsonConvert.SerializeObject(requestBodyObject);
-                content = new StringContent(request, Encoding.UTF8, "application/json");
+                if (!IsNullOrWhiteSpace(param)) url += param;
+
+                var client = new HttpClient();
+
+                if (!IsNullOrWhiteSpace(authToken))
+                    client.DefaultRequestHeaders.Authorization = AuthenticationHeaderValue.Parse(authToken);
+
+                var content = new StringContent(Empty);
+
+                if (requestBodyObject != null)
+                {
+                    var request = JsonConvert.SerializeObject(requestBodyObject);
+                    content = new StringContent(request, Encoding.UTF8, "application/json");
+                }
+
+                object response;
+                switch (method)
+                {
+                    case Verb.Get:
+                        response = await client.GetAsync(url);
+                        break;
+                    case Verb.Post:
+                        response = await client.PostAsync(url, content);
+                        break;
+                    case Verb.Put:
+                        response = await client.PutAsync(url, content);
+                        break;
+                    case Verb.Delete:
+                        response = await client.DeleteAsync(url);
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(method), method, null);
+                }
+
+                //if (method == Verb.Get) return response;
+
+                var httpResponse = (HttpResponseMessage)response;
+                response = await httpResponse.Content.ReadAsStringAsync();
+
+                return response;
             }
-
-            var response = method switch
+            catch (Exception e)
             {
-                Verb.Get => (object)await client.GetStringAsync(url),
-                Verb.Post => await client.PostAsync(url, content),
-                Verb.Put => await client.PutAsync(url, content),
-                Verb.Delete => await client.DeleteAsync(url),
-                _ => throw new ArgumentOutOfRangeException(nameof(method), method, null)
-            };
-
-            if (method == Verb.Get) return response;
-
-            var httpResponse = (HttpResponseMessage)response;
-            response = await httpResponse.Content.ReadAsStringAsync();
-
-            return response;
+                Console.WriteLine(e);
+                throw;
+            }
         }
     }
 }

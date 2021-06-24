@@ -9,11 +9,13 @@
             
             </summary>
         </member>
-        <member name="M:PointOS.Api.Controllers.v1.AccountController.#ctor(PointOS.BusinessLogic.Interfaces.IUserAccountBusiness)">
+        <member name="M:PointOS.Api.Controllers.v1.AccountController.#ctor(PointOS.BusinessLogic.Interfaces.IUserAccountBusiness,Microsoft.AspNetCore.Http.IHttpContextAccessor,PointOS.Common.Helpers.IHelpers.IUtils)">
             <summary>
             
             </summary>
             <param name="userAccountBusiness"></param>
+            <param name="httpContextAccessor"></param>
+            <param name="utils"></param>
         </member>
         <member name="M:PointOS.Api.Controllers.v1.AccountController.Authenticate(PointOS.Common.DTO.Request.AuthenticationRequest)">
             <summary>
@@ -22,11 +24,24 @@
             <param name="request"></param>
             <returns></returns>
         </member>
+        <member name="M:PointOS.Api.Controllers.v1.AccountController.SignOut">
+            <summary>
+            User Account Sign Out
+            </summary>
+        </member>
         <member name="M:PointOS.Api.Controllers.v1.AccountController.Register(PointOS.Common.DTO.Request.UserRegistrationRequest)">
             <summary>
             User Account Authentication
             </summary>
             <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PointOS.Api.Controllers.v1.AccountController.ConfirmAccount(System.String,System.String)">
+            <summary>
+            Confirm User Account Email
+            </summary>
+            <param name="userId"></param>
+            <param name="token"></param>
             <returns></returns>
         </member>
         <member name="T:PointOS.Api.Controllers.v1.BranchController">
@@ -198,23 +213,6 @@
             <param name="transactionId"></param>
             <returns></returns>
         </member>
-        <member name="T:PointOS.Api.Controllers.WeatherForecastController">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="M:PointOS.Api.Controllers.WeatherForecastController.#ctor(Microsoft.Extensions.Logging.ILogger{PointOS.Api.Controllers.WeatherForecastController})">
-            <summary>
-            
-            </summary>
-            <param name="logger"></param>
-        </member>
-        <member name="M:PointOS.Api.Controllers.WeatherForecastController.Get">
-            <summary>
-            
-            </summary>
-            <returns></returns>
-        </member>
         <member name="T:PointOS.Api.Program">
             <summary>
             
@@ -261,31 +259,6 @@
             </summary>
             <param name="app"></param>
             <param name="env"></param>
-        </member>
-        <member name="T:PointOS.Api.WeatherForecast">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:PointOS.Api.WeatherForecast.Date">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:PointOS.Api.WeatherForecast.TemperatureC">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:PointOS.Api.WeatherForecast.TemperatureF">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:PointOS.Api.WeatherForecast.Summary">
-            <summary>
-            
-            </summary>
         </member>
     </members>
 </doc>

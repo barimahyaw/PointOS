@@ -21,6 +21,7 @@ namespace PointOS.Common.Helpers
             _staticFilesPath = staticFilesPath.Value;
             _connectionStrings = connectionStrings.Value;
         }
+
         /// <summary>
         /// Get Connection String From appSettings
         /// </summary>

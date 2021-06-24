@@ -27,5 +27,6 @@ namespace PointOS.DataAccess.Entities
         public DateTime CreatedOn { get; set; }
         public ICollection<ProductCategory> ProductCategories { get; set; }
         public ICollection<Branch> Branches { get; set; }
+        public string LogoPath { get; set; }
     }
 }

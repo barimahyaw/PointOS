@@ -15,6 +15,7 @@ namespace PointOS.DataAccess
         public IBranchRepository BranchRepository { get; }
         public ISalesRepository SalesRepository { get; }
         public ITransactionRepository TransactionRepository { get; }
+        public IDashboardRepository DashboardRepository { get; }
         #endregion
 
         private readonly AppDbContext _dbContext;
@@ -33,6 +34,7 @@ namespace PointOS.DataAccess
             BranchRepository = new BranchRepository(_dbContext);
             SalesRepository = new SalesRepository(_dbContext);
             TransactionRepository = new TransactionRepository(_dbContext);
+            DashboardRepository = new DashboardRepository(_dbContext);
         }
 
         /// <summary>

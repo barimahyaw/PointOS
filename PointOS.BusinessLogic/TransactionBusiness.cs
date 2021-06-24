@@ -86,7 +86,7 @@ namespace PointOS.BusinessLogic
 
             var trans = new Transactions
             {
-                Guid = Guid.NewGuid(),
+                //GuidId = Guid.NewGuid(),
                 TransactionType = TransactionType.Sales.GetAttributeStringValue(),
                 TransactionId = transactionId,
                 Amount = requests.Sum(x => x.Amount),

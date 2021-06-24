@@ -1,7 +1,10 @@
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -9,6 +12,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using PointOS.BusinessLogic;
 using PointOS.BusinessLogic.Interfaces;
+using PointOS.BusinessLogic.Security;
 using PointOS.BusinessLogic.Validators;
 using PointOS.BusinessLogic.Validators.IValidators;
 using PointOS.Common.Helpers;
@@ -47,7 +51,14 @@ namespace PointOS.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers(o =>
+            {
+                var policy = new AuthorizationPolicyBuilder()
+                    .RequireAuthenticatedUser()
+                    .Build();
+
+                o.Filters.Add(new AuthorizeFilter(policy));
+            });
 
             services.AddCors(options =>
             {
@@ -66,12 +77,24 @@ namespace PointOS.Api
 
             });
 
+            //services.Configure<CookiePolicyOptions>(options =>
+            //{
+            //    // This lambda determines whether user consent for non-essential cookies is needed for a given request.
+            //    options.CheckConsentNeeded = context => true;
+            //    options.MinimumSameSitePolicy = SameSiteMode.None;
+            //});
+
             services.AddApiVersioning(x =>
             {
                 x.DefaultApiVersion = new ApiVersion(1, 0);
                 x.AssumeDefaultVersionWhenUnspecified = true;
                 x.ReportApiVersions = true;
             });
+
+            //general configuration for token expiry time span
+            //services.Configure<DataProtectionTokenProviderOptions>(options =>
+            //    options.TokenLifespan = TimeSpan.FromHours(24));
+
             //Swagger documentation
             services.AddSwaggerGen(setupAction =>
             {
@@ -100,13 +123,26 @@ namespace PointOS.Api
                 setupAction.IncludeXmlComments(xmlCommentsFullPath);
             });
 
+
             var appConnectionString = Configuration.GetSection("ConnectionStrings");
             services.Configure<ConnectionStrings>(appConnectionString);
 
             services.AddDbContextPool<AppDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("AppConnectionString")));
 
-            services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>();
+            services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+            {
+                options.Password.RequiredLength = 10;
+                options.Password.RequiredUniqueChars = 3;
+                options.User.RequireUniqueEmail = true;
+                options.SignIn.RequireConfirmedEmail = true;
+                options.SignIn.RequireConfirmedAccount = true;
+            }).AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
+
+            //general configuration for token expiry time span
+            services.Configure<DataProtectionTokenProviderOptions>(options =>
+                options.TokenLifespan = TimeSpan.FromHours(48));
+
 
             var emailSettings = Configuration.GetSection("EmailSettings");
             services.Configure<EmailSettings>(emailSettings);
@@ -134,6 +170,39 @@ namespace PointOS.Api
             services.AddScoped<IProductValidator, ProductValidator>();
 
             services.AddScoped<IUtils, Utils>();
+
+
+            #region Custom Bearer or Basic Authenticaation with a JWT Token provider
+            services.AddAuthentication("CustomAuthentication")
+                .AddScheme<AuthenticationSchemeOptions, CustomAuthenticationHandler>("CustomAuthentication", options => { })
+                .AddCookie();
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("CustomAuthentication", new AuthorizationPolicyBuilder("CustomAuthentication")
+                    .RequireAuthenticatedUser().Build());
+            });
+            #endregion
+
+            #region JWT Bearer Token Authentication Config
+            //services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            //    .AddJwtBearer(options =>
+            //    {
+            //        options.TokenValidationParameters = new TokenValidationParameters
+            //        {
+            //            ClockSkew = TimeSpan.FromMinutes(5),
+            //            ValidateIssuer = true,
+            //            ValidateAudience = true,
+            //            ValidateLifetime = true,
+            //            ValidateIssuerSigningKey = true,
+            //            ValidIssuer = Configuration["JwtIssuer"],
+            //            ValidAudience = Configuration["JwtAudience"],
+            //            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JwtSecurityKey"]))
+            //        };
+            //    });
+            #endregion
+
+            //services.AddAuthorization();
         }
 
         /// <summary>
@@ -148,15 +217,6 @@ namespace PointOS.Api
             {
                 app.UseDeveloperExceptionPage();
             }
-
-            app.UseHttpsRedirection();
-
-            app.UseRouting();
-
-            app.UseAuthorization();
-
-            app.UseCors("CorsPolicy");
-
             //Swagger
             app.UseSwagger();
             app.UseSwaggerUI(setupAction =>
@@ -170,6 +230,15 @@ namespace PointOS.Api
                 setupAction.EnableDeepLinking();
                 setupAction.DisplayOperationId();
             });
+
+            //app.UseHttpsRedirection();
+
+            app.UseRouting();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
+
+            app.UseCors("CorsPolicy");
 
             app.UseEndpoints(endpoints =>
             {

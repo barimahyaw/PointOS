@@ -14,5 +14,7 @@ namespace PointOS.Common.DTO.Request
 
         [Display(Name = "Remember Me")]
         public bool RememberMe { get; set; }
+
+        public string Id { get; set; }
     }
 }

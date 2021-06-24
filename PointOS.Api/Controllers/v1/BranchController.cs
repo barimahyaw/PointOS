@@ -4,6 +4,7 @@ using PointOS.Common.DTO.Request;
 using PointOS.Common.DTO.Response;
 using PointOS.Common.Enums;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PointOS.Api.Controllers.v1
 {
@@ -13,6 +14,7 @@ namespace PointOS.Api.Controllers.v1
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
+    [Authorize]
     public class BranchController : ControllerBase
     {
         private readonly IBranchBusiness _businessBusiness;

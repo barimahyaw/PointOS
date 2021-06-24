@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
-using eViSeM.Common.DTO.Response;
+﻿using eViSeM.Common.DTO.Response;
 using PointOS.Common.DTO.Request;
 using PointOS.Common.DTO.Response;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace PointOS.BusinessLogic.Interfaces
 {
@@ -43,8 +43,9 @@ namespace PointOS.BusinessLogic.Interfaces
         /// User Account Authentication
         /// </summary>
         /// <param name="request"></param>
+        /// <param name="isLogin"></param>
         /// <returns></returns>
-        Task<ResponseHeader> AuthenticationAsync(AuthenticationRequest request);
+        Task<ResponseHeader> AuthenticationAsync(AuthenticationRequest request, bool isLogin = false);
 
         /// <summary>
         /// User Account Sign Out

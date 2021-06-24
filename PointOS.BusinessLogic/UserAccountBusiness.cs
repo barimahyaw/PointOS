@@ -3,18 +3,21 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using PointOS.BusinessLogic.Interfaces;
+using PointOS.BusinessLogic.Security;
 using PointOS.Common.DTO.Request;
 using PointOS.Common.DTO.Response;
+using PointOS.Common.DTO.Sessions;
 using PointOS.Common.Enums;
 using PointOS.Common.Extensions;
+using PointOS.DataAccess;
 using PointOS.DataAccess.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Security.Principal;
 using System.Threading;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 
 namespace PointOS.BusinessLogic
 {
@@ -23,15 +26,17 @@ namespace PointOS.BusinessLogic
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly IUnitOfWork _unitOfWork;
 
 
         public UserAccountBusiness(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager,
-            RoleManager<IdentityRole> roleManager, IOptions<IdentityOptions> optionsAccessor)
+            RoleManager<IdentityRole> roleManager, IOptions<IdentityOptions> optionsAccessor, IUnitOfWork unitOfWork)
         : base(userManager, roleManager, optionsAccessor)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
+            _unitOfWork = unitOfWork;
         }
 
         /// <summary>
@@ -50,18 +55,19 @@ namespace PointOS.BusinessLogic
                 LastName = request.Surname,
                 Gender = (int)request.Gender,
                 PhoneNumber = request.PhoneNumber,
-                IsActive = true
+                IsActive = true,
+                CreatedOn = DateTime.UtcNow
             };
 
             var result = await _userManager.CreateAsync(user, request.Password);
 
             if (result.Succeeded)
             {
-                //var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                 return new ResponseHeader
                 {
                     ReferenceNumber = user.Id,
-                    Message = "Registered Successfully",
+                    Message = /*"Registered Successfully"*/ token,
                     Success = true,
                     StatusCode = (int)Status.Created
                 };
@@ -151,40 +157,21 @@ namespace PointOS.BusinessLogic
         /// User Account Authentication
         /// </summary>
         /// <param name="request"></param>
+        /// <param name="isLogin"></param>
         /// <returns></returns>
-        public async Task<ResponseHeader> AuthenticationAsync(AuthenticationRequest request)
+        public async Task<ResponseHeader> AuthenticationAsync(AuthenticationRequest request, bool isLogin = false)
         {
             var result = await _signInManager.PasswordSignInAsync(request.UserName, request.Password,
                 request.RememberMe, true);
 
-            if (result.Succeeded)
+            if (result.Succeeded) return new ResponseHeader
             {
-                //// check whether a company exist for the user
-                //var sessionData = await _unitOfWork.DashboardRepository.WelcomeDataAsync(request.UserName);
-
-                //if (sessionData == null) return new ResponseHeader {StatusCode = 700};
-
-                //var userSession = new UserSession
-                //{
-                //    CompanyId = sessionData.CompanyId,
-                //    Company = sessionData.CompanyName,
-                //    EmployeeId = sessionData.EmployeeId,
-                //    BranchId = sessionData.BranchId,
-                //    Branch = sessionData.BranchName,
-                //    FullName = sessionData.FullName,
-                //    PhotoPath = sessionData.PhotoPath,
-                //    LogoPath = sessionData.LogoPath
-                //};
-
-                //return new ResponseHeader { Success = true, StatusCode = 200, Data = userSession };
-
-                return new ResponseHeader
-                {
-                    Message = "Successfully Logged in",
-                    StatusCode = 200,
-                    Success = true
-                };
-            }
+                Message = "Successfully Logged in",
+                StatusCode = 200,
+                Success = true,
+                //ReferenceNumber = isLogin ? TokenHandler.GenerateAuthorizationToken(request) : string.Empty
+                Data = isLogin ? await SessionData(request) : new UserSession()
+            };
 
             if (result.IsLockedOut) return new ResponseHeader
             {
@@ -201,8 +188,34 @@ namespace PointOS.BusinessLogic
             return new ResponseHeader { StatusCode = 902, Message = "Invalid Login Attempt!!!" };
         }
 
+        private async Task<UserSession> SessionData(AuthenticationRequest request)
+        {
+            // check whether a company exist for the user
+            //var sessionData = await _unitOfWork.DashboardRepository.WelcomeDataAsync(request.UserName, true);
+            var user = await _userManager.FindByNameAsync(request.UserName);
+            request.Id = user.Id;
+            var roles = await GetUserRoles(request.Id, CancellationToken.None);
+
+            var token = TokenHandler.GenerateAuthToken(request, roles);
+
+            var userSession = new UserSession
+            {
+                //CompanyId = sessionData.CompanyId,
+                //Company = sessionData.CompanyName,
+                //EmployeeId = sessionData.EmployeeId,
+                //BranchId = sessionData.BranchId,
+                //Branch = sessionData.BranchName,
+                FullName = /*sessionData.FullName*/ $"{user.FirstName} {user.MiddleName} {user.LastName}",
+                //PhotoPath = sessionData.PhotoPath,
+                //LogoPath = sessionData.LogoPath,
+                Token = TokenHandler.GenerateAuthorizationToken(request)
+            };
+
+            return userSession;
+        }
+
         /// <summary>
-        /// User Account Sign Out
+        /// Signs the current user out of the application.
         /// </summary>
         /// <returns></returns>
         public async Task SignOutAsync() => await _signInManager.SignOutAsync();
@@ -274,6 +287,7 @@ namespace PointOS.BusinessLogic
 
             var userResponse = new UserResponse
             {
+                Id = entity.Id,
                 FirstName = entity.FirstName,
                 MiddleName = entity.MiddleName,
                 Surname = entity.LastName,

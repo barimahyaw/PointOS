@@ -10,5 +10,6 @@
         public string FullName { get; set; }
         public string PhotoPath { get; set; }
         public string LogoPath { get; set; }
+        public dynamic Token { get; set; }
     }
 }

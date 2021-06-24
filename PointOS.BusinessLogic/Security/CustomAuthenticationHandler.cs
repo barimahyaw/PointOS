@@ -21,6 +21,7 @@ namespace PointOS.BusinessLogic.Security
             _userAccountBusiness = userAccountBusiness;
         }
 
+
         protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
         {
             if (!Request.Headers.ContainsKey("Authorization"))
@@ -35,6 +36,7 @@ namespace PointOS.BusinessLogic.Security
                 var handler = new JwtSecurityTokenHandler();
                 var token = handler.ReadJwtToken(jwt);
 
+
                 #region Basic Authentication Logics
                 //var authenticationHeaderValue = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]);
 
@@ -46,8 +48,8 @@ namespace PointOS.BusinessLogic.Security
 
                 var credentials = token.Claims.ToArray();
 
-                var userName = credentials[0].ToString();
-                var password = credentials[1].ToString();
+                var userName = credentials[0].ToString().Split(":")[1].Trim();
+                var password = credentials[1].ToString().Split(":")[1].Trim();
 
                 var authenticationRequest = new AuthenticationRequest
                 {

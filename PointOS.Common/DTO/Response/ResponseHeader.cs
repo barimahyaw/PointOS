@@ -1,4 +1,6 @@
-﻿namespace PointOS.Common.DTO.Response
+﻿using PointOS.Common.DTO.Sessions;
+
+namespace PointOS.Common.DTO.Response
 {
     public class ResponseHeader
     {
@@ -18,5 +20,9 @@
         /// Operation response code
         /// </summary>
         public int StatusCode { get; set; }
+        /// <summary>
+        /// Any Simple/Complex data
+        /// </summary>
+        public UserSession Data { get; set; }
     }
 }
