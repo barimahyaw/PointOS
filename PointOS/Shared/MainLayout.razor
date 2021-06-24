@@ -57,7 +57,11 @@
             </MudToolBar>
         </MudHidden>
         <MudContainer MaxWidth="MaxWidth.False" Class="mt-4">
-            @Body
+            <CascadingAuthenticationState>
+                <AuthorizeView>
+                    @Body
+                </AuthorizeView>
+            </CascadingAuthenticationState>
         </MudContainer>
     </MudMainContent>
 </MudLayout>

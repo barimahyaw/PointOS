@@ -1,9 +1,12 @@
 ﻿@*@page "/overlay"*@
 @inherits OverlayBase
+@*@if (IsOverlayVisible)
+    {
+        <MudOverlay Visible="true" LightBackground="true" Absolute="true">
+            <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
+        </MudOverlay>
 
-@if (IsOverlayVisible)
-{
-    <MudOverlay Visible="true" LightBackground="IsOverlayVisible" Absolute="true">
-        <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
-    </MudOverlay>
-}
+    }*@
+<MudOverlay Visible="true" LightBackground="true" ZIndex="9999" AutoClose="false">
+    <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
+</MudOverlay>

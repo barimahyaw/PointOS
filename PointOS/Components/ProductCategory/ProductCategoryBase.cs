@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using Newtonsoft.Json;
 using PointOS.Common.DTO.Request;
 using PointOS.Common.DTO.Response;
 using PointOS.Common.Enums;
 using PointOS.Common.Helpers.IHelpers;
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using Blazored.LocalStorage;
 
 namespace PointOS.Components.ProductCategory
 {
@@ -23,9 +23,11 @@ namespace PointOS.Components.ProductCategory
 
         [Inject]
         private ISnackbar Snackbar { get; set; }
+        [Inject]
+        protected ILocalStorageService LocalStorage { get; set; }
 
         protected ProductCategoryRequest ProductCategoryRequest { get; set; } = new ProductCategoryRequest();
-        protected IEnumerable<ProductCategoryResponse> ProductCategoryResponse { get; set; } = new List<ProductCategoryResponse>();
+        protected IEnumerable<ProductCategoryResponse> ProductCategoryResponse { get; set; }
 
         /// <summary>
         /// 
@@ -34,14 +36,15 @@ namespace PointOS.Components.ProductCategory
         protected override async Task OnInitializedAsync()
         {
             var param = $"?id={ProductCategoryId}";
-            var response = await RestUtility.ApiServiceAsync(BaseUrl.PointOs, "ProductCategory/get", "", null, param, Verb.Get);
+
+            var token = await LocalStorage.GetItemAsync<string>("authToken");
+
+            var response = await RestUtility.ApiServiceAsync(BaseUrl.PointOs, "ProductCategory/get", token, null, param, Verb.Get);
 
             var result = JsonConvert.DeserializeObject<ListResponse<ProductCategoryResponse>>(response.ToString());
 
             var responseHeader = result.ResponseHeader;
             var responseBody = result.ResponseBodyList;
-
-            await Task.Delay(5000);
 
             if (responseHeader.Success)
             {
@@ -49,7 +52,23 @@ namespace PointOS.Components.ProductCategory
             }
             else
             {
+                await Task.Delay(5000);
                 var products = new List<ProductCategoryResponse>();
+                products.Add(new ProductCategoryResponse
+                {
+                    ProductName = "test is here",
+                    CreatedOn = DateTime.UtcNow
+                });
+                products.Add(new ProductCategoryResponse
+                {
+                    ProductName = "test is here",
+                    CreatedOn = DateTime.UtcNow
+                });
+                products.Add(new ProductCategoryResponse
+                {
+                    ProductName = "test is here",
+                    CreatedOn = DateTime.UtcNow
+                });
                 products.Add(new ProductCategoryResponse
                 {
                     ProductName = "test is here",

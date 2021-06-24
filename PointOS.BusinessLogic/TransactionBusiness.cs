@@ -86,6 +86,7 @@ namespace PointOS.BusinessLogic
 
             var trans = new Transactions
             {
+                Guid = Guid.NewGuid(),
                 TransactionType = TransactionType.Sales.GetAttributeStringValue(),
                 TransactionId = transactionId,
                 Amount = requests.Sum(x => x.Amount),
@@ -111,6 +112,7 @@ namespace PointOS.BusinessLogic
         {
             var trans = requests.Select(t => new Sales
             {
+                GuidId = Guid.NewGuid(),
                 TransactionId = transactionId,
                 Quantity = t.Quantity,
                 ProductPricingId = t.ProductPricingId
