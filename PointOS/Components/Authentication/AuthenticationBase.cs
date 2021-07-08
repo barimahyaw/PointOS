@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Net.Http;
-using System.Security.Claims;
-using Blazored.LocalStorage;
+﻿using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using Newtonsoft.Json;
@@ -9,9 +6,10 @@ using PointOS.Common.DTO.Request;
 using PointOS.Common.DTO.Response;
 using PointOS.Common.Enums;
 using PointOS.Common.Helpers.IHelpers;
+using System;
+using System.Collections.Generic;
+using System.Net.Http;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.AspNetCore.Http;
 
 namespace PointOS.Components.Authentication
 {
@@ -54,24 +52,35 @@ namespace PointOS.Components.Authentication
             var response = await RestUtility.ApiServiceAsync(BaseUrl.PointOs, "Account/Authenticate", null, AuthenticationRequest,
                 null, Verb.Post);
 
-            var result = JsonConvert.DeserializeObject<ResponseHeader>(response.ToString());
-
-            ErrorMessage = result.Message;
-
-            if (result.Success)
+            try
             {
-                await LocalStorage.SetItemAsync("authToken", $"Bearer {result.Data.Token}");
-                ButtonSubmitText = "Sign In";
-                Snackbar.Add(result.Message, Severity.Success, config => config.ShowCloseIcon = true);
-                NavigationManager.NavigateTo("/Personal/Dashboard");
+                var result = JsonConvert.DeserializeObject<ResponseHeader>(response.ToString());
+
+                ErrorMessage = result.Message;
+
+                if (result.Success)
+                {
+                    await LocalStorage.SetItemAsync("authToken", $"Bearer {result.Data.Token}");
+                    ButtonSubmitText = "Sign In";
+                    Snackbar.Add(result.Message, Severity.Success, config => config.ShowCloseIcon = true);
+                    NavigationManager.NavigateTo("/Personal/Dashboard");
+                }
+                else
+                {
+                    //var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+                    //var user = authState.User;
+                    ButtonSubmitText = "Sign In";
+                    IsOverlayVisible = false;
+                    Snackbar.Add(result.Message, Severity.Error, config => config.ShowCloseIcon = true);
+                }
             }
-            else
+            catch
             {
-                //var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-                //var user = authState.User;
-                ButtonSubmitText = "Sign In";
+                Snackbar.Add("Opps!!! Something went wrong", Severity.Error, config => config.ShowCloseIcon = true);
                 IsOverlayVisible = false;
-                Snackbar.Add(result.Message, Severity.Error, config => config.ShowCloseIcon = true);
+                ButtonSubmitText = "Sign In";
+                AuthenticationRequest.UserName = string.Empty;
+                AuthenticationRequest.Password = string.Empty;
             }
         }
 
@@ -92,7 +101,7 @@ namespace PointOS.Components.Authentication
             ErrorMessage = result.Message;
 
             if (result.Success)
-                NavigationManager.NavigateTo("/");
+                NavigationManager.NavigateTo($"/");
             else
             {
                 IsOverlayVisible = false;

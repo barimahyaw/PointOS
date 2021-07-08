@@ -86,7 +86,7 @@ namespace PointOS.BusinessLogic.Security
                 request.UserName
             };
 
-            return output;
+            return output.Access_Token;
         }
     }
 }

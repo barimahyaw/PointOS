@@ -20,7 +20,7 @@ namespace PointOS.Services.Authentication
             var keyValuePairs = JsonSerializer.Deserialize<Dictionary<string, object>>(jsonBytes);
 
             ExtractRolesFromJwt(claims, keyValuePairs);
-            ExtractUserNameFromJwt(jwt, claims);
+            //ExtractUserNameFromJwt(jwt, claims);
 
             claims.AddRange(keyValuePairs.Select(kvp => new Claim(kvp.Key, kvp.Value.ToString())));
 

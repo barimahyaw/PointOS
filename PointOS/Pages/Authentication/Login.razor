@@ -2,8 +2,8 @@
 @page "/authentication/login"
 @page "/Account/Login"
 @layout LoginLayout
-
-@inherits AuthenticationBase
+@*@inherits AuthenticationBase*@
+@inherits PasswordVisibilityBase
 
 <EditForm Model="@AuthenticationRequest" OnValidSubmit="@Authenticate">
 

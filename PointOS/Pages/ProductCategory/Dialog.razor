@@ -1,0 +1,54 @@
+﻿@*<MudDialog>
+        <DialogContent>
+            @Message
+        </DialogContent>
+        <DialogActions>
+            <MudButton OnClick="Cancel">Cancel</MudButton>
+            <MudButton Color="Color.Primary" OnClick="Submit">Yes</MudButton>
+        </DialogActions>
+    </MudDialog>
+    @code {
+        [CascadingParameter]
+        MudDialogInstance MudDialog { get; set; }
+
+        [CascadingParameter]
+        public string Message { get; set; }
+
+        void Submit() => MudDialog.Close(DialogResult.Ok(true));
+        void Cancel() => MudDialog.Cancel();
+    }*@
+
+
+<MudDialog>
+    <DialogContent>
+        <MudText>@ContentText</MudText>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="@Color" Variant="Variant.Filled" OnClick="OnConfirmationChange">@ButtonText</MudButton>
+    </DialogActions>
+</MudDialog>
+@code {
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+
+    [Parameter] public string ContentText { get; set; }
+
+    [Parameter] public string ButtonText { get; set; }
+
+    [Parameter] public Color Color { get; set; }
+
+    [Parameter]
+    public EventCallback<MouseEventArgs> OnClickEventCallback { get; set; }
+
+    [CascadingParameter]
+    public bool Confirmed { get; set; }
+
+    protected async Task OnConfirmationChange(MouseEventArgs e)
+    {
+        await OnClickEventCallback.InvokeAsync(e);
+    }
+
+    void Submit() => MudDialog.Close(DialogResult.Ok(true));
+    void Cancel() => MudDialog.Cancel();
+
+}

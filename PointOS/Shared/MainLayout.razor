@@ -1,4 +1,5 @@
 ﻿@using MudBlazor.ThemeManager
+@using PointOS.Pages.Authentication
 @using PointOS.Theme
 @inherits LayoutComponentBase
 
@@ -59,7 +60,12 @@
         <MudContainer MaxWidth="MaxWidth.False" Class="mt-4">
             <CascadingAuthenticationState>
                 <AuthorizeView>
-                    @Body
+                    <Authorized>
+                        @Body
+                    </Authorized>
+                    <NotAuthorized>
+                        @if (true) { NavigationManager.NavigateTo($"authentication/login?returnUrl={Uri.EscapeDataString(NavigationManager.Uri)}"); }
+                    </NotAuthorized>
                 </AuthorizeView>
             </CascadingAuthenticationState>
         </MudContainer>
@@ -91,8 +97,21 @@
         StateHasChanged();
     }
 
+    //[CascadingParameter] protected Task<AuthenticationState> AuthStat { get; set; }
+
+    [Inject]
+    private NavigationManager NavigationManager { get; set; }
+
     protected override void OnInitialized()
     {
+        //base.OnInitialized();
+        //var user = (await AuthStat).User;
+
+        //if (!user.Identity.IsAuthenticated)
+        //{
+        //    NavigationManager.NavigateTo($"/login?returnUrl={Uri.EscapeDataString(NavigationManager.Uri)}");
+        //}
+
         _themeManager.Theme = new MudBlazorAdminDashboard();
         _themeManager.DrawerClipMode = DrawerClipMode.Always;
         _themeManager.FontFamily = "Montserrat";

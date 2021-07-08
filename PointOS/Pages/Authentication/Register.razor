@@ -1,10 +1,10 @@
 ﻿@page "/authentication/register"
 @layout LoginLayout
+@*@inherits AuthenticationBase*@
 
+@inherits PasswordVisibilityBase
 
-@inherits AuthenticationBase
-
-<EditForm Model="@UserRegistrationRequest" OnValidSubmit="@Register">
+<EditForm Model="@UserRegistrationRequest" OnValidSubmit="@SubmitRegistration">
     <DataAnnotationsValidator></DataAnnotationsValidator>
     <MudText Typo="Typo.h4" GutterBottom="true">Sign Up</MudText>
     <MudText>Already have an account? <MudLink Href="/authentication/login">Sign In</MudLink></MudText>

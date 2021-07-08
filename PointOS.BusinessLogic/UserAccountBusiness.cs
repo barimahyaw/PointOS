@@ -208,7 +208,7 @@ namespace PointOS.BusinessLogic
                 FullName = /*sessionData.FullName*/ $"{user.FirstName} {user.MiddleName} {user.LastName}",
                 //PhotoPath = sessionData.PhotoPath,
                 //LogoPath = sessionData.LogoPath,
-                Token = TokenHandler.GenerateAuthorizationToken(request)
+                Token = /*TokenHandler.GenerateAuthorizationToken(request)*/ token
             };
 
             return userSession;
