@@ -1,6 +1,7 @@
 ﻿using eViSeM.Common.Enums;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
+using PointOS.Common.DTO.Request;
 using PointOS.Common.Helpers.IHelpers;
 using PointOS.Common.Settings;
 using System;
@@ -87,28 +88,27 @@ namespace PointOS.Common.Helpers
         /// <summary>
         /// smtp email sender class
         /// </summary>
-        /// <param name="emailAddress"></param>
-        /// <param name="subject"></param>
-        /// <param name="body"></param>
-        public void EmailSender(string emailAddress, string subject, string body)
+        /// <param name="request"></param>
+        public void EmailSender(EmailRequest request)
         {
+            //var host = _emailSettings.SmtpHostName;
             var client = new SmtpClient
             {
                 //Credentials = new NetworkCredential(_emailSettings.UserName, _emailSettings.Password),
                 Host = _emailSettings.SmtpHostName,
                 Port = _emailSettings.Port,
-                EnableSsl = true
+                //EnableSsl = true
             };
 
             var mailMessage = new MailMessage { From = new MailAddress(_emailSettings.SenderAddress) };
 
-            mailMessage.To.Add(emailAddress);
-            mailMessage.Subject = $"{_emailSettings.SenderName} - {subject}";
+            mailMessage.To.Add(request.EmailAddress);
+            mailMessage.Subject = $"{_emailSettings.SenderName} - {request.Subject}";
             //mailMessage.CC.Add("");
             //mailMessage.Bcc.Add("");
             mailMessage.IsBodyHtml = true;
 
-            mailMessage.Body = body;
+            mailMessage.Body = request.Body;
 
             client.Send(mailMessage);
         }

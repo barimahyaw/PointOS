@@ -1,5 +1,6 @@
 ﻿using eViSeM.Common.Enums;
 using Microsoft.AspNetCore.Http;
+using PointOS.Common.DTO.Request;
 using System.Threading.Tasks;
 
 namespace PointOS.Common.Helpers.IHelpers
@@ -35,9 +36,7 @@ namespace PointOS.Common.Helpers.IHelpers
         /// <summary>
         /// smtp email sender class
         /// </summary>
-        /// <param name="emailAddress"></param>
-        /// <param name="subject"></param>
-        /// <param name="body"></param>
-        void EmailSender(string emailAddress, string subject, string body);
+        /// <param name="request"></param>
+        void EmailSender(EmailRequest request);
     }
 }
