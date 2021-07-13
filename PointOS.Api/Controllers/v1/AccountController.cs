@@ -1,10 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PointOS.BusinessLogic.Interfaces;
 using PointOS.Common.DTO.Request;
 using PointOS.Common.DTO.Response;
-using PointOS.Common.Helpers.IHelpers;
 using System.Threading.Tasks;
 
 namespace PointOS.Api.Controllers.v1
@@ -19,21 +17,13 @@ namespace PointOS.Api.Controllers.v1
     public class AccountController : ControllerBase
     {
         private readonly IUserAccountBusiness _userAccountBusiness;
-        private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly IUtils _utils;
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="userAccountBusiness"></param>
-        /// <param name="httpContextAccessor"></param>
-        /// <param name="utils"></param>
-        public AccountController(IUserAccountBusiness userAccountBusiness, IHttpContextAccessor httpContextAccessor, IUtils utils)
-        {
-            _userAccountBusiness = userAccountBusiness;
-            _httpContextAccessor = httpContextAccessor;
-            _utils = utils;
-        }
+        public AccountController(IUserAccountBusiness userAccountBusiness)
+            => _userAccountBusiness = userAccountBusiness;
 
         /// <summary>
         /// User Account Authentication
@@ -81,8 +71,28 @@ namespace PointOS.Api.Controllers.v1
         /// <param name="token"></param>
         /// <returns></returns>
         [AllowAnonymous]
-        [HttpPost("confirmEmail")]
+        [HttpPost("confirmAccount")]
         public async Task<ResponseHeader> ConfirmAccount(string userId, string token)
             => await _userAccountBusiness.ConfirmEmail(userId, token);
+
+        /// <summary>
+        /// Request forgot password
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [AllowAnonymous]
+        [HttpPost("forgotPassword")]
+        public async Task<ResponseHeader> ForgotPassword(ForgotPasswordRequest request)
+            => await _userAccountBusiness.ForgotPasswordAsync(request);
+
+        /// <summary>
+        /// Reset Account password
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [AllowAnonymous]
+        [HttpPost("resetPassword")]
+        public async Task<ResponseHeader> ResetPassword(ResetPasswordRequest request)
+            => await _userAccountBusiness.ResetPasswordAsync(request);
     }
 }

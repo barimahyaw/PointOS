@@ -44,6 +44,20 @@
             <param name="token"></param>
             <returns></returns>
         </member>
+        <member name="M:PointOS.Api.Controllers.v1.AccountController.ForgotPassword(PointOS.Common.DTO.Request.ForgotPasswordRequest)">
+            <summary>
+            Request forgot password
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PointOS.Api.Controllers.v1.AccountController.ResetPassword(PointOS.Common.DTO.Request.ResetPasswordRequest)">
+            <summary>
+            Reset Account password
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
         <member name="T:PointOS.Api.Controllers.v1.BranchController">
             <summary>
             
@@ -93,6 +107,23 @@
             </summary>
             <param name="request"></param>
             <returns></returns>
+        </member>
+        <member name="T:PointOS.Api.Controllers.v1.NotificationController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:PointOS.Api.Controllers.v1.NotificationController.#ctor(PointOS.Common.Helpers.IHelpers.IUtils)">
+            <summary>
+            
+            </summary>
+            <param name="utils"></param>
+        </member>
+        <member name="M:PointOS.Api.Controllers.v1.NotificationController.SendEmail(PointOS.Common.DTO.Request.EmailRequest)">
+            <summary>
+            smtp email sender end point
+            </summary>
+            <param name="request"></param>
         </member>
         <member name="T:PointOS.Api.Controllers.v1.PricingController">
             <summary>
