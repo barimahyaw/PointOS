@@ -10,6 +10,7 @@ using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using PointOS.Services.Authentication;
+using PointOS.Services.Notifications;
 
 namespace PointOS
 {
@@ -21,6 +22,8 @@ namespace PointOS
             builder.RootComponents.Add<App>("#app");
 
             builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
+            builder.Services.AddScoped<IEmailService, EmailService>();
+
 
             builder.Services.AddBlazoredLocalStorage();
             builder.Services.AddBlazoredSessionStorage();

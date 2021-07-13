@@ -1,5 +1,6 @@
 ﻿using eViSeM.Common.DTO.Response;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using PointOS.BusinessLogic.Interfaces;
@@ -9,13 +10,13 @@ using PointOS.Common.DTO.Response;
 using PointOS.Common.DTO.Sessions;
 using PointOS.Common.Enums;
 using PointOS.Common.Extensions;
-using PointOS.DataAccess;
 using PointOS.DataAccess.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Security.Principal;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -26,17 +27,15 @@ namespace PointOS.BusinessLogic
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly IUnitOfWork _unitOfWork;
 
 
         public UserAccountBusiness(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager,
-            RoleManager<IdentityRole> roleManager, IOptions<IdentityOptions> optionsAccessor, IUnitOfWork unitOfWork)
+            RoleManager<IdentityRole> roleManager, IOptions<IdentityOptions> optionsAccessor)
         : base(userManager, roleManager, optionsAccessor)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
-            _unitOfWork = unitOfWork;
         }
 
         /// <summary>
@@ -67,9 +66,10 @@ namespace PointOS.BusinessLogic
                 return new ResponseHeader
                 {
                     ReferenceNumber = user.Id,
-                    Message = /*"Registered Successfully"*/ token,
+                    Message = "Registered Successfully",
                     Success = true,
-                    StatusCode = (int)Status.Created
+                    StatusCode = (int)Status.Created,
+                    Data = new UserSession { Token = token }
                 };
             }
 
@@ -93,6 +93,18 @@ namespace PointOS.BusinessLogic
 
             if (user == null)
                 return new ResponseHeader { StatusCode = 111, Message = "Invalid account confirmation token" };
+
+            token = token.Replace(" ", "+");
+            //try
+            //{
+            //    token = token.Replace(" ", "+");
+            //    //token = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(token.Trim()));
+            //}
+            //catch (Exception e)
+            //{
+            //    Console.WriteLine(e);
+            //    throw;
+            //}
 
             var result = await _userManager.ConfirmEmailAsync(user, token);
 
@@ -252,7 +264,7 @@ namespace PointOS.BusinessLogic
 
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
 
-            return new ResponseHeader { Success = true, Message = token };
+            return new ResponseHeader { Success = true, Data = new UserSession { Token = token } };
         }
 
         /// <summary>
@@ -267,7 +279,7 @@ namespace PointOS.BusinessLogic
             if (user == null) return new ResponseHeader { StatusCode = 404 };
 
             var result = await _userManager.ResetPasswordAsync(user, request.Token, request.Password);
-            if (result.Succeeded) return new ResponseHeader { Success = true, Message = "" };
+            if (result.Succeeded) return new ResponseHeader { Success = true, Message = "Password reset successfully." };
 
             foreach (var error in result.Errors)
                 return new ResponseHeader { Message = string.Join("|", error.Description) };

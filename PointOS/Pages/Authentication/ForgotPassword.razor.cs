@@ -7,62 +7,62 @@ using System.Threading.Tasks;
 
 namespace PointOS.Pages.Authentication
 {
-    public partial class Register
+    public partial class ForgotPassword
     {
+
         [Inject]
         private IAuthenticationService AuthenticationService { get; set; }
 
         [Inject]
         private NavigationManager NavigationManager { get; set; }
 
-
         [Inject]
         private ISnackbar Snackbar { get; set; }
 
-        public UserRegistrationRequest UserRegistrationRequest { get; set; } = new UserRegistrationRequest();
+        public ForgotPasswordRequest ForgotPasswordRequest { get; set; } = new ForgotPasswordRequest();
 
         protected string ErrorMessage { get; set; }
-        protected string ButtonSubmitText { get; set; }
+        protected string ButtonSubmitText { get; set; } = "Reset Password";
         public bool IsOverlayVisible { get; set; }
 
         [Inject]
         private IEmailService EmailService { get; set; }
 
-        protected async Task SubmitRegistration()
+        protected async Task SubmitRequest()
         {
             IsOverlayVisible = true;
             ButtonSubmitText = "Submitting...";
 
-            var result = await AuthenticationService.Register(UserRegistrationRequest);
+            var result = await AuthenticationService.ForgotPassword(ForgotPasswordRequest);
 
-            ErrorMessage = result.Message;
+            //ErrorMessage = result.Message;
 
             if (result.Success)
             {
-                var confirmLink = NavigationManager.ToAbsoluteUri($"Account/ConfirmAccount?userId={result.ReferenceNumber}&token={result.Data.Token}").ToString();
+                var confirmLink = NavigationManager.ToAbsoluteUri($"Account/ResetPassword?EmailAddress={ForgotPasswordRequest.EmailAddress}&token={result.Data.Token}").ToString();
 
-                confirmLink = $"Kindly click on the link below to activate your account.</br>{confirmLink}";
+                confirmLink = $"Kindly click on the link below to Reset your account password.</br>{confirmLink}";
 
                 var emailRequest = new EmailRequest
                 {
-                    EmailAddress = UserRegistrationRequest.EmailAddress,
-                    Subject = "Account Email Confirmation",
+                    EmailAddress = ForgotPasswordRequest.EmailAddress,
+                    Subject = "Account Password Reset Confirmation",
                     Body = confirmLink
                 };
 
                 await EmailService.SendEmail(emailRequest);
 
-                Snackbar.Add("Account confirmation Link sent to your work email successfully.", Severity.Success, config => config.ShowCloseIcon = false);
+                Snackbar.Add("Password reset Link sent to your work email successfully.", Severity.Success, config => config.ShowCloseIcon = true);
 
                 NavigationManager.NavigateTo("/");
             }
             else
             {
                 IsOverlayVisible = false;
-                ButtonSubmitText = "Register";
+                ButtonSubmitText = "Reset Password";
                 Snackbar.Add(result.Message, Severity.Error, config => config.ShowCloseIcon = false);
+                ForgotPasswordRequest.EmailAddress = string.Empty;
             }
-
         }
     }
 }

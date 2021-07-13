@@ -103,10 +103,50 @@ namespace PointOS.Services.Authentication
         /// User Registration Button Submit Handler
         /// </summary>
         /// <returns></returns>
-        public async Task<ResponseHeader> Register(UserRegistrationRequest request)
+        public async Task<ResponseHeader> Register(UserRegistrationRequest request) 
+            => await CallApiService("Account/Register", null, request, null, Verb.Post);
+
+        /// <summary>
+        /// Confirm User Account work email
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="token"></param>
+        /// <returns></returns>
+        public async Task<ResponseHeader> ConfirmAccount(string userId, string token)
         {
-            var response = await _restUtility.ApiServiceAsync(BaseUrl.PointOs, "Account/Authenticate", null, request,
-                null, Verb.Post);
+            var param = $"?userId={userId}&token={token}";
+
+            return await CallApiService("Account/ConfirmAccount", null, null, param, Verb.Post);
+        }
+
+        /// <summary>
+        /// Request forgot password 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public async Task<ResponseHeader> ForgotPassword(ForgotPasswordRequest request) 
+            => await CallApiService("Account/ForgotPassword", null,request,null,Verb.Post);
+
+        /// <summary>
+        /// Reset Account password
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public async Task<ResponseHeader> ResetPassword(ResetPasswordRequest request)
+            => await CallApiService("Account/ResetPassword", null, request, null, Verb.Post);
+
+        /// <summary>
+        /// Generic method to call api endpoints
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="token"></param>
+        /// <param name="request"></param>
+        /// <param name="param"></param>
+        /// <param name="method"></param>
+        /// <returns></returns>
+        private async Task<ResponseHeader> CallApiService(string url, string token, object request, string param, Verb method)
+        {
+            var response = await _restUtility.ApiServiceAsync(BaseUrl.PointOs, url, token, request, param, method);
 
             if (response == null)
             {

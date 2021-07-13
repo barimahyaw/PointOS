@@ -101,7 +101,7 @@ namespace PointOS.Components.Authentication
             ErrorMessage = result.Message;
 
             if (result.Success)
-                NavigationManager.NavigateTo($"/");
+                NavigationManager.NavigateTo("/");
             else
             {
                 IsOverlayVisible = false;

@@ -9,13 +9,11 @@
             
             </summary>
         </member>
-        <member name="M:PointOS.Api.Controllers.v1.AccountController.#ctor(PointOS.BusinessLogic.Interfaces.IUserAccountBusiness,Microsoft.AspNetCore.Http.IHttpContextAccessor,PointOS.Common.Helpers.IHelpers.IUtils)">
+        <member name="M:PointOS.Api.Controllers.v1.AccountController.#ctor(PointOS.BusinessLogic.Interfaces.IUserAccountBusiness)">
             <summary>
             
             </summary>
             <param name="userAccountBusiness"></param>
-            <param name="httpContextAccessor"></param>
-            <param name="utils"></param>
         </member>
         <member name="M:PointOS.Api.Controllers.v1.AccountController.Authenticate(PointOS.Common.DTO.Request.AuthenticationRequest)">
             <summary>

@@ -50,6 +50,7 @@ namespace PointOS.Api.Controllers.v1
         /// <returns></returns>
         [HttpPost("register")]
         //[ValidateAntiForgeryToken]
+        [AllowAnonymous]
         public async Task<ResponseHeader> Register(UserRegistrationRequest request)
         {
             var response = await _userAccountBusiness.AddUser(request);

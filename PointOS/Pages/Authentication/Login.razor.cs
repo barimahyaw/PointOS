@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.WebUtilities;
 using MudBlazor;
 using PointOS.Common.DTO.Request;
 using PointOS.Services.Authentication;
@@ -31,12 +32,18 @@ namespace PointOS.Pages.Authentication
 
             if (response.Success)
             {
+                var uri = NavigationManager.ToAbsoluteUri(NavigationManager.Uri);
+                if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("ReturnUrl", out var returnUrl))
+                {
+                    var url = NavigationManager.ToBaseRelativePath(returnUrl);
+                    NavigationManager.NavigateTo($"/{url}");
+                }
+
+                if (string.IsNullOrWhiteSpace(returnUrl))
+                    NavigationManager.NavigateTo("/Personal/Dashboard");
+
                 ButtonSubmitText = "Sign In";
                 Snackbar.Add(response.Message, Severity.Success, config => config.ShowCloseIcon = true);
-
-                var url = NavigationManager.ToAbsoluteUri("/Personal/Dashboard");
-
-                NavigationManager.NavigateTo("/Personal/Dashboard");
             }
             else
             {
