@@ -1,6 +1,5 @@
 ﻿using eViSeM.Common.DTO.Response;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using PointOS.BusinessLogic.Interfaces;
@@ -16,9 +15,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Security.Principal;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using PointOS.DataAccess;
 
 namespace PointOS.BusinessLogic
 {
@@ -27,15 +26,16 @@ namespace PointOS.BusinessLogic
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-
+        private readonly IUnitOfWork _unitOfWork;
 
         public UserAccountBusiness(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager,
-            RoleManager<IdentityRole> roleManager, IOptions<IdentityOptions> optionsAccessor)
+            RoleManager<IdentityRole> roleManager, IOptions<IdentityOptions> optionsAccessor, IUnitOfWork unitOfWork)
         : base(userManager, roleManager, optionsAccessor)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
+            _unitOfWork = unitOfWork;
         }
 
         /// <summary>
@@ -203,7 +203,7 @@ namespace PointOS.BusinessLogic
         private async Task<UserSession> SessionData(AuthenticationRequest request)
         {
             // check whether a company exist for the user
-            //var sessionData = await _unitOfWork.DashboardRepository.WelcomeDataAsync(request.UserName, true);
+            var sessionData = await _unitOfWork.DashboardRepository.WelcomeDataAsync(request.UserName, true);
             var user = await _userManager.FindByNameAsync(request.UserName);
             request.Id = user.Id;
             var roles = await GetUserRoles(request.Id, CancellationToken.None);
@@ -212,14 +212,14 @@ namespace PointOS.BusinessLogic
 
             var userSession = new UserSession
             {
-                //CompanyId = sessionData.CompanyId,
-                //Company = sessionData.CompanyName,
-                //EmployeeId = sessionData.EmployeeId,
-                //BranchId = sessionData.BranchId,
-                //Branch = sessionData.BranchName,
+                CompanyId = sessionData.CompanyId,
+                Company = sessionData.CompanyName,
+                EmployeeId = sessionData.EmployeeId,
+                BranchId = sessionData.BranchId,
+                Branch = sessionData.BranchName,
                 FullName = /*sessionData.FullName*/ $"{user.FirstName} {user.MiddleName} {user.LastName}",
-                //PhotoPath = sessionData.PhotoPath,
-                //LogoPath = sessionData.LogoPath,
+                PhotoPath = sessionData.PhotoPath,
+                LogoPath = sessionData.LogoPath,
                 Token = /*TokenHandler.GenerateAuthorizationToken(request)*/ token
             };
 

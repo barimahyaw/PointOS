@@ -1,16 +1,34 @@
-﻿<MudCard Elevation="0" Square="true" Class="@Class" Style="@Style">
+﻿@using Blazored.SessionStorage
+@using PointOS.Common.DTO.Sessions
+
+
+<MudCard Elevation="0" Square="true" Class="@Class" Style="@Style">
     <MudCardHeader>
         <CardHeaderAvatar>
             <MudAvatar Image="images/avatar_jonny.jpg" />
         </CardHeaderAvatar>
         <CardHeaderContent>
-            <MudText Typo="Typo.body2">Jonny Larsson</MudText>
+            <MudText Typo="Typo.body2">@FullName</MudText>
             <MudText Typo="Typo.caption">IT Consultant</MudText>
         </CardHeaderContent>
     </MudCardHeader>
 </MudCard>
 
 @code {
+    [Inject]
+    protected ISessionStorageService SessionStorageService { get; set; }
+
     [Parameter] public string Class { get; set; }
     [Parameter] public string Style { get; set; }
+
+
+    protected string FullName { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var session = await SessionStorageService.GetItemAsync<UserSession>("UserSession");
+
+        FullName = session.FullName;
+    }
+
 }

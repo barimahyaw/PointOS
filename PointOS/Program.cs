@@ -6,11 +6,13 @@ using Microsoft.Extensions.DependencyInjection;
 using MudBlazor.Services;
 using PointOS.Common.Helpers;
 using PointOS.Common.Helpers.IHelpers;
+using PointOS.Services.Authentication;
+using PointOS.Services.Notifications;
+using PointOS.Services.ProductCategory;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
-using PointOS.Services.Authentication;
-using PointOS.Services.Notifications;
+using Microsoft.AspNetCore.Http;
 
 namespace PointOS
 {
@@ -23,7 +25,9 @@ namespace PointOS
 
             builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
             builder.Services.AddScoped<IEmailService, EmailService>();
+            builder.Services.AddScoped<IProductCategoryService, ProductCategoryService>();
 
+            builder.Services.AddBlazoredSessionStorage();
 
             builder.Services.AddBlazoredLocalStorage();
             builder.Services.AddBlazoredSessionStorage();

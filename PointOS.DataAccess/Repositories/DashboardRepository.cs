@@ -52,23 +52,25 @@ namespace PointOS.DataAccess.Repositories
         /// <returns></returns>
         public async Task<WelcomeResponse> WelcomeDataAsync(string userName, bool newUser)
         {
-            var data = await _dbContext.Branches.Where(c => c.CreatedUser.UserName == userName)
-                .Select(x => new WelcomeResponse
-                {
-                    UserId = x.CreatedUserId,
-                    CompanyId = x.Company.Id,
-                    BranchId = x.Id,
-                    //CompanyAbbrev = x.Company.NameAbbrev,
-                    CompanyName = x.Company.Name,
-                    //BranchName = x.BranchName,
-                    FirstName = x.CreatedUser.FirstName,
-                    FullName = $"{x.CreatedUser.FirstName} {x.CreatedUser.MiddleName} {x.CreatedUser.LastName}",
-                    //LogoPath = x.Company.LogoPath,
-                    EmpCount = 0
-                })
-                .FirstOrDefaultAsync();
+            var data = _dbContext.Branches.Where(c => c.CreatedUser.UserName == userName);
 
-            return data;
+            if (data.ToList().Count == 0) return new WelcomeResponse();
+
+            var response = await data.Select(x => new WelcomeResponse
+            {
+                UserId = x.CreatedUserId,
+                CompanyId = x.Company.Id,
+                BranchId = x.Id,
+                //CompanyAbbrev = x.Company.NameAbbrev,
+                CompanyName = x.Company.Name,
+                BranchName = x.Name,
+                FirstName = x.CreatedUser.FirstName,
+                FullName = $"{x.CreatedUser.FirstName} {x.CreatedUser.MiddleName} {x.CreatedUser.LastName}",
+                //LogoPath = x.Company.LogoPath,
+                EmpCount = 0
+            }).FirstOrDefaultAsync();
+
+            return response;
         }
     }
 }

@@ -10,7 +10,7 @@
     <DataAnnotationsValidator />
     <MudText Typo="Typo.h4" GutterBottom="true">Sign In</MudText>
 
-    <MudText>Don't have an account? <MudLink Href="/authentication/register">Sign Up</MudLink></MudText>
+    <MudText>Provide your user's credentials and let's get started. @*<MudLink Href="/authentication/register">Sign Up</MudLink>*@</MudText>
     @if (!string.IsNullOrWhiteSpace(ErrorMessage))
     {
 <MudAlert Severity="Severity.Error" Class="mt-8 mud-width-full" Style="max-width: 500px;" Elevation="25">

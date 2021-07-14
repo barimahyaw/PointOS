@@ -1,4 +1,5 @@
 ﻿using Blazored.LocalStorage;
+using Blazored.SessionStorage;
 using Microsoft.AspNetCore.Components.Authorization;
 using Newtonsoft.Json;
 using PointOS.Common.DTO.Request;
@@ -21,13 +22,15 @@ namespace PointOS.Services.Authentication
         private readonly AuthenticationStateProvider _authStateProvider;
         private readonly ILocalStorageService _localStorage;
         private readonly IRestUtility _restUtility;
+        private readonly ISessionStorageService _sessionStorageService;
 
-        public AuthenticationService(HttpClient httpClient, AuthenticationStateProvider authStateProvider, ILocalStorageService localStorage, IRestUtility restUtility)
+        public AuthenticationService(HttpClient httpClient, AuthenticationStateProvider authStateProvider, ILocalStorageService localStorage, IRestUtility restUtility, ISessionStorageService sessionStorageService)
         {
             _httpClient = httpClient;
             _authStateProvider = authStateProvider;
             _localStorage = localStorage;
             _restUtility = restUtility;
+            _sessionStorageService = sessionStorageService;
         }
 
         /// <summary>
@@ -54,6 +57,8 @@ namespace PointOS.Services.Authentication
 
             await _localStorage.SetItemAsync("authToken", result.Data.Token);
             ((AuthStateProvider)_authStateProvider).NotifyUserAuthentication(result.Data.Token);
+
+            await _sessionStorageService.SetItemAsync("UserSession", result.Data);
 
             return result;
         }
@@ -97,13 +102,15 @@ namespace PointOS.Services.Authentication
             await _localStorage.RemoveItemAsync("authToken");
             ((AuthStateProvider)_authStateProvider).NotifyUserLogout();
             _httpClient.DefaultRequestHeaders.Authorization = null;
+
+            await _sessionStorageService.RemoveItemAsync("UserSession");
         }
 
         /// <summary>
         /// User Registration Button Submit Handler
         /// </summary>
         /// <returns></returns>
-        public async Task<ResponseHeader> Register(UserRegistrationRequest request) 
+        public async Task<ResponseHeader> Register(UserRegistrationRequest request)
             => await CallApiService("Account/Register", null, request, null, Verb.Post);
 
         /// <summary>
@@ -124,8 +131,8 @@ namespace PointOS.Services.Authentication
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public async Task<ResponseHeader> ForgotPassword(ForgotPasswordRequest request) 
-            => await CallApiService("Account/ForgotPassword", null,request,null,Verb.Post);
+        public async Task<ResponseHeader> ForgotPassword(ForgotPasswordRequest request)
+            => await CallApiService("Account/ForgotPassword", null, request, null, Verb.Post);
 
         /// <summary>
         /// Reset Account password

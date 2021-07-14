@@ -3,6 +3,7 @@ using PointOS.BusinessLogic.Interfaces;
 using PointOS.Common.DTO.Request;
 using PointOS.Common.DTO.Response;
 using System;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 
@@ -49,7 +50,7 @@ namespace PointOS.Api.Controllers.v1
         /// <param name="request"></param>
         /// <returns>number of records affected</returns>
         [HttpPost]
-        public async Task<ResponseHeader> Post(ProductCategoryRequest request)
+        public async Task<ResponseHeader> Post(ProductCategoryRequest request) 
             => await _productCategoryBusiness.SaveAsync(request);
     }
 }

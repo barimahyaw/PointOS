@@ -60,6 +60,7 @@ namespace PointOS.BusinessLogic.Security
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, request.UserName),
+                new Claim(ClaimTypes.SerialNumber, request.Password),
                 new Claim(ClaimTypes.NameIdentifier, request.Id),
                 new Claim(JwtRegisteredClaimNames.Nbf, new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds().ToString()),
                 new Claim(JwtRegisteredClaimNames.Exp, new DateTimeOffset(DateTime.UtcNow.AddDays(1)).ToUnixTimeSeconds().ToString())

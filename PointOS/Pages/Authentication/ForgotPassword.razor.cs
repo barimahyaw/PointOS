@@ -46,7 +46,7 @@ namespace PointOS.Pages.Authentication
                 var emailRequest = new EmailRequest
                 {
                     EmailAddress = ForgotPasswordRequest.EmailAddress,
-                    Subject = "Account Password Reset Confirmation",
+                    Subject = "Password Reset Instruction",
                     Body = confirmLink
                 };
 

@@ -24,8 +24,8 @@
         <MudText>@ContentText</MudText>
     </DialogContent>
     <DialogActions>
-        <MudButton OnClick="Cancel">Cancel</MudButton>
-        <MudButton Color="@Color" Variant="Variant.Filled" OnClick="OnConfirmationChange">@ButtonText</MudButton>
+        <MudButton OnClick="@Cancel">Cancel</MudButton>
+        <MudButton Color="@Color" Variant="Variant.Filled" OnClick="@OnConfirmationChange">@ButtonText</MudButton>
     </DialogActions>
 </MudDialog>
 @code {

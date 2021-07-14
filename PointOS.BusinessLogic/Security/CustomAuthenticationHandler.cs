@@ -48,18 +48,24 @@ namespace PointOS.BusinessLogic.Security
 
                 var credentials = token.Claims.ToArray();
 
-                var userName = credentials[0].ToString().Split(":")[1].Trim();
-                var password = credentials[1].ToString().Split(":")[1].Trim();
+                var userName  = credentials[0].ToString().Split(":")[2].Trim();
+                var password = credentials[1].ToString().Split(":")[2].Trim();
+                var serialNumber = credentials[2].ToString().Split(":")[2].Trim();
 
                 var authenticationRequest = new AuthenticationRequest
                 {
                     UserName = userName,
-                    Password = password
+                    Password = password,
+                    Id = serialNumber
                 };
 
                 if ((await _userAccountBusiness.AuthenticationAsync(authenticationRequest)).Success)
                 {
-                    var claims = new[] { new Claim(ClaimTypes.Name, userName) };
+                    var claims = new[]
+                    {
+                        new Claim(ClaimTypes.Name, authenticationRequest.UserName),
+                        new Claim(ClaimTypes.NameIdentifier, authenticationRequest.Id)
+                    };
                     var identity = new ClaimsIdentity(claims, Scheme.Name);
                     var principal = new ClaimsPrincipal(identity);
                     var ticket = new AuthenticationTicket(principal, Scheme.Name);
@@ -69,7 +75,7 @@ namespace PointOS.BusinessLogic.Security
             }
             catch (Exception e)
             {
-                AuthenticateResult.Fail($"An Error Occured. Try again later. {e}");
+                return AuthenticateResult.Fail($"An Error Occured. Try again later. {e}");
             }
             return AuthenticateResult.Fail("Unauthorized Access");
         }
