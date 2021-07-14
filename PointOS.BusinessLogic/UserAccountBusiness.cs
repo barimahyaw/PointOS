@@ -278,6 +278,8 @@ namespace PointOS.BusinessLogic
 
             if (user == null) return new ResponseHeader { StatusCode = 404 };
 
+            request.Token = request.Token.Replace(" ", "+");
+
             var result = await _userManager.ResetPasswordAsync(user, request.Token, request.Password);
             if (result.Succeeded) return new ResponseHeader { Success = true, Message = "Password reset successfully." };
 

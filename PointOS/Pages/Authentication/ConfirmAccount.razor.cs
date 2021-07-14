@@ -26,7 +26,7 @@ namespace PointOS.Pages.Authentication
             QueryHelpers.ParseQuery(uri.Query).TryGetValue("token", out var token);
             QueryHelpers.ParseQuery(uri.Query).TryGetValue("userId", out var userId);
 
-            var response = await AuthenticationService.ConfirmAccount(userId.First(), token.First());
+            var response = await AuthenticationService.ConfirmAccount(userId, token);
             Snackbar.Add(response.Message, response.Success ? Severity.Success : Severity.Error, config => config.ShowCloseIcon = true);
 
             await Task.Delay(3000);

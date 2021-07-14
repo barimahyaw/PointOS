@@ -4,7 +4,7 @@ namespace PointOS.Common.DTO.Request
 {
     public class ResetPasswordRequest
     {
-        [Required]
+        ///[Required]
         [EmailAddress]
         [Display(Name = "Work email")]
         public string EmailAddress { get; set; }
