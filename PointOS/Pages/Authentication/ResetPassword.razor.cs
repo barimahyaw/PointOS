@@ -2,16 +2,16 @@
 using Microsoft.AspNetCore.WebUtilities;
 using MudBlazor;
 using PointOS.Common.DTO.Request;
-using PointOS.Services.Authentication;
+using PointOS.Common.Enums;
+using PointOS.Services;
 using System.Threading.Tasks;
 
 namespace PointOS.Pages.Authentication
 {
     public partial class ResetPassword
     {
-
         [Inject]
-        private IAuthenticationService AuthenticationService { get; set; }
+        private IApiEndpointCallService ApiEndpointCallService { get; set; }
 
         [Inject]
         private NavigationManager NavigationManager { get; set; }
@@ -44,7 +44,7 @@ namespace PointOS.Pages.Authentication
                 Token = token
             };
 
-            var result = await AuthenticationService.ResetPassword(request);
+            var result = await ApiEndpointCallService.CallApiService("Account/ResetPassword", ResetPasswordRequest, null, Verb.Post);
 
             ErrorMessage = result.Message;
 

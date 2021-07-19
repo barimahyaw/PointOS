@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using PointOS.Common.DTO.Request;
-using PointOS.Services.Authentication;
+using PointOS.Common.Enums;
+using PointOS.Services;
 using PointOS.Services.Notifications;
 using System.Threading.Tasks;
 
@@ -9,9 +10,8 @@ namespace PointOS.Pages.Authentication
 {
     public partial class ForgotPassword
     {
-
         [Inject]
-        private IAuthenticationService AuthenticationService { get; set; }
+        private IApiEndpointCallService ApiEndpointCallService { get; set; }
 
         [Inject]
         private NavigationManager NavigationManager { get; set; }
@@ -33,7 +33,7 @@ namespace PointOS.Pages.Authentication
             IsOverlayVisible = true;
             ButtonSubmitText = "Submitting...";
 
-            var result = await AuthenticationService.ForgotPassword(ForgotPasswordRequest);
+            var result = await ApiEndpointCallService.CallApiService("Account/ForgotPassword", ForgotPasswordRequest, null, Verb.Post);
 
             //ErrorMessage = result.Message;
 

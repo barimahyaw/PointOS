@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PointOS.BusinessLogic.Interfaces;
 using PointOS.Common.DTO.Request;
 using PointOS.Common.DTO.Response;
@@ -15,6 +16,7 @@ namespace PointOS.Api.Controllers.v1
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = "CustomAuthentication")]
     public class SalesController : ControllerBase
     {
         private readonly ITransactionBusiness _transactionBusiness;

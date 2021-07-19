@@ -1,0 +1,56 @@
+﻿@page "/company/register"
+@layout LoginLayout
+@*@inherits AuthenticationBase*@
+
+@inherits PointOS.Services.PasswordVisibilityBase
+
+<EditForm Model="@CompanyRegistrationRequest" OnValidSubmit="@SubmitRegistration">
+    <DataAnnotationsValidator></DataAnnotationsValidator>
+    <MudText Typo="Typo.h4" GutterBottom="true">Sign Up</MudText>
+    <MudText>Already have an account? <MudLink Href="/authentication/login">Sign In</MudLink></MudText>
+
+    @if (!string.IsNullOrWhiteSpace(ErrorMessage))
+    {
+<MudAlert Severity="Severity.Error" Class="mt-8 mud-width-full" Style="max-width: 500px;" Elevation="25">
+    @ErrorMessage
+</MudAlert>}
+    @if (IsCompanyVisible)
+    {
+<MudTextField T="string" Label="Company Email" Variant="Variant.Outlined" Class="my-4" @bind-Value="@CompanyRegistrationRequest.CompanyRequest.EmailAddress" For="@(()=>CompanyRegistrationRequest.CompanyRequest.EmailAddress)"></MudTextField>
+
+
+                    <MudTextField T="string" Label="Name of Company" Variant="Variant.Outlined" Class="my-4" @bind-Value="@CompanyRegistrationRequest.CompanyRequest.Name" For="@(()=>CompanyRegistrationRequest.CompanyRequest.Name)"></MudTextField>
+
+                                        <MudTextField T="string" Label="Phone Number" Variant="Variant.Outlined" Class="my-4" @bind-Value="@CompanyRegistrationRequest.CompanyRequest.PhoneNumber" For="@(()=>CompanyRegistrationRequest.CompanyRequest.PhoneNumber)"></MudTextField>
+
+                                                            <MudTextField T="string" Label="Altinative Phone Number" Variant="Variant.Outlined" Class="my-4" @bind-Value="@CompanyRegistrationRequest.CompanyRequest.AltPhoneNumber" For="@(()=>CompanyRegistrationRequest.CompanyRequest.AltPhoneNumber)"></MudTextField>
+
+
+
+                                                                                <MudButton Variant="Variant.Filled" Color="Color.Primary" Size="Size.Large" FullWidth="true" @onclick="@NextPage">Next</MudButton>}
+
+
+
+    @if (!IsCompanyVisible)
+    {
+<MudTextField T="string" Label="Work Email" Variant="Variant.Outlined" Class="my-4" @bind-Value="@CompanyRegistrationRequest.UserRegistrationRequest.EmailAddress" For="@(()=>CompanyRegistrationRequest.UserRegistrationRequest.EmailAddress)"></MudTextField>
+
+                    <MudTextField T="string" Label="First Name" Variant="Variant.Outlined" Class="my-4" @bind-Value="@CompanyRegistrationRequest.UserRegistrationRequest.FirstName" For="@(()=>CompanyRegistrationRequest.UserRegistrationRequest.FirstName)"></MudTextField>
+                                        <MudTextField T="string" Label="Middle Name" Variant="Variant.Outlined" Class="my-4" @bind-Value="@CompanyRegistrationRequest.UserRegistrationRequest.MiddleName"></MudTextField>
+                                                            <MudTextField T="string" Label="Surname" Variant="Variant.Outlined" @bind-Value="@CompanyRegistrationRequest.UserRegistrationRequest.Surname" For="@(()=>CompanyRegistrationRequest.UserRegistrationRequest.Surname)"></MudTextField>
+                                                                                <MudTextField T="string" Label="Phone Number" Variant="Variant.Outlined" Class="my-4" @bind-Value="@CompanyRegistrationRequest.UserRegistrationRequest.PhoneNumber" For="@(()=>CompanyRegistrationRequest.UserRegistrationRequest.PhoneNumber)"></MudTextField>
+
+                                                                                                    <MudTextField Class="my-4" @bind-Value="@CompanyRegistrationRequest.UserRegistrationRequest.Password" Label="Password" Variant="Variant.Outlined" InputType="@PasswordInput" Adornment="Adornment.End"
+                                                                                                                  AdornmentIcon="@PasswordInputIcon" OnAdornmentClick="@TogglePasswordVisibility" For="@(()=>CompanyRegistrationRequest.UserRegistrationRequest.Password)" />
+
+                                                                                                                        <MudTextField @bind-Value="@CompanyRegistrationRequest.UserRegistrationRequest.ConfirmPassword" Label="Confirm Password" Variant="Variant.Outlined" InputType="@PasswordInput" Adornment="Adornment.End" AdornmentIcon="@PasswordInputIcon" OnAdornmentClick="@TogglePasswordVisibility" Class="mt-4" For="@(()=>CompanyRegistrationRequest.UserRegistrationRequest.ConfirmPassword)" />
+
+                                                                                                                                            <MudCheckBox @bind-Checked="@AgreeToTerms" Label="I agree to the terms and privacy" Color="Color.Primary" Class="ml-n1 my-3"></MudCheckBox> var submitBtnTxt = string.IsNullOrWhiteSpace(ButtonSubmitText) ? "Register" : ButtonSubmitText;
+
+                                                                                                                        <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Disabled="@(!AgreeToTerms)" Size="Size.Large" FullWidth="true">@submitBtnTxt</MudButton>}
+    @if (IsOverlayVisible)
+    {
+<FormOverlay />}
+</EditForm>
+
+@code { public bool AgreeToTerms { get; set; } }

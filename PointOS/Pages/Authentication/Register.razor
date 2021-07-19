@@ -2,7 +2,7 @@
 @layout LoginLayout
 @*@inherits AuthenticationBase*@
 
-@inherits PasswordVisibilityBase
+@inherits PointOS.Services.PasswordVisibilityBase
 
 <EditForm Model="@UserRegistrationRequest" OnValidSubmit="@SubmitRegistration">
     <DataAnnotationsValidator></DataAnnotationsValidator>
@@ -27,9 +27,7 @@
 
     <MudTextField @bind-Value="@UserRegistrationRequest.ConfirmPassword" Label="Confirm Password" Variant="Variant.Outlined" InputType="@PasswordInput" Adornment="Adornment.End" AdornmentIcon="@PasswordInputIcon" OnAdornmentClick="@TogglePasswordVisibility" Class="mt-4" For="@(()=>UserRegistrationRequest.ConfirmPassword)" />
 
-    <MudCheckBox @bind-Checked="@AgreeToTerms" Label="I agree to the terms and privacy" Color="Color.Primary" Class="ml-n1 my-3"></MudCheckBox>
-
-    @{ var submitBtnTxt = string.IsNullOrWhiteSpace(ButtonSubmitText) ? "Register" : ButtonSubmitText; }
+    <MudCheckBox @bind-Checked="@AgreeToTerms" Label="I agree to the terms and privacy" Color="Color.Primary" Class="ml-n1 my-3"></MudCheckBox> @{ var submitBtnTxt = string.IsNullOrWhiteSpace(ButtonSubmitText) ? "Register" : ButtonSubmitText; }
 
     <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Disabled="@(!AgreeToTerms)" Size="Size.Large" FullWidth="true">@submitBtnTxt</MudButton>
 

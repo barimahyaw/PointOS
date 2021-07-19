@@ -1,6 +1,6 @@
 ﻿@using Blazored.SessionStorage
 @using MudBlazor.ThemeManager
-@using PointOS.Pages.Authentication
+@using PointOS.Common.DTO.Sessions
 @using PointOS.Theme
 @inherits LayoutComponentBase
 
@@ -17,10 +17,10 @@
             <MudIconButton Icon="@Icons.Material.Outlined.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
         </MudHidden>
         <MudHidden Breakpoint="Breakpoint.Xs">
-            <MudText Typo="Typo.h6" Class="ml-4">Point Of Sale (PointOS)</MudText>
+            <MudText Typo="Typo.h6" Class="ml-4">@Company</MudText>
         </MudHidden>
         <MudHidden Breakpoint="Breakpoint.Xs" Invert="true">
-            <MudText Typo="Typo.subtitle2">Point Of Sale (PointOS)</MudText>
+            <MudText Typo="Typo.subtitle2">@Branch</MudText>
         </MudHidden>
         <MudAppBarSpacer />
         <MudMenu Icon="@Icons.Material.Outlined.Translate" Color="Color.Inherit" Direction="Direction.Bottom" OffsetY="true" Dense="true">
@@ -102,7 +102,13 @@
     [Inject]
     private NavigationManager NavigationManager { get; set; }
 
-    protected override void OnInitialized()
+    [Inject]
+    protected ISessionStorageService SessionStorageService { get; set; }
+
+    protected string Company { get; set; }
+    protected string Branch { get; set; }
+
+    protected override async Task OnInitializedAsync()
     {
         //base.OnInitialized();
         //var user = (await AuthStat).User;
@@ -116,6 +122,12 @@
         _themeManager.DrawerClipMode = DrawerClipMode.Always;
         _themeManager.FontFamily = "Montserrat";
         _themeManager.DefaultBorderRadius = 3;
+
+        var session = await SessionStorageService.GetItemAsync<UserSession>("UserSession");
+
+        Company = !string.IsNullOrWhiteSpace(session.Company) ? $"{session.Company} ({session.Branch})" : $"Point Of Sale ({Branch})";
+
+        Branch = string.IsNullOrWhiteSpace(session.Branch) ? "PointOS" : session.Branch;
     }
 
     private List<BreadcrumbItem> _items = new List<BreadcrumbItem>

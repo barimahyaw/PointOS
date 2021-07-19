@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using MudBlazor;
 
-namespace PointOS.Components
+namespace PointOS.Services
 {
     public class PasswordVisibilityBase : ComponentBase
     {

@@ -1,0 +1,25 @@
+﻿@page "/CompanyBranches"
+<EditForm Model="@BranchRequest" OnSubmit="@SaveChanges">
+    <DataAnnotationsValidator></DataAnnotationsValidator>
+    <MudCard Elevation="25">
+        <MudCardHeader>
+            <CardHeaderContent>
+                <MudText>Product Category Form</MudText>
+            </CardHeaderContent>
+        </MudCardHeader>
+        <MudCardContent>
+            <MudGrid>
+                <MudItem xs="12" md="12">
+                    <MudTextField @bind-Value="@BranchRequest.Name" Label="Name" Variant="Variant.Outlined" />
+                </MudItem>
+            </MudGrid>
+        </MudCardContent>
+
+        <MudCardActions Class="pb-4 pl-4">
+            @*<MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Save" Color="Color.Primary" Class="ml-auto"
+                @onclick="@ConfirmButtonClicked">Save Changes</MudButton>*@
+
+            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Large" FullWidth="true">submit </MudButton>
+        </MudCardActions>
+    </MudCard>
+</EditForm>

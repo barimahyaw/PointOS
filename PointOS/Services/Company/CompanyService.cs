@@ -6,23 +6,23 @@ using PointOS.Common.Enums;
 using PointOS.Common.Helpers.IHelpers;
 using System.Threading.Tasks;
 
-namespace PointOS.Services.ProductCategory
+namespace PointOS.Services.Company
 {
-    public class ProductCategoryService : IProductCategoryService
+    public class CompanyService : ICompanyService
     {
         private readonly IRestUtility _restUtility;
         private readonly ILocalStorageService _localStorageService;
 
-        public ProductCategoryService(IRestUtility restUtility, ILocalStorageService localStorageService)
+        public CompanyService(IRestUtility restUtility, ILocalStorageService localStorageService)
         {
             _restUtility = restUtility;
             _localStorageService = localStorageService;
         }
 
-        public async Task<ResponseHeader> Add(ProductCategoryRequest request)
+        public async Task<ResponseHeader> Add(CompanyRegistrationRequest request)
         {
             var token = $"Bearer {await _localStorageService.GetItemAsync<string>("authToken")}";
-            var response = await _restUtility.ApiServiceAsync(BaseUrl.PointOs, "ProductCategory",
+            var response = await _restUtility.ApiServiceAsync(BaseUrl.PointOs, "Company",
                 token, request, null, Verb.Post);
 
             var result = JsonConvert.DeserializeObject<ResponseHeader>(response.ToString());

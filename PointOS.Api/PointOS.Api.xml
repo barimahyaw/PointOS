@@ -86,13 +86,14 @@
             
             </summary>
         </member>
-        <member name="M:PointOS.Api.Controllers.v1.CompanyController.#ctor(PointOS.BusinessLogic.Interfaces.ICompanyBusiness)">
+        <member name="M:PointOS.Api.Controllers.v1.CompanyController.#ctor(PointOS.BusinessLogic.Interfaces.ICompanyBusiness,PointOS.BusinessLogic.Interfaces.IUserAccountBusiness)">
             <summary>
             
             </summary>
             <param name="companyBusiness"></param>
+            <param name="userAccountBusiness"></param>
         </member>
-        <member name="M:PointOS.Api.Controllers.v1.CompanyController.Post(PointOS.Common.DTO.Request.CompanyRequest)">
+        <member name="M:PointOS.Api.Controllers.v1.CompanyController.Post(PointOS.Common.DTO.Request.CompanyRegistrationRequest)">
             <summary>
             Saves a company's record
             </summary>

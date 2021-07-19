@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using PointOS.Common.DTO.Request;
-using PointOS.Services.ProductCategory;
+using PointOS.Common.Enums;
+using PointOS.Services;
 using System.Threading.Tasks;
 
 namespace PointOS.Pages.ProductCategory
@@ -20,7 +21,7 @@ namespace PointOS.Pages.ProductCategory
         private IDialogService DialogService { get; set; }
 
         [Inject]
-        private IProductCategoryService ProductCategoryService { get; set; }
+        private IApiEndpointCallService ApiEndpointCallService { get; set; }
 
         private ProductCategoryRequest ProductCategoryRequest { get; set; } = new ProductCategoryRequest();
 
@@ -32,7 +33,7 @@ namespace PointOS.Pages.ProductCategory
 
         protected async Task SaveChanges()
         {
-            var response = await ProductCategoryService.Add(ProductCategoryRequest);
+            var response = await ApiEndpointCallService.CallApiService("ProductCategory", ProductCategoryRequest, null, Verb.Post);
             Snackbar.Add(response.Message, Severity.Success, config =>
             {
                 config.ShowCloseIcon = false;

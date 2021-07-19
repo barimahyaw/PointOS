@@ -58,15 +58,25 @@ namespace PointOS.BusinessLogic
                     goto case CrudOperation.Create;
             }
 
-            var numOfRows = await _unitOfWork.SaveChangesAsync();
+            try
+            {
+                var numOfRows = await _unitOfWork.SaveChangesAsync();
 
-            var result = numOfRows != 0
-                ? request.Operation == CrudOperation.Create
-                    ? new ResponseHeader { StatusCode = 201, Message = $"Record created for {request.Name}", Success = true }
-                    : new ResponseHeader { StatusCode = 202, Message = $"Record updated for {request.Name}", Success = true }
-                : new ResponseHeader { Message = "Operation failed. please try again later!" };
+                var result = numOfRows != 0
+                    ? request.Operation == CrudOperation.Create
+                        ? new ResponseHeader { StatusCode = 201, Message = $"Record created for {request.Name}", Success = true }
+                        : new ResponseHeader { StatusCode = 202, Message = $"Record updated for {request.Name}", Success = true }
+                    : new ResponseHeader { Message = "Operation failed. please try again later!" };
 
-            return result;
+                return result;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+
+           
         }
     }
 }

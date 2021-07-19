@@ -6,18 +6,39 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Components\**" />
     <Compile Remove="Pages1\**" />
+    <Compile Remove="Pages\Applications\**" />
+    <Compile Remove="Services\Company\**" />
+    <Compile Remove="Services\ProductCategory\**" />
     <Compile Remove="Shared1\**" />
     <Compile Remove="wwwroot1\**" />
+    <Content Remove="Components\**" />
     <Content Remove="Pages1\**" />
+    <Content Remove="Pages\Applications\**" />
+    <Content Remove="Services\Company\**" />
+    <Content Remove="Services\ProductCategory\**" />
     <Content Remove="Shared1\**" />
     <Content Remove="wwwroot1\**" />
+    <EmbeddedResource Remove="Components\**" />
     <EmbeddedResource Remove="Pages1\**" />
+    <EmbeddedResource Remove="Pages\Applications\**" />
+    <EmbeddedResource Remove="Services\Company\**" />
+    <EmbeddedResource Remove="Services\ProductCategory\**" />
     <EmbeddedResource Remove="Shared1\**" />
     <EmbeddedResource Remove="wwwroot1\**" />
+    <None Remove="Components\**" />
     <None Remove="Pages1\**" />
+    <None Remove="Pages\Applications\**" />
+    <None Remove="Services\Company\**" />
+    <None Remove="Services\ProductCategory\**" />
     <None Remove="Shared1\**" />
     <None Remove="wwwroot1\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Services\Authentication\AuthenticationService.cs" />
+    <Compile Remove="Services\Authentication\IAuthenticationService.cs" />
   </ItemGroup>
 
   <ItemGroup>

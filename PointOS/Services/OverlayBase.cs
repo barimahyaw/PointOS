@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 
-namespace PointOS.Components
+namespace PointOS.Services
 {
     public class OverlayBase : ComponentBase
     {

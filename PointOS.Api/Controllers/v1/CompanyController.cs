@@ -4,6 +4,7 @@ using PointOS.Common.DTO.Request;
 using PointOS.Common.DTO.Response;
 using PointOS.Common.Enums;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PointOS.Api.Controllers.v1
 {
@@ -13,16 +14,21 @@ namespace PointOS.Api.Controllers.v1
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = "CustomAuthentication")]
     public class CompanyController : ControllerBase
     {
         private readonly ICompanyBusiness _companyBusiness;
+        private readonly IUserAccountBusiness _userAccountBusiness;
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="companyBusiness"></param>
-        public CompanyController(ICompanyBusiness companyBusiness)
+        /// <param name="userAccountBusiness"></param>
+        public CompanyController(ICompanyBusiness companyBusiness, IUserAccountBusiness userAccountBusiness)
         {
             _companyBusiness = companyBusiness;
+            _userAccountBusiness = userAccountBusiness;
         }
 
         /// <summary>
@@ -31,10 +37,19 @@ namespace PointOS.Api.Controllers.v1
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ResponseHeader> Post(CompanyRequest request)
+        [AllowAnonymous]
+        public async Task<ResponseHeader> Post(CompanyRegistrationRequest request)
         {
-            request.Operation = CrudOperation.Create;
-            return await _companyBusiness.SaveAsync(request);
+            request.CompanyRequest.Operation = CrudOperation.Create;
+            var userResponse = await _userAccountBusiness.AddUser(request.UserRegistrationRequest);
+
+            if (!userResponse.Success) return userResponse;
+
+            request.CompanyRequest.CreatedBy = userResponse.ReferenceNumber;
+            await _companyBusiness.SaveAsync(request.CompanyRequest);
+
+
+            return userResponse;
         }
 
         /// <summary>
