@@ -30,7 +30,6 @@ namespace PointOS.Pages.Authentication
 
             Snackbar.Add(response.Message, response.Success ? Severity.Success : Severity.Error, config => config.ShowCloseIcon = true);
 
-            await Task.Delay(3000);
             NavigationManager.NavigateTo("/");
         }
     }

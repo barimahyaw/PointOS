@@ -23,7 +23,7 @@ namespace PointOS.BusinessLogic.Security
 
 
         protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
-         {
+        {
             if (!Request.Headers.ContainsKey("Authorization"))
                 return AuthenticateResult.Fail("Authorization Header is not found");
 

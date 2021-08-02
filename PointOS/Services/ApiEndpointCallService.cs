@@ -19,7 +19,7 @@ namespace PointOS.Services
         }
 
         /// <summary>
-        /// Generic method to call api endpoints
+        /// Generic method to call api endpoints (post,put,patch and delete)
         /// </summary>
         /// <param name="url"></param>
         /// <param name="request"></param>
@@ -28,7 +28,10 @@ namespace PointOS.Services
         /// <returns></returns>
         public async Task<ResponseHeader> CallApiService(string url, object request, string param, Verb method)
         {
-            var token = $"Bearer {await _localStorageService.GetItemAsync<string>("authToken")}";
+            var authToken = await _localStorageService.GetItemAsync<string>("authToken");
+            var token = $"Bearer {authToken}";
+
+            if (string.IsNullOrWhiteSpace(authToken)) token = null;
 
             var response = await _restUtility.ApiServiceAsync(BaseUrl.PointOs, url, token, request, param, method);
 
@@ -43,6 +46,25 @@ namespace PointOS.Services
             var result = JsonConvert.DeserializeObject<ResponseHeader>(response.ToString());
 
             return result;
+        }
+
+        /// <summary>
+        /// Generic method to call api Get endpoints
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="request"></param>
+        /// <param name="param"></param>
+        /// <returns></returns>
+        public async Task<object> CallApiGetService(string url, object request, string param)
+        {
+            var authToken = await _localStorageService.GetItemAsync<string>("authToken");
+            var token = $"Bearer {authToken}";
+
+            if (string.IsNullOrWhiteSpace(authToken)) token = null;
+
+            var response = await _restUtility.ApiServiceAsync(BaseUrl.PointOs, url, token, request, param, Verb.Get);
+
+            return response;
         }
     }
 }

@@ -5,6 +5,7 @@ using PointOS.Common.Enums;
 using PointOS.DataAccess;
 using PointOS.DataAccess.Entities;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace PointOS.BusinessLogic
@@ -59,6 +60,32 @@ namespace PointOS.BusinessLogic
                 : new ResponseHeader { Message = "Operation failed. please try again later!" };
 
             return result;
+        }
+
+        /// <summary>
+        /// Gets Branches filtering by company Id
+        /// </summary>
+        /// <param name="companyId"></param>
+        /// <param name="skip"></param>
+        /// <param name="take"></param>
+        /// <returns></returns>
+        public async Task<ListResponse<BranchResponse>> FindByCompanyIdAsync(int companyId, int skip, int take)
+        {
+            var result = await _unitOfWork.BranchRepository.FindByCompanyIdAsync(companyId, skip, take);
+
+            if (result.Count == 0) return new ListResponse<BranchResponse> { ResponseHeader = new ResponseHeader { Message = "No Record/Result found" } };
+
+            return new ListResponse<BranchResponse>
+            {
+                ResponseBodyList = result.Select(x => new BranchResponse
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    CreatedBy = x.CreatedUser.FirstName,
+                    CreatedOn = x.CreatedOn
+                }),
+                ResponseHeader = new ResponseHeader { Success = true, ReferenceNumber = result.Count.ToString() }
+            };
         }
     }
 }

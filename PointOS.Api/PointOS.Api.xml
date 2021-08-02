@@ -81,6 +81,15 @@
             <param name="request"></param>
             <returns></returns>
         </member>
+        <member name="M:PointOS.Api.Controllers.v1.BranchController.Get(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Gets Branches by company Id
+            </summary>
+            <param name="companyId"></param>
+            <param name="skip"></param>
+            <param name="take"></param>
+            <returns></returns>
+        </member>
         <member name="T:PointOS.Api.Controllers.v1.CompanyController">
             <summary>
             

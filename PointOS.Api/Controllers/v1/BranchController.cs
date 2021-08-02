@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PointOS.BusinessLogic.Interfaces;
 using PointOS.Common.DTO.Request;
 using PointOS.Common.DTO.Response;
 using PointOS.Common.Enums;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 
 namespace PointOS.Api.Controllers.v1
 {
@@ -51,5 +51,17 @@ namespace PointOS.Api.Controllers.v1
             request.Operation = CrudOperation.Update;
             return await _businessBusiness.SaveAsync(request);
         }
+
+        /// <summary>
+        /// Gets Branches by company Id
+        /// </summary>
+        /// <param name="companyId"></param>
+        /// <param name="skip"></param>
+        /// <param name="take"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<ListResponse<BranchResponse>> Get(int companyId, int skip = 0, int take = 5) =>
+            await _businessBusiness.FindByCompanyIdAsync(companyId, skip, take);
     }
 }

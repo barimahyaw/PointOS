@@ -9,6 +9,7 @@ using PointOS.Common.Helpers.IHelpers;
 using PointOS.Services;
 using PointOS.Services.Authentication;
 using PointOS.Services.Notifications;
+using Syncfusion.Blazor;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -38,6 +39,11 @@ namespace PointOS
             builder.Services.AddMudServices();
 
             builder.Services.AddSingleton<IRestUtility, RestUtility>();
+
+            builder.Services.AddSyncfusionBlazor();
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("NDgyOTI2QDMxMzkyZTMyMmUzMENhQjJ5N0syU0lvTm5LYi9waW1FKy9OSlZyMHBINzA1dmlZK2MyZkZnNU09");
+
+            builder.Services.AddScoped<BranchAdapter>();
 
             await builder.Build().RunAsync();
         }

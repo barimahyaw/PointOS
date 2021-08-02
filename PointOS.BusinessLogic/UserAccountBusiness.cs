@@ -9,6 +9,7 @@ using PointOS.Common.DTO.Response;
 using PointOS.Common.DTO.Sessions;
 using PointOS.Common.Enums;
 using PointOS.Common.Extensions;
+using PointOS.DataAccess;
 using PointOS.DataAccess.Entities;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,6 @@ using System.Security.Claims;
 using System.Security.Principal;
 using System.Threading;
 using System.Threading.Tasks;
-using PointOS.DataAccess;
 
 namespace PointOS.BusinessLogic
 {

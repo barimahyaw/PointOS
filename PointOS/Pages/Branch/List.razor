@@ -1,0 +1,32 @@
+﻿@page "/branches"
+@using PointOS.Common.DTO.Response
+@using PointOS.Services
+
+<MudText Typo="Typo.h5" Color="Color.Primary" Class="mb-4">Branches (Retail/Wholesale Shops)</MudText>
+
+<SfGrid TValue="@BranchResponse" AllowPaging="true" AllowSorting="true" Toolbar="@(new List<string>() {"Search"})">
+    <Syncfusion.Blazor.Data.SfDataManager Adaptor="Adaptors.CustomAdaptor" AdaptorInstance="@typeof(BranchAdapter)"></Syncfusion.Blazor.Data.SfDataManager>
+    <GridPageSettings PageCount="3" PageSize="5" PageSizes="@PagerDropDown"></GridPageSettings>
+    <GridSortSettings AllowUnsort="false"></GridSortSettings>
+    <GridEditSettings AllowAdding="true" AllowDeleting="true" AllowEditing="true"></GridEditSettings>
+    <GridColumns>
+        <GridColumn Field="@nameof(Common.DTO.Response.BranchResponse.Id)" HeaderText="Id"></GridColumn>
+        <GridColumn Field="@nameof(Common.DTO.Response.BranchResponse.Name)" HeaderText="Name"></GridColumn>
+        <GridColumn Field="@nameof(Common.DTO.Response.BranchResponse.CreatedBy)" HeaderText="Created By"></GridColumn>
+        <GridColumn Field="@nameof(Common.DTO.Response.BranchResponse.CreatedOn)" HeaderText="Created On"></GridColumn>
+        <GridColumn HeaderText="Manage Records" Width="150">
+            <GridCommandColumns>
+                <GridCommandColumn Type="CommandButtonType.Edit" ButtonOption="@(new CommandButtonOptions() {IconCss = "e-icons e-edit", CssClass = "e-flat"})"></GridCommandColumn>
+                <GridCommandColumn Type="CommandButtonType.Delete" ButtonOption="@(new CommandButtonOptions() {IconCss = "e-icons e-delete", CssClass = "e-flat"})"></GridCommandColumn>
+                <GridCommandColumn Type="CommandButtonType.Save" ButtonOption="@(new CommandButtonOptions() {IconCss = "e-icons e-save", CssClass = "e-flat"})"></GridCommandColumn>
+                <GridCommandColumn Type="CommandButtonType.Cancel" ButtonOption="@(new CommandButtonOptions() {IconCss = "e-icons e-cancel-icon", CssClass = "e-flat"})"></GridCommandColumn>
+                <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Add" Color="Color.Primary" Class="ml-auto">Add</MudButton>
+            </GridCommandColumns>
+        </GridColumn>
+    </GridColumns>
+</SfGrid>
+
+@code
+{
+    public string[] PagerDropDown { get; set; } = { "All", "5", "10", "15", "20" };
+}

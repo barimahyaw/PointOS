@@ -15,5 +15,14 @@ namespace PointOS.Services
         /// <param name="method"></param>
         /// <returns></returns>
         Task<ResponseHeader> CallApiService(string url, object request, string param, Verb method);
+
+        /// <summary>
+        /// Generic method to call api Get endpoints
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="request"></param>
+        /// <param name="param"></param>
+        /// <returns></returns>
+        Task<object> CallApiGetService(string url, object request, string param);
     }
 }

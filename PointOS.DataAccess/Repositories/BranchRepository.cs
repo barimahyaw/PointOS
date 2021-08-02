@@ -1,8 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PointOS.DataAccess.Entities;
+using PointOS.DataAccess.IRepositories;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using PointOS.DataAccess.IRepositories;
 
 namespace PointOS.DataAccess.Repositories
 {
@@ -38,5 +39,30 @@ namespace PointOS.DataAccess.Repositories
             _dbContext.Branches.Update(branch);
             return Task.FromResult(0);
         }
+
+        ///// <summary>
+        ///// Gets Branches filtering by company Id
+        ///// </summary>
+        ///// <param name="companyId"></param>
+        ///// <returns></returns>
+        //public async Task<List<BranchResponse>> FindByCompanyIdAsync(int companyId) =>
+        //    await GetQueryable().Where(b => b.CompanyId == companyId).Select(r => new BranchResponse
+        //    {
+        //        Id = r.Id,
+        //        Name = r.Name,
+        //        CreatedBy = r.CreatedUser.FirstName,
+        //        CreatedOn = r.CreatedOn
+        //    }).ToListAsync();
+
+        /// <summary>
+        /// Gets Branches filtering by company Id
+        /// </summary>
+        /// <param name="companyId"></param>
+        /// <param name="skip"></param>
+        /// <param name="take"></param>
+        /// <returns></returns>
+        public async Task<List<Branch>> FindByCompanyIdAsync(int companyId, int skip, int take) =>
+            await GetQueryable().Include(b => b.CreatedUser)
+                .Where(b => b.CompanyId == companyId).Skip(skip).Take(take).ToListAsync();
     }
 }
