@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PointOS.DataAccess;
 
 namespace PointOS.DataAccess.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210802122832_SalesDbContextUpdated")]
+    partial class SalesDbContextUpdated
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -456,20 +458,24 @@ namespace PointOS.DataAccess.Migrations
                         .HasMaxLength(12)
                         .HasColumnType("nvarchar(12)");
 
+                    b.Property<int?>("TransactionId1")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ProductPricingId");
 
-                    b.HasIndex("TransactionId");
+                    b.HasIndex("TransactionId1");
 
                     b.ToTable("Sales");
                 });
 
             modelBuilder.Entity("PointOS.DataAccess.Entities.Transactions", b =>
                 {
-                    b.Property<string>("TransactionId")
-                        .HasMaxLength(12)
-                        .HasColumnType("nvarchar(12)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<double>("Amount")
                         .HasColumnType("float");
@@ -489,12 +495,17 @@ namespace PointOS.DataAccess.Migrations
                     b.Property<int?>("ProductPricingId")
                         .HasColumnType("int");
 
+                    b.Property<string>("TransactionId")
+                        .IsRequired()
+                        .HasMaxLength(12)
+                        .HasColumnType("nvarchar(12)");
+
                     b.Property<string>("TransactionType")
                         .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
-                    b.HasKey("TransactionId");
+                    b.HasKey("Id");
 
                     b.HasIndex("CreatedUserId");
 
@@ -660,9 +671,7 @@ namespace PointOS.DataAccess.Migrations
 
                     b.HasOne("PointOS.DataAccess.Entities.Transactions", "Transaction")
                         .WithMany("Sales")
-                        .HasForeignKey("TransactionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("TransactionId1");
 
                     b.Navigation("ProductPricing");
 
