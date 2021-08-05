@@ -81,10 +81,14 @@ namespace PointOS.BusinessLogic
                 {
                     Id = x.Id,
                     Name = x.Name,
-                    CreatedBy = x.CreatedUser.FirstName,
+                    CreatedBy = $"{x.CreatedUser.FirstName} {x.CreatedUser.MiddleName} {x.CreatedUser.LastName}",
                     CreatedOn = x.CreatedOn
                 }),
-                ResponseHeader = new ResponseHeader { Success = true, ReferenceNumber = result.Count.ToString() }
+                ResponseHeader = new ResponseHeader
+                {
+                    Success = true, 
+                    ReferenceNumber = _unitOfWork.BranchRepository.TotalBranchesNumber(companyId).ToString()
+                }
             };
         }
     }

@@ -1,100 +1,123 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using Blazored.SessionStorage;
+using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
 using MudBlazor;
 using PointOS.Common.DTO.Request;
+using PointOS.Common.DTO.Sessions;
 using PointOS.Common.Enums;
 using PointOS.Services;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace PointOS.Pages.ProductCategory
 {
     public partial class Add
     {
-        public string FirstName { get; set; }
+        [CascadingParameter]
+        private MudDialogInstance MudDialog { get; set; }
+
+        [Inject]
+        protected ISessionStorageService SessionStorageService { get; set; }
+        private void Cancel() => MudDialog.Cancel();
+
         public bool FriendSwitch { get; set; } = true;
 
-        public string Message { get; set; }
+        //public string Message { get; set; }
 
         [Inject]
         private ISnackbar Snackbar { get; set; }
 
-        [Inject]
-        private IDialogService DialogService { get; set; }
+        //[Inject]
+        //private IDialogService DialogService { get; set; }
 
         [Inject]
         private IApiEndpointCallService ApiEndpointCallService { get; set; }
 
+        [Inject]
+        private AuthenticationStateProvider AuthenticationStateProvider { get; set; }
+
         private ProductCategoryRequest ProductCategoryRequest { get; set; } = new ProductCategoryRequest();
 
-        private void OpenDialog(DialogOptions options)
-        {
-            DialogService.Show<Dialog>("Confirm", options);
-            Message = "Are you sure you want add Thinkpad X1 Nano as a Product?";
-        }
+        //private void OpenDialog(DialogOptions options)
+        //{
+        //    DialogService.Show<Dialog>("Confirm", options);
+        //    Message = "Are you sure you want add Thinkpad X1 Nano as a Product?";
+        //}
 
         protected async Task SaveChanges()
         {
+            var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+
+            var session = await SessionStorageService.GetItemAsync<UserSession>("UserSession");
+
+            ProductCategoryRequest.CreatedBy = authState.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            ProductCategoryRequest.Status = FriendSwitch;
+            ProductCategoryRequest.CompanyId = session.CompanyId;
+
             var response = await ApiEndpointCallService.CallApiService("ProductCategory", ProductCategoryRequest, null, Verb.Post);
             Snackbar.Add(response.Message, Severity.Success, config =>
             {
                 config.ShowCloseIcon = false;
             });
 
+            MudDialog.Close(DialogResult.Ok(true));
         }
 
-        public void ConfirmButtonClicked()
-        {
+        //public void ConfirmButtonClicked()
+        //{
 
-            Snackbar.Add("Product Category saved successfully.", Severity.Success, config =>
-            {
-                config.ShowCloseIcon = false;
-            });
+        //    Snackbar.Add("Product Category saved successfully.", Severity.Success, config =>
+        //    {
+        //        config.ShowCloseIcon = false;
+        //    });
 
-        }
-
-
-        DialogOptions maxWidth = new DialogOptions() { MaxWidth = MaxWidth.Medium, FullWidth = true };
-        DialogOptions closeButton = new DialogOptions() { CloseButton = true/*, MaxWidth = MaxWidth.Small, FullWidth = true*/ };
-        DialogOptions noHeader = new DialogOptions() { NoHeader = true };
-        DialogOptions disableBackdropClick = new DialogOptions() { DisableBackdropClick = true };
-        DialogOptions fullScreen = new DialogOptions() { FullScreen = true, CloseButton = true };
+        //}
 
 
-        private void DeleteUser()
-        {
-            var parameters = new DialogParameters();
-            parameters.Add("ContentText", "Do you really want to delete these records? This process cannot be undone.");
-            parameters.Add("ButtonText", "Delete");
-            parameters.Add("Color", Color.Error);
+        //DialogOptions maxWidth = new DialogOptions() { MaxWidth = MaxWidth.Medium, FullWidth = true };
+        //DialogOptions closeButton = new DialogOptions() { CloseButton = true/*, MaxWidth = MaxWidth.Small, FullWidth = true*/ };
+        //DialogOptions noHeader = new DialogOptions() { NoHeader = true };
+        //DialogOptions disableBackdropClick = new DialogOptions() { DisableBackdropClick = true };
+        //DialogOptions fullScreen = new DialogOptions() { FullScreen = true, CloseButton = true };
 
-            var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
 
-            DialogService.Show<Dialog>("Delete", parameters, options);
-        }
+        //private void DeleteUser()
+        //{
+        //    var parameters = new DialogParameters();
+        //    parameters.Add("ContentText", "Do you really want to delete these records? This process cannot be undone.");
+        //    parameters.Add("ButtonText", "Delete");
+        //    parameters.Add("Color", Color.Error);
 
-        private void Confirm()
-        {
-            var parameters = new DialogParameters();
-            parameters.Add("ContentText", "Are you sure you want to remove thisguy@emailz.com from this account?");
-            parameters.Add("ButtonText", "Yes");
-            parameters.Add("Color", Color.Success);
+        //    var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
 
-            var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
+        //    DialogService.Show<Dialog>("Delete", parameters, options);
+        //}
 
-            DialogService.Show<Dialog>("Confirm", parameters, options);
+        //private void Confirm()
+        //{
+        //    var parameters = new DialogParameters();
+        //    parameters.Add("ContentText", "Are you sure you want to remove thisguy@emailz.com from this account?");
+        //    parameters.Add("ButtonText", "Yes");
+        //    parameters.Add("Color", Color.Success);
 
-            //DialogService.ShowMessageBox("", "Are u sure", "Yes", null, "Cancel");
-        }
+        //    var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
 
-        private void Download()
-        {
-            var parameters = new DialogParameters();
-            parameters.Add("ContentText", "Your computer seems very slow, click the download button to download free RAM.");
-            parameters.Add("ButtonText", "Download");
-            parameters.Add("Color", Color.Info);
+        //    DialogService.Show<Dialog>("Confirm", parameters, options);
 
-            var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
+        //    //DialogService.ShowMessageBox("", "Are u sure", "Yes", null, "Cancel");
+        //}
 
-            DialogService.Show<Dialog>("Slow Computer Detected", parameters, options);
-        }
+        //private void Download()
+        //{
+        //    var parameters = new DialogParameters();
+        //    parameters.Add("ContentText", "Your computer seems very slow, click the download button to download free RAM.");
+        //    parameters.Add("ButtonText", "Download");
+        //    parameters.Add("Color", Color.Info);
+
+        //    var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
+
+        //    DialogService.Show<Dialog>("Slow Computer Detected", parameters, options);
+        //}
     }
 }

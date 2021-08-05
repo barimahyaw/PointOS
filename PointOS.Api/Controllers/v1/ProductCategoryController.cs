@@ -1,11 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PointOS.BusinessLogic.Interfaces;
 using PointOS.Common.DTO.Request;
 using PointOS.Common.DTO.Response;
 using System;
-using System.Security.Claims;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 
 namespace PointOS.Api.Controllers.v1
 {
@@ -41,8 +40,8 @@ namespace PointOS.Api.Controllers.v1
         /// </summary>
         /// <returns>a list of product category records</returns>
         [HttpGet("get")]
-        public async Task<ListResponse<ProductCategoryResponse>> Get()
-            => await _productCategoryBusiness.FindAllAsync();
+        public async Task<ListResponse<ProductCategoryResponse>> Get(int companyId, int skip = 0, int take = 5)
+            => await _productCategoryBusiness.FindAllAsync(companyId, skip, take);
 
         /// <summary>
         /// Saves a product category record
@@ -50,7 +49,7 @@ namespace PointOS.Api.Controllers.v1
         /// <param name="request"></param>
         /// <returns>number of records affected</returns>
         [HttpPost]
-        public async Task<ResponseHeader> Post(ProductCategoryRequest request) 
+        public async Task<ResponseHeader> Post(ProductCategoryRequest request)
             => await _productCategoryBusiness.SaveAsync(request);
     }
 }

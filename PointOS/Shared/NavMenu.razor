@@ -1,35 +1,37 @@
 ﻿<PersonCard Style="background-color: var(--mud-palette-drawer-background);color: var(--mud-palette-drawer-text);" />
 <MudDivider Class="mb-4" />
 <MudNavMenu>
-    <MudText Typo="Typo.subtitle2" Color="Color.Inherit" Class="ml-4 my-3">Personal</MudText>
-    <MudNavLink Href="/personal/dashboard" Match="NavLinkMatch.All" Icon="@Icons.Material.Outlined.Dashboard">Dashboard</MudNavLink>
-    <MudNavLink Href="/personal/account" Icon="@Icons.Material.Outlined.Person">Account</MudNavLink>
-    <MudNavLink Href="/ProductCategories" Icon="@Icons.Material.Outlined.Person">Product Categories</MudNavLink>
+    <MudText Typo="Typo.subtitle2" Color="Color.Inherit" Class="ml-4 my-3">Dashboard</MudText>
+    <MudNavLink Href="/personal/dashboard" Match="NavLinkMatch.All" Icon="@Icons.Material.Outlined.Dashboard">General</MudNavLink>
+    <MudNavLink Href="/personal/account" Icon="@Icons.Material.Outlined.AccountBox">Transactions</MudNavLink>
+    <MudNavLink Href="/ProductCategories" Icon="@Icons.Material.Outlined.AccountCircle">Sales</MudNavLink>
 
 
-    <MudText Typo="Typo.subtitle2" Color="Color.Inherit" Class="ml-4 my-3">App Examples</MudText>
-    <MudNavLink Href="application/email" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Outlined.Email">Email</MudNavLink>
-    <MudNavLink Href="application/chat" Icon="@Icons.Material.Outlined.Forum">Chat</MudNavLink>
-    <MudNavLink Href="application/todo" Icon="@Icons.Custom.Uncategorized.AlertSuccess" Disabled="true">Todo</MudNavLink>
-    <MudNavLink Href="application/users" Icon="@Icons.Material.Outlined.PeopleAlt" Disabled="true">Users</MudNavLink>
+    @*<MudText Typo="Typo.subtitle2" Color="Color.Inherit" Class="ml-4 my-3">App Examples</MudText>
+        <MudNavLink Href="application/email" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Outlined.Email">Email</MudNavLink>
+        <MudNavLink Href="application/chat" Icon="@Icons.Material.Outlined.Forum">Chat</MudNavLink>
+        <MudNavLink Href="application/todo" Icon="@Icons.Custom.Uncategorized.AlertSuccess" Disabled="true">Todo</MudNavLink>
+        <MudNavLink Href="application/users" Icon="@Icons.Material.Outlined.PeopleAlt" Disabled="true">Users</MudNavLink>*@
 
-    <MudText Typo="Typo.subtitle2" Color="Color.Inherit" Class="ml-4 my-3">Pages</MudText>
-    <MudNavGroup Title="Authentication" Icon="@Icons.Material.Outlined.AssignmentInd" HideExpandIcon="true">
-        <MudNavLink Href="/authentication/login" Icon="@Icons.Material.Outlined.InsertDriveFile">Login</MudNavLink>
-        <MudNavLink Href="/authentication/register" Icon="@Icons.Material.Outlined.InsertDriveFile">Register</MudNavLink>
-        <MudNavLink Href="/authentication/forgot-password" Icon="@Icons.Material.Outlined.InsertDriveFile">Forgot Password</MudNavLink>
-        <MudNavLink Href="/authentication/reset-password" Icon="@Icons.Material.Outlined.InsertDriveFile">Reset Password</MudNavLink>
-    </MudNavGroup>
-    <MudNavGroup Title="Error" Icon="@AlertAssignmentIcon" HideExpandIcon="true">
-        <MudNavLink Href="pages/error/404" Icon="@Icons.Material.Outlined.InsertDriveFile">404</MudNavLink>
-    </MudNavGroup>
-    <MudNavGroup Title="Utility" Icon="@Icons.Material.Outlined.Assignment" HideExpandIcon="true">
-        <MudNavLink Href="/utility/faq" Icon="@Icons.Material.Outlined.InsertDriveFile">Faq</MudNavLink>
-    </MudNavGroup>
+    @*<MudText Typo="Typo.subtitle2" Color="Color.Inherit" Class="ml-4 my-3">Pages</MudText>
+        <MudNavGroup Title="Authentication" Icon="@Icons.Material.Outlined.AssignmentInd" HideExpandIcon="true">
+            <MudNavLink Href="/authentication/login" Icon="@Icons.Material.Outlined.InsertDriveFile">Login</MudNavLink>
+            <MudNavLink Href="/authentication/register" Icon="@Icons.Material.Outlined.InsertDriveFile">Register</MudNavLink>
+            <MudNavLink Href="/authentication/forgot-password" Icon="@Icons.Material.Outlined.InsertDriveFile">Forgot Password</MudNavLink>
+            <MudNavLink Href="/authentication/reset-password" Icon="@Icons.Material.Outlined.InsertDriveFile">Reset Password</MudNavLink>
+        </MudNavGroup>
+        <MudNavGroup Title="Error" Icon="@AlertAssignmentIcon" HideExpandIcon="true">
+            <MudNavLink Href="pages/error/404" Icon="@Icons.Material.Outlined.InsertDriveFile">404</MudNavLink>
+        </MudNavGroup>*@
+    @*<MudNavGroup Title="Utility" Icon="@Icons.Material.Outlined.Assignment" HideExpandIcon="true">
+            <MudNavLink Href="/utility/faq" Icon="@Icons.Material.Outlined.InsertDriveFile">Faq</MudNavLink>
+        </MudNavGroup>*@
 
-    <MudText Typo="Typo.subtitle2" Color="Color.Inherit" Class="ml-4 my-3"></MudText>
-    <MudNavGroup Title="User Manager" Icon="@Icons.Material.Outlined.AssignmentInd" HideExpandIcon="true">
-        <MudNavLink Href="/authentication/login" Icon="@Icons.Material.Outlined.InsertDriveFile">Create New User</MudNavLink>
+    <MudText Typo="Typo.subtitle2" Color="Color.Inherit" Class="ml-4 my-3">System Setup</MudText>
+    <MudNavLink Href="/ProductCategories" Icon="@Icons.Material.Outlined.Pages">Product Manager</MudNavLink>
+    <MudNavLink Href="/Branches" Icon="@Icons.Material.Outlined.Pages">Branch Manager</MudNavLink>
+    <MudNavGroup Title="User Manager" Icon="@Icons.Material.Outlined.SupervisedUserCircle" HideExpandIcon="true">
+        <MudNavLink Href="/authentication/login" Icon="@Icons.Material.Outlined.VerifiedUser">Create New User</MudNavLink>
         <MudNavLink Href="/authentication/register" Icon="@Icons.Material.Outlined.InsertDriveFile">Register</MudNavLink>
         <MudNavLink Href="/authentication/forgot-password" Icon="@Icons.Material.Outlined.InsertDriveFile">Forgot Password</MudNavLink>
         <MudNavLink Href="/authentication/reset-password" Icon="@Icons.Material.Outlined.InsertDriveFile">Reset Password</MudNavLink>

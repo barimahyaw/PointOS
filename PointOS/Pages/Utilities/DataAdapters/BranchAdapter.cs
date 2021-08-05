@@ -1,13 +1,14 @@
-﻿using Blazored.SessionStorage;
+﻿using System;
+using System.Threading.Tasks;
+using Blazored.SessionStorage;
 using Newtonsoft.Json;
 using PointOS.Common.DTO.Response;
 using PointOS.Common.DTO.Sessions;
+using PointOS.Services;
 using Syncfusion.Blazor;
 using Syncfusion.Blazor.Data;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace PointOS.Services
+namespace PointOS.Pages.Utilities.DataAdapters
 {
     public class BranchAdapter : DataAdaptor
     {
@@ -30,21 +31,11 @@ namespace PointOS.Services
 
             var result = JsonConvert.DeserializeObject<ListResponse<BranchResponse>>(response.ToString());
 
-            //var branchResults = result.ResponseBodyList
-            //    .Select(branchResponse => new BranchResponse
-            //    {
-            //        Name = branchResponse.Name,
-            //        Id = branchResponse.Id,
-            //        CreatedBy = branchResponse.CreatedBy,
-            //        CreatedOn = branchResponse.CreatedOn
-            //    }).ToList();
-
             var dataResult = new DataResult
             {
                 Result = result.ResponseBodyList,
-                Count = result.ResponseBodyList.Count()
+                Count = Convert.ToInt32(result.ResponseHeader.ReferenceNumber)
             };
-            await Task.Delay(3000);
 
             return dataResult;
         }

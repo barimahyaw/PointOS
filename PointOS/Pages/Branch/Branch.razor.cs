@@ -11,6 +11,8 @@ namespace PointOS.Pages.Branch
 {
     public partial class Branch
     {
+        [Inject]
+        private NavigationManager NavigationManager { get; set; }
         private BranchRequest BranchRequest { get; set; } = new BranchRequest();
 
         [Inject]
@@ -44,6 +46,9 @@ namespace PointOS.Pages.Branch
             ErrorMessage = result.Message;
 
             Snackbar.Add(result.Message, result.Success ? Severity.Success : Severity.Error, config => config.ShowCloseIcon = false);
+
+            MudDialog.Close(DialogResult.Ok(true));
+
         }
     }
 }

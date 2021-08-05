@@ -32,7 +32,11 @@ namespace PointOS.Pages.Authentication
         [Inject]
         private ISnackbar Snackbar { get; set; }
 
-        public AuthenticationRequest AuthenticationRequest { get; set; } = new AuthenticationRequest();
+        public AuthenticationRequest AuthenticationRequest { get; set; } = new AuthenticationRequest
+        {
+            UserName = "nanabarimah22@gmail.com",
+            Password = "P@$$w0rd@1234"
+        };
 
         protected string ErrorMessage { get; set; }
         protected string ButtonSubmitText { get; set; }

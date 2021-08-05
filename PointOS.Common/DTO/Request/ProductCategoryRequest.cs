@@ -12,5 +12,6 @@ namespace PointOS.Common.DTO.Request
         public string Name { get; set; }
         public bool Status { get; set; }
         public Guid GuidId { get; set; }
+        public int CompanyId { get; set; }
     }
 }

@@ -1,6 +1,6 @@
 ﻿
 
-<EditForm Model="@ProductCategoryRequest" OnValidSubmit="@SaveChanges">
+@*<EditForm Model="@ProductCategoryRequest" OnValidSubmit="@SaveChanges">
     <DataAnnotationsValidator></DataAnnotationsValidator>
     <MudCard Elevation="25">
         <MudCardHeader>
@@ -26,11 +26,43 @@
         </MudCardContent>
         
         <MudCardActions Class="pb-4 pl-4">
-            <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Save" Color="Color.Primary" Class="ml-auto"
-                @onclick="@ConfirmButtonClicked">Save Changes</MudButton>
-
-            @*<MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Large" FullWidth="true">submit </MudButton>*@
+            <MudButton OnClick="@Cancel">Cancel</MudButton>
+            <MudButton Color="Color.Primary" Variant="Variant.Filled" ButtonType="ButtonType.Submit">Save</MudButton>
         </MudCardActions>
     </MudCard>
+</EditForm>*@
+
+<EditForm Model="@ProductCategoryRequest" OnValidSubmit="@SaveChanges">
+    <MudDialog>
+        <DialogContent>
+
+            <DataAnnotationsValidator></DataAnnotationsValidator>
+
+            <MudGrid>
+                <MudItem xs="12" md="12">
+                    <MudTextField @bind-Value="@ProductCategoryRequest.Name" Label="Name" Variant="Variant.Outlined" For="@(()=>ProductCategoryRequest.Name)" />
+                </MudItem>
+                <MudItem xs="12">
+                    <MudText>
+                        <b>Status</b>
+                    </MudText>
+                    <MudText Typo="Typo.body2">
+                        Set the Status of the Product Category to Active/Inactive.
+                    </MudText>
+                    <MudSwitch @bind-Checked="@FriendSwitch" Color="Color.Secondary" />
+                </MudItem>
+            </MudGrid>
+            <MudCardActions>
+
+            </MudCardActions>
+
+
+        </DialogContent>
+        <DialogActions>
+            <MudButton OnClick="@Cancel">Cancel</MudButton>
+            <MudButton Color="Color.Primary" Variant="Variant.Filled" ButtonType="ButtonType.Submit">Save</MudButton>
+        </DialogActions>
+    </MudDialog>
 </EditForm>
+
 @*<Dialog OnClickEventCallback="@ConfirmButtonClicked"></Dialog>*@

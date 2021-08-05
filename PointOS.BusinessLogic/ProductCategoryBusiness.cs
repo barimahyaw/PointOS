@@ -30,14 +30,17 @@ namespace PointOS.BusinessLogic
                 GuidId = Guid.NewGuid(),
                 Name = request.Name,
                 CreatedOn = DateTime.UtcNow,
-                Status = true,
-                CreatedUserId = request.CreatedBy
+                Status = request.Status,
+                CreatedUserId = request.CreatedBy,
+                CompanyId = request.CompanyId
             };
             await _unitOfWork.ProductCategoryRepository.AddAsync(entity);
+
             var result = await _unitOfWork.SaveChangesAsync();
 
             return result != 0 ? new ResponseHeader { StatusCode = 201, Message = $"Record created for {request.Name}", Success = true }
                 : new ResponseHeader { Message = "" };
+
         }
 
         /// <summary>
@@ -114,15 +117,19 @@ namespace PointOS.BusinessLogic
         /// Select all records of product category 
         /// </summary>
         /// <returns>a list of product category records</returns>
-        public async Task<ListResponse<ProductCategoryResponse>> FindAllAsync()
+        public async Task<ListResponse<ProductCategoryResponse>> FindAllAsync(int companyId, int skip, int take)
         {
-            var entities = await _unitOfWork.ProductCategoryRepository.FindAllAsync();
+            var entities = await _unitOfWork.ProductCategoryRepository.FindAllAsync(companyId, skip, take);
 
             if (entities.Count <= 0) return new ListResponse<ProductCategoryResponse>(new ResponseHeader { Message = "No record found." }, null);
 
             var result = entities.Select(ProductCategoryResponseEntity);
 
-            return new ListResponse<ProductCategoryResponse>(new ResponseHeader { Success = true }, result);
+            return new ListResponse<ProductCategoryResponse>(new ResponseHeader
+            {
+                Success = true,
+                ReferenceNumber = _unitOfWork.ProductCategoryRepository.TotalProductCategories(companyId).ToString()
+            }, result);
         }
 
         /// <summary>
@@ -132,13 +139,14 @@ namespace PointOS.BusinessLogic
         /// <returns>a single record</returns>
         private static ProductCategoryResponse ProductCategoryResponseEntity(ProductCategory entity)
         {
+            var user = entity.CreatedUser;
             var result = new ProductCategoryResponse
             {
                 Id = entity.Id,
                 GuidValue = entity.GuidId,
                 ProductName = entity.Name,
                 Status = entity.Status,
-                CreatedBy = entity.CreatedUserId,
+                CreatedBy = $"{user.FirstName} {user.MiddleName} {user.LastName}",
                 CreatedOn = entity.CreatedOn
             };
             return result;

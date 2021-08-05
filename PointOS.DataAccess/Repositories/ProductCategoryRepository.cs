@@ -74,6 +74,30 @@ namespace PointOS.DataAccess.Repositories
         /// Select all records of product category 
         /// </summary>
         /// <returns>a list of product category records</returns>
-        public async Task<IList<ProductCategory>> FindAllAsync() => await GetQueryable().ToListAsync();
+        public async Task<IList<ProductCategory>> FindAllAsync(int companyId, int skip, int take)
+            => await GetQueryable().Where(pC => pC.CompanyId == companyId).Take(take).Skip(skip)
+                .Select(pC=> new ProductCategory
+                {
+                    CreatedUser = new ApplicationUser
+                    {
+                        FirstName = pC.CreatedUser.FirstName,
+                        MiddleName = pC.CreatedUser.MiddleName,
+                        LastName = pC.CreatedUser.LastName
+                    },
+                    Name = pC.Name,
+                    Status = pC.Status,
+                    CreatedOn = pC.CreatedOn,
+                    GuidId = pC.GuidId,
+                    Id = pC.Id
+                })
+                .ToListAsync();
+
+        /// <summary>
+        /// Gets the total number of Product Categories by company Id
+        /// </summary>
+        /// <param name="companyId"></param>
+        /// <returns></returns>
+        public int TotalProductCategories(int companyId)
+            => GetQueryable().Count(b => b.CompanyId == companyId);
     }
 }

@@ -177,7 +177,7 @@
             <param name="guidValue"></param>
             <returns>a single product category record</returns>
         </member>
-        <member name="M:PointOS.Api.Controllers.v1.ProductCategoryController.Get">
+        <member name="M:PointOS.Api.Controllers.v1.ProductCategoryController.Get(System.Int32,System.Int32,System.Int32)">
             <summary>
             Select all records of product category 
             </summary>

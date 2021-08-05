@@ -13,6 +13,7 @@ using Syncfusion.Blazor;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using PointOS.Pages.Utilities.DataAdapters;
 
 namespace PointOS
 {
@@ -44,6 +45,7 @@ namespace PointOS
             Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("NDgyOTI2QDMxMzkyZTMyMmUzMENhQjJ5N0syU0lvTm5LYi9waW1FKy9OSlZyMHBINzA1dmlZK2MyZkZnNU09");
 
             builder.Services.AddScoped<BranchAdapter>();
+            builder.Services.AddScoped<ProductCategoryAdapter>();
 
             await builder.Build().RunAsync();
         }

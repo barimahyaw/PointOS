@@ -47,6 +47,6 @@ namespace PointOS.BusinessLogic.Interfaces
         /// Select all records of product category 
         /// </summary>
         /// <returns>a list of product category records</returns>
-        Task<ListResponse<ProductCategoryResponse>> FindAllAsync();
+        Task<ListResponse<ProductCategoryResponse>> FindAllAsync(int companyId, int skip, int take);
     }
 }

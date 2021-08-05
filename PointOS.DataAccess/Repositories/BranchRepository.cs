@@ -40,6 +40,25 @@ namespace PointOS.DataAccess.Repositories
             return Task.FromResult(0);
         }
 
+        /// <summary>
+        /// Gets Branches filtering by company Id
+        /// </summary>
+        /// <param name="companyId"></param>
+        /// <param name="skip"></param>
+        /// <param name="take"></param>
+        /// <returns></returns>
+        public async Task<List<Branch>> FindByCompanyIdAsync(int companyId, int skip, int take) =>
+            await GetQueryable().Include(b => b.CreatedUser)
+                .Where(b => b.CompanyId == companyId).Skip(skip).Take(take).ToListAsync();
+
+        /// <summary>
+        /// Gets the total number of branches by company Id
+        /// </summary>
+        /// <param name="companyId"></param>
+        /// <returns></returns>
+        public int TotalBranchesNumber(int companyId) 
+            => GetQueryable().Count(b => b.CompanyId == companyId);
+
         ///// <summary>
         ///// Gets Branches filtering by company Id
         ///// </summary>
@@ -54,15 +73,5 @@ namespace PointOS.DataAccess.Repositories
         //        CreatedOn = r.CreatedOn
         //    }).ToListAsync();
 
-        /// <summary>
-        /// Gets Branches filtering by company Id
-        /// </summary>
-        /// <param name="companyId"></param>
-        /// <param name="skip"></param>
-        /// <param name="take"></param>
-        /// <returns></returns>
-        public async Task<List<Branch>> FindByCompanyIdAsync(int companyId, int skip, int take) =>
-            await GetQueryable().Include(b => b.CreatedUser)
-                .Where(b => b.CompanyId == companyId).Skip(skip).Take(take).ToListAsync();
     }
 }

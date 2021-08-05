@@ -1,25 +1,32 @@
-﻿@page "/CompanyBranches"
-<EditForm Model="@BranchRequest" OnSubmit="@SaveChanges">
-    <DataAnnotationsValidator></DataAnnotationsValidator>
-    <MudCard Elevation="25">
-        <MudCardHeader>
-            <CardHeaderContent>
-                <MudText>Product Category Form</MudText>
-            </CardHeaderContent>
-        </MudCardHeader>
-        <MudCardContent>
+﻿
+<EditForm Model="@BranchRequest" OnValidSubmit="@SaveChanges">
+    <MudDialog>
+        <DialogContent>
+
+            <DataAnnotationsValidator></DataAnnotationsValidator>
+
             <MudGrid>
                 <MudItem xs="12" md="12">
-                    <MudTextField @bind-Value="@BranchRequest.Name" Label="Name" Variant="Variant.Outlined" />
+                    <MudTextField @bind-Value="@BranchRequest.Name" Label="Name" Variant="Variant.Outlined" For="@(()=>BranchRequest.Name)" />
                 </MudItem>
             </MudGrid>
-        </MudCardContent>
+            <MudCardActions>
 
-        <MudCardActions Class="pb-4 pl-4">
-            @*<MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Save" Color="Color.Primary" Class="ml-auto"
-                @onclick="@ConfirmButtonClicked">Save Changes</MudButton>*@
+            </MudCardActions>
 
-            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Large" FullWidth="true">submit </MudButton>
-        </MudCardActions>
-    </MudCard>
+
+        </DialogContent>
+        <DialogActions>
+            <MudButton OnClick="@Cancel">Cancel</MudButton>
+            <MudButton Color="Color.Primary" Variant="Variant.Filled" ButtonType="ButtonType.Submit">Save</MudButton>
+        </DialogActions>
+    </MudDialog>
 </EditForm>
+
+@code {
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+
+
+    void Submit() => MudDialog.Close(DialogResult.Ok(true));
+    void Cancel() => MudDialog.Cancel();
+}
