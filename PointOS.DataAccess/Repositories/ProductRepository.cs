@@ -34,7 +34,29 @@ namespace PointOS.DataAccess.Repositories
         /// Finds all Product records 
         /// </summary>
         /// <returns>list of products</returns>
-        public async Task<IList<Product>> FindAllAsync() => await GetQueryable().ToListAsync();
+        public async Task<IList<Product>> FindAllAsync(int companyId, int skip, int take)
+            => await GetQueryable().Where(p=>p.ProductCategory.CompanyId == companyId)
+                .Select(p=>new Product
+                {
+                    Name = p.Name,
+                    CreatedOn = p.CreatedOn,
+                    CreatedUserId = p.CreatedUserId,
+                    Status = p.Status,
+                    Id = p.Id,
+                    CreatedUser = new ApplicationUser
+                    {
+                        FirstName = p.CreatedUser.FirstName,
+                        MiddleName = p.CreatedUser.MiddleName,
+                        LastName = p.CreatedUser.LastName
+                    },
+                    //ProductPricing = p.ProductPricing.Where(x=>x.Status).ToList(),
+                    ProductCategory = new ProductCategory
+                    {
+                        //CompanyId = p.ProductCategory.CompanyId,
+                        Name = p.ProductCategory.Name
+                    }
+                })
+                .Skip(skip).Take(take).ToListAsync();
 
         /// <summary>
         /// Finds a product record by it's integer Id
@@ -58,5 +80,13 @@ namespace PointOS.DataAccess.Repositories
         /// <param name="id"></param>
         /// <returns>a record of product</returns>
         public async Task<Product> FindById(Guid id) => await GetQueryable().FirstOrDefaultAsync(p => p.GuidId == id);
+
+        /// <summary>
+        /// Gets the sum total of all products by company Id
+        /// </summary>
+        /// <param name="companyId"></param>
+        /// <returns></returns>
+        public int TotalProducts(int companyId)
+            => GetQueryable().Count(p => p.ProductCategory.CompanyId == companyId);
     }
 }

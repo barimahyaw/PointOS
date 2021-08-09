@@ -9,6 +9,9 @@ namespace PointOS.DataAccess.Entities
         public int Id { get; set; }
         public int ProductId { get; set; }
         public Product Product { get; set; }
+        [Required]
+        public int CurrencyId { get; set; }
+        public Currency Currency { get; set; }
         public double CostPrice { get; set; }
         public double WholeSalePrice { get; set; }
         public double RetailPrice { get; set; }

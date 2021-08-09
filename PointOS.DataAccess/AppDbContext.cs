@@ -19,5 +19,6 @@ namespace PointOS.DataAccess
         public DbSet<Branch> Branches { get; set; }
         public DbSet<Transactions> Transactions { get; set; }
         public DbSet<Sales> Sales { get; set; }
+        public DbSet<Currency> Currencies { get; set; }
     }
 }

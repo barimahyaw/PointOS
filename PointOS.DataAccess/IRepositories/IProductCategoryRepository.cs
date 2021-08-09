@@ -51,6 +51,18 @@ namespace PointOS.DataAccess.IRepositories
         /// </summary>
         /// <param name="companyId"></param>
         /// <returns></returns>
+
+        /// <summary>
+        /// Select all records of product category by company Id
+        /// </summary>
+        /// <returns>a list of product category records</returns>
+        public Task<IList<ProductCategory>> FindAllAsync(int companyId);
+
+        /// <summary>
+        /// Gets the sum total of all product categories by company Id
+        /// </summary>
+        /// <param name="companyId"></param>
+        /// <returns></returns>
         public int TotalProductCategories(int companyId);
     }
 }

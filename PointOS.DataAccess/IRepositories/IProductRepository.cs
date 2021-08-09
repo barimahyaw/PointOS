@@ -17,7 +17,7 @@ namespace PointOS.DataAccess.IRepositories
         /// Finds all Product records 
         /// </summary>
         /// <returns>list of products</returns>
-        Task<IList<Product>> FindAllAsync();
+        Task<IList<Product>> FindAllAsync(int companyId, int skip, int take);
 
         /// <summary>
         /// Finds a product record by it's integer Id
@@ -40,5 +40,12 @@ namespace PointOS.DataAccess.IRepositories
         /// <param name="id"></param>
         /// <returns>a record of product</returns>
         Task<Product> FindById(Guid id);
+
+        /// <summary>
+        /// Gets the sum total of all products by company Id
+        /// </summary>
+        /// <param name="companyId"></param>
+        /// <returns></returns>
+        public int TotalProducts(int companyId);
     }
 }

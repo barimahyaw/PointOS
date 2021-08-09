@@ -11,10 +11,12 @@ namespace PointOS.DataAccess.Repositories
     {
         private readonly AppDbContext _dbContext;
 
-        public TransactionRepository(AppDbContext dbContext)
-        {
-            _dbContext = dbContext;
-        }
+        /// <summary>
+        /// Constructor for DI
+        /// </summary>
+        /// <param name="dbContext"></param>
+        public TransactionRepository(AppDbContext dbContext) 
+            => _dbContext = dbContext;
 
         /// <summary>
         ///  Gets Branches as queryable with no tracking of changes
