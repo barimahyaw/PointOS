@@ -133,6 +133,25 @@ namespace PointOS.BusinessLogic
         }
 
         /// <summary>
+        /// Select all records of product category by company Id
+        /// </summary>
+        /// <returns>a list of product category records</returns>
+        public async Task<ListResponse<ProductCategoryResponse>> FindAllAsync(int companyId)
+        {
+            var entities = await _unitOfWork.ProductCategoryRepository.FindAllAsync(companyId);
+
+            if (entities.Count <= 0) return new ListResponse<ProductCategoryResponse>(new ResponseHeader { Message = "No record found." }, null);
+
+            var result = entities.Select(ProductCategoryResponseEntity);
+
+            return new ListResponse<ProductCategoryResponse>(new ResponseHeader
+            {
+                Success = true,
+                ReferenceNumber = _unitOfWork.ProductCategoryRepository.TotalProductCategories(companyId).ToString()
+            }, result);
+        }
+
+        /// <summary>
         /// a private method to initiate and populate Product Category
         /// </summary>
         /// <param name="entity"></param>
@@ -145,8 +164,8 @@ namespace PointOS.BusinessLogic
                 Id = entity.Id,
                 GuidValue = entity.GuidId,
                 ProductName = entity.Name,
-                Status = entity.Status,
-                CreatedBy = $"{user.FirstName} {user.MiddleName} {user.LastName}",
+                Status = entity.Status ? "Active" : "Inactive",
+                CreatedBy = user != null ? $"{user.FirstName} {user.MiddleName} {user.LastName}" : string.Empty,
                 CreatedOn = entity.CreatedOn
             };
             return result;

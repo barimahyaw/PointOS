@@ -7,7 +7,7 @@ namespace PointOS.Common.DTO.Response
         public int Id { get; set; }
         public Guid GuidValue { get; set; }
         public string ProductName { get; set; }
-        public bool Status { get; set; }
+        public string Status { get; set; }
 
     }
 }

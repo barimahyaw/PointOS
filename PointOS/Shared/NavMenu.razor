@@ -28,13 +28,16 @@
         </MudNavGroup>*@
 
     <MudText Typo="Typo.subtitle2" Color="Color.Inherit" Class="ml-4 my-3">System Setup</MudText>
-    <MudNavLink Href="/ProductCategories" Icon="@Icons.Material.Outlined.Pages">Product Manager</MudNavLink>
-    <MudNavLink Href="/Branches" Icon="@Icons.Material.Outlined.Pages">Branch Manager</MudNavLink>
+    <MudNavGroup Title="Setup Manager" Icon="@Icons.Material.Outlined.Settings" HideExpandIcon="true">
+        <MudNavLink Href="/Branches" Icon="@Icons.Material.Outlined.Book">Branches</MudNavLink>
+        @*<MudNavLink Href="/ProductCategories" Icon="@Icons.Material.Outlined.Pages">Product Categories</MudNavLink>*@
+        <MudNavLink Href="/Product" Icon="@Icons.Material.Outlined.Preview">Products</MudNavLink>
+    </MudNavGroup>
     <MudNavGroup Title="User Manager" Icon="@Icons.Material.Outlined.SupervisedUserCircle" HideExpandIcon="true">
-        <MudNavLink Href="/authentication/login" Icon="@Icons.Material.Outlined.VerifiedUser">Create New User</MudNavLink>
-        <MudNavLink Href="/authentication/register" Icon="@Icons.Material.Outlined.InsertDriveFile">Register</MudNavLink>
-        <MudNavLink Href="/authentication/forgot-password" Icon="@Icons.Material.Outlined.InsertDriveFile">Forgot Password</MudNavLink>
-        <MudNavLink Href="/authentication/reset-password" Icon="@Icons.Material.Outlined.InsertDriveFile">Reset Password</MudNavLink>
+        <MudNavLink Href="/personal/account" Icon="@Icons.Material.Outlined.AccountBox">Personal Profile</MudNavLink>
+        @*<MudNavLink Href="/authentication/register" Icon="@Icons.Material.Outlined.InsertDriveFile">Register</MudNavLink>
+            <MudNavLink Href="/authentication/forgot-password" Icon="@Icons.Material.Outlined.InsertDriveFile">Forgot Password</MudNavLink>
+            <MudNavLink Href="/authentication/reset-password" Icon="@Icons.Material.Outlined.InsertDriveFile">Reset Password</MudNavLink>*@
     </MudNavGroup>
 </MudNavMenu>
 

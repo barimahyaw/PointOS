@@ -144,6 +144,15 @@
             </summary>
             <param name="productPricingBusiness"></param>
         </member>
+        <member name="M:PointOS.Api.Controllers.v1.PricingController.Get(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Updates a product pricing record
+            </summary>
+            <param name="companyId"></param>
+            <param name="skip"></param>
+            <param name="take"></param>
+            <returns></returns>
+        </member>
         <member name="M:PointOS.Api.Controllers.v1.PricingController.Post(PointOS.Common.DTO.Request.ProductPricingRequest)">
             <summary>
             Saves a product pricing record
@@ -183,6 +192,12 @@
             </summary>
             <returns>a list of product category records</returns>
         </member>
+        <member name="M:PointOS.Api.Controllers.v1.ProductCategoryController.Find(System.Int32)">
+            <summary>
+            Select all records of product category 
+            </summary>
+            <returns>a list of product category records</returns>
+        </member>
         <member name="M:PointOS.Api.Controllers.v1.ProductCategoryController.Post(PointOS.Common.DTO.Request.ProductCategoryRequest)">
             <summary>
             Saves a product category record
@@ -201,7 +216,7 @@
             </summary>
             <param name="productBusiness"></param>
         </member>
-        <member name="M:PointOS.Api.Controllers.v1.ProductController.Get">
+        <member name="M:PointOS.Api.Controllers.v1.ProductController.Get(System.Int32,System.Int32,System.Int32)">
             <summary>
             Gets all Product records 
             </summary>

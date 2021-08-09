@@ -1,6 +1,5 @@
 ﻿@page "/ProductCategories"
-
-<MudText Typo="Typo.h5" Color="Color.Primary" Class="mb-4">Product Categories</MudText>
+@*<MudText Typo="Typo.h5" Color="Color.Primary" Class="mb-4">Product Category List</MudText>*@
 
 <SfGrid TValue="@ProductCategoryResponse" AllowPaging="true" AllowSorting="true" Toolbar="@(new List<string>() {"Search"})">
     <Syncfusion.Blazor.Data.SfDataManager Adaptor="Adaptors.CustomAdaptor" AdaptorInstance="@typeof(ProductCategoryAdapter)"></Syncfusion.Blazor.Data.SfDataManager>
@@ -8,10 +7,11 @@
     <GridSortSettings AllowUnsort="false"></GridSortSettings>
     <GridEditSettings AllowAdding="true" AllowDeleting="true" AllowEditing="true"></GridEditSettings>
     <GridColumns>
-        <GridColumn Field="@nameof(ProductCategoryResponse.Id)" HeaderText="Id"></GridColumn>
-        <GridColumn Field="@nameof(ProductCategoryResponse.GuidValue)" HeaderText="Value"></GridColumn>
+        <GridColumn Type="ColumnType.CheckBox" AllowFiltering="false" AllowSorting="false" Width="60"></GridColumn>
+        <GridColumn Field="@nameof(ProductCategoryResponse.Id)" Visible="false" HeaderText="Id"></GridColumn>
+        <GridColumn Field="@nameof(ProductCategoryResponse.GuidValue)" Visible="false" HeaderText="Value"></GridColumn>
         <GridColumn Field="@nameof(ProductCategoryResponse.ProductName)" HeaderText="Name"></GridColumn>
-        <GridColumn Field="@nameof(ProductCategoryResponse.Status)" HeaderText="Is Active"></GridColumn>
+        <GridColumn Field="@nameof(ProductCategoryResponse.Status)" HeaderText="Status"></GridColumn>
         <GridColumn Field="@nameof(ProductCategoryResponse.CreatedBy)" HeaderText="Created By"></GridColumn>
         <GridColumn Field="@nameof(ProductCategoryResponse.CreatedOn)" HeaderText="Created On"></GridColumn>
         @*<GridColumn Field="@nameof(ProductCategoryResponse.ModifiedBy)" HeaderText="Modified By"></GridColumn>

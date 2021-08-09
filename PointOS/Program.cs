@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using MudBlazor.Services;
 using PointOS.Common.Helpers;
 using PointOS.Common.Helpers.IHelpers;
+using PointOS.DataAdapters;
 using PointOS.Services;
 using PointOS.Services.Authentication;
 using PointOS.Services.Notifications;
@@ -13,7 +14,6 @@ using Syncfusion.Blazor;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
-using PointOS.Pages.Utilities.DataAdapters;
 
 namespace PointOS
 {
@@ -46,6 +46,8 @@ namespace PointOS
 
             builder.Services.AddScoped<BranchAdapter>();
             builder.Services.AddScoped<ProductCategoryAdapter>();
+            builder.Services.AddScoped<ProductAdapter>();
+            builder.Services.AddScoped<PricingAdapter>();
 
             await builder.Build().RunAsync();
         }

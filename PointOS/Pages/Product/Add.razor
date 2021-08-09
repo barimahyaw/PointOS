@@ -1,0 +1,58 @@
+﻿
+<EditForm Model="@ProductRequest" OnValidSubmit="@SaveChanges">
+    <MudDialog>
+        <DialogContent>
+
+            <DataAnnotationsValidator></DataAnnotationsValidator>
+
+            <MudGrid>
+                <MudItem xs="12" md="12" sm="12" lg="12" xl="12">
+                    <MudTextField @bind-Value="@ProductRequest.Name" Label="Name" Variant="Variant.Outlined" For="@(()=>ProductRequest.Name)" />
+                </MudItem>
+                @if (ProductRequest.ProductCategories != null)
+                {
+                    <MudItem xs="12" md="12" sm="12" lg="12" xl="12">
+                        <MudSelect Label="-- Select Product Category --" Strict="true" Variant="Variant.Outlined" Format="F2" @bind-Value="@ProductRequest.ProductCategoryId" For="@(()=>ProductRequest.ProductCategoryId)">
+                            @foreach (var productCategory in ProductRequest.ProductCategories)
+                                {
+                                    if (!string.IsNullOrWhiteSpace(productCategory.Value))
+                                    {
+                                    <MudSelectItem Value="Convert.ToInt32(productCategory.Value)">@productCategory.Text</MudSelectItem>
+                                    }
+                                }
+                        </MudSelect>
+                    </MudItem>
+                }
+
+                @*<MudItem xs="4" md="4" sm="4" lg="4" xl="4">
+                        <MudTextField @bind-Value="@ProductRequest.ProductPricingRequest.CostPrice" Label="Cost Price" Variant="Variant.Outlined" For="@(()=>ProductRequest.ProductPricingRequest.CostPrice)" />
+                    </MudItem>
+                    <MudItem xs="4" md="4" sm="4" lg="4" xl="4">
+                        <MudTextField @bind-Value="@ProductRequest.ProductPricingRequest.WholeSalePrice" Label="Whole Sale Price" Variant="Variant.Outlined" For="@(()=>ProductRequest.ProductPricingRequest.WholeSalePrice)" />
+                    </MudItem>
+                    <MudItem xs="4" md="4" sm="4" lg="4" xl="4">
+                        <MudTextField @bind-Value="@ProductRequest.ProductPricingRequest.RetailPrice" Label="Retail Sale" Variant="Variant.Outlined" For="@(()=>ProductRequest.ProductPricingRequest.RetailPrice)" />
+                    </MudItem>*@
+
+                <MudItem xs="12" md="12" sm="12" lg="12" xl="12">
+                    <MudText>
+                        <b>Status</b>
+                    </MudText>
+                    <MudText Typo="Typo.body2">
+                        Set the Status of the Product to Active/Inactive.
+                    </MudText>
+                    <MudSwitch @bind-Checked="@FriendSwitch" Color="Color.Secondary" />
+                </MudItem>
+            </MudGrid>
+            <MudCardActions>
+
+            </MudCardActions>
+
+
+        </DialogContent>
+        <DialogActions>
+            <MudButton OnClick="@Cancel">Cancel</MudButton>
+            <MudButton Color="Color.Primary" Variant="Variant.Filled" ButtonType="ButtonType.Submit">Save</MudButton>
+        </DialogActions>
+    </MudDialog>
+</EditForm>

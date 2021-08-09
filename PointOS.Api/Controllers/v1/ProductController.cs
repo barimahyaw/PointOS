@@ -32,7 +32,7 @@ namespace PointOS.Api.Controllers.v1
         /// </summary>
         /// <returns>a list of products</returns>
         [HttpGet]
-        public async Task<ListResponse<ProductResponse>> Get() => await _productBusiness.FindAllAsync();
+        public async Task<ListResponse<ProductResponse>> Get(int companyId, int skip, int take = 5) => await _productBusiness.FindAllAsync(companyId,skip,take);
 
         /// <summary>
         /// Gets a product record by it's integer Id

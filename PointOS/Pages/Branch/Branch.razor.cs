@@ -11,8 +11,6 @@ namespace PointOS.Pages.Branch
 {
     public partial class Branch
     {
-        [Inject]
-        private NavigationManager NavigationManager { get; set; }
         private BranchRequest BranchRequest { get; set; } = new BranchRequest();
 
         [Inject]

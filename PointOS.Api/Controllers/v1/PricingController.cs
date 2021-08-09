@@ -24,9 +24,18 @@ namespace PointOS.Api.Controllers.v1
         /// </summary>
         /// <param name="productPricingBusiness"></param>
         public PricingController(IProductPricingBusiness productPricingBusiness)
-        {
-            _productPricingBusiness = productPricingBusiness;
-        }
+            => _productPricingBusiness = productPricingBusiness;
+
+        /// <summary>
+        /// Updates a product pricing record
+        /// </summary>
+        /// <param name="companyId"></param>
+        /// <param name="skip"></param>
+        /// <param name="take"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ListResponse<ProductPricingResponse>> Get(int companyId, int skip, int take)
+            => await _productPricingBusiness.FindAllAsync(companyId, skip, take);
 
         /// <summary>
         /// Saves a product pricing record

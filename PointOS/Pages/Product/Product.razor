@@ -1,0 +1,64 @@
+﻿@page "/Product"
+
+<MudText Typo="Typo.h5" Color="Color.Primary" Class="mb-4">Products Manager</MudText>
+<MudTabs Elevation="25" Color="Color.Transparent" Rounded="true" PanelClass="mt-6">
+
+    <MudTabPanel Text="Products">
+        <MudCard>
+            <MudCardHeader>
+                <CardHeaderContent>
+                    <MudText>Products List</MudText>
+                </CardHeaderContent>
+            </MudCardHeader>
+            <MudCardContent>
+                <PointOS.Pages.Product.List />
+            </MudCardContent>
+
+        </MudCard>
+    </MudTabPanel>
+    <MudTabPanel Text="Pricing">
+        <MudGrid>
+            <MudItem xs="12" sm="4" md="3">
+                <MudCard Elevation="25">
+                    <MudCardHeader>
+                        <CardHeaderContent>
+                            <MudText>Pricing Setup</MudText>
+                        </CardHeaderContent>
+                    </MudCardHeader>
+                    <MudCardContent>
+
+                    </MudCardContent>
+                    <MudCardActions Class="pb-4 pl-4">
+
+                    </MudCardActions>
+                </MudCard>
+            </MudItem>
+            <MudItem xs="12" sm="8" md="9">
+                <MudCard Elevation="25">
+                    <MudCardHeader>
+                        <CardHeaderContent>
+                            <MudText>Product Price List</MudText>
+                        </CardHeaderContent>
+                    </MudCardHeader>
+                    <MudCardContent>
+                        <PointOS.Pages.Pricing.List />
+                    </MudCardContent>
+                </MudCard>
+            </MudItem>
+        </MudGrid>
+    </MudTabPanel>
+    <MudTabPanel Text="Categories">
+        <MudItem xs="12" sm="12" md="12">
+            <MudCard Elevation="25">
+                <MudCardHeader>
+                    <CardHeaderContent>
+                        <MudText>Product Categories List</MudText>
+                    </CardHeaderContent>
+                </MudCardHeader>
+                <MudCardContent>
+                    <PointOS.Pages.ProductCategory.List />
+                </MudCardContent>
+            </MudCard>
+        </MudItem>
+    </MudTabPanel>
+</MudTabs>

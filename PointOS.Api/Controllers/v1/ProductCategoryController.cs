@@ -40,8 +40,16 @@ namespace PointOS.Api.Controllers.v1
         /// </summary>
         /// <returns>a list of product category records</returns>
         [HttpGet("get")]
-        public async Task<ListResponse<ProductCategoryResponse>> Get(int companyId, int skip = 0, int take = 5)
+        public async Task<ListResponse<ProductCategoryResponse>> Get(int companyId, int skip, int take = 5)
             => await _productCategoryBusiness.FindAllAsync(companyId, skip, take);
+
+        /// <summary>
+        /// Select all records of product category 
+        /// </summary>
+        /// <returns>a list of product category records</returns>
+        [HttpGet("find")]
+        public async Task<ListResponse<ProductCategoryResponse>> Find(int companyId)
+            => await _productCategoryBusiness.FindAllAsync(companyId);
 
         /// <summary>
         /// Saves a product category record

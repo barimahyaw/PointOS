@@ -13,6 +13,7 @@ namespace PointOS.Common.DTO.Request
         public bool Status { get; set; }
         [Required]
         [Display(Name = "Product Category")]
+        [Range(1, int.MaxValue, ErrorMessage = "Select a valid Product Category")]
         public int ProductCategoryId { get; set; }
 
         public IEnumerable<SelectListItem> ProductCategories { get; set; }

@@ -92,9 +92,9 @@ namespace PointOS.BusinessLogic
         /// Finds all Product records 
         /// </summary>
         /// <returns>a list of products</returns>
-        public async Task<ListResponse<ProductResponse>> FindAllAsync()
+        public async Task<ListResponse<ProductResponse>> FindAllAsync(int companyId, int skip, int take)
         {
-            var entities = await _unitOfWork.ProductRepository.FindAllAsync();
+            var entities = await _unitOfWork.ProductRepository.FindAllAsync(companyId, skip, take);
 
             if (entities == null) return new ListResponse<ProductResponse>(new ResponseHeader
             {
@@ -103,7 +103,11 @@ namespace PointOS.BusinessLogic
 
             var response = entities.Select(ProductEntity);
 
-            return new ListResponse<ProductResponse>(new ResponseHeader { Success = true }, response);
+            return new ListResponse<ProductResponse>(new ResponseHeader
+            {
+                Success = true,
+                ReferenceNumber = _unitOfWork.ProductRepository.TotalProducts(companyId).ToString()
+            }, response);
         }
 
         /// <summary>
@@ -118,10 +122,11 @@ namespace PointOS.BusinessLogic
                 Id = entity.Id,
                 GuidValue = entity.GuidId,
                 Name = entity.Name,
-                Status = entity.Status,
+                Status = entity.Status ? "Active" : "Inactive",
+                ProductCategory = entity.ProductCategory.Name,
                 ProductCategoryId = entity.ProductCategoryId,
                 CreatedOn = entity.CreatedOn,
-                CreatedUserId = entity.CreatedUserId
+                CreatedBy = $"{entity.CreatedUser.FirstName} {entity.CreatedUser.MiddleName} {entity.CreatedUser.LastName}",
             };
             return response;
         }

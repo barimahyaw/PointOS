@@ -8,14 +8,14 @@ using PointOS.Services;
 using Syncfusion.Blazor;
 using Syncfusion.Blazor.Data;
 
-namespace PointOS.Pages.Utilities.DataAdapters
+namespace PointOS.DataAdapters
 {
-    public class BranchAdapter : DataAdaptor
+    public class ProductCategoryAdapter : DataAdaptor
     {
         private readonly IApiEndpointCallService _apiEndpointCallService;
         private readonly ISessionStorageService _sessionStorageService;
 
-        public BranchAdapter(IApiEndpointCallService apiEndpointCallService, ISessionStorageService sessionStorageService)
+        public ProductCategoryAdapter(IApiEndpointCallService apiEndpointCallService, ISessionStorageService sessionStorageService)
         {
             _apiEndpointCallService = apiEndpointCallService;
             _sessionStorageService = sessionStorageService;
@@ -27,9 +27,9 @@ namespace PointOS.Pages.Utilities.DataAdapters
 
             var param = $"?companyId={session.CompanyId}&skip={dataManagerRequest.Skip}&take={dataManagerRequest.Take}";
 
-            var response = await _apiEndpointCallService.CallApiGetService("Branch", null, param);
+            var response = await _apiEndpointCallService.CallApiGetService("ProductCategory/get", null, param);
 
-            var result = JsonConvert.DeserializeObject<ListResponse<BranchResponse>>(response.ToString());
+            var result = JsonConvert.DeserializeObject<ListResponse<ProductCategoryResponse>>(response.ToString());
 
             var dataResult = new DataResult
             {
