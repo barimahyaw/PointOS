@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using PointOS.BusinessLogic;
+using PointOS.BusinessLogic.Interfaces;
 using PointOS.Common.DTO.Response;
 using System.Threading.Tasks;
 
@@ -15,13 +15,13 @@ namespace PointOS.Api.Controllers.v1
     [Authorize(AuthenticationSchemes = "CustomAuthentication")]
     public class CurrencyController : ControllerBase
     {
-        private readonly CurrencyBusiness _currencyBusiness;
+        private readonly ICurrencyBusiness _currencyBusiness;
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="currencyBusiness"></param>
-        public CurrencyController(CurrencyBusiness currencyBusiness)
+        public CurrencyController(ICurrencyBusiness currencyBusiness)
             => _currencyBusiness = currencyBusiness;
 
 

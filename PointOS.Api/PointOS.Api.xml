@@ -116,6 +116,23 @@
             <param name="request"></param>
             <returns></returns>
         </member>
+        <member name="T:PointOS.Api.Controllers.v1.CurrencyController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:PointOS.Api.Controllers.v1.CurrencyController.#ctor(PointOS.BusinessLogic.Interfaces.ICurrencyBusiness)">
+            <summary>
+            
+            </summary>
+            <param name="currencyBusiness"></param>
+        </member>
+        <member name="M:PointOS.Api.Controllers.v1.CurrencyController.Get">
+            <summary>
+            Gets details of all Currencies
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:PointOS.Api.Controllers.v1.NotificationController">
             <summary>
             
@@ -219,6 +236,12 @@
         <member name="M:PointOS.Api.Controllers.v1.ProductController.Get(System.Int32,System.Int32,System.Int32)">
             <summary>
             Gets all Product records 
+            </summary>
+            <returns>a list of products</returns>
+        </member>
+        <member name="M:PointOS.Api.Controllers.v1.ProductController.GetAll(System.Int32)">
+            <summary>
+            Gets all Product records by company Id
             </summary>
             <returns>a list of products</returns>
         </member>
