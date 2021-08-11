@@ -128,7 +128,7 @@ namespace PointOS.BusinessLogic
             return new ListResponse<ProductCategoryResponse>(new ResponseHeader
             {
                 Success = true,
-                ReferenceNumber = _unitOfWork.ProductCategoryRepository.TotalProductCategories(companyId).ToString()
+                ReferenceNumber = _unitOfWork.ProductCategoryRepository.TotalProductTypes(companyId).ToString()
             }, result);
         }
 
@@ -147,7 +147,7 @@ namespace PointOS.BusinessLogic
             return new ListResponse<ProductCategoryResponse>(new ResponseHeader
             {
                 Success = true,
-                ReferenceNumber = _unitOfWork.ProductCategoryRepository.TotalProductCategories(companyId).ToString()
+                ReferenceNumber = _unitOfWork.ProductCategoryRepository.TotalProductTypes(companyId).ToString()
             }, result);
         }
 

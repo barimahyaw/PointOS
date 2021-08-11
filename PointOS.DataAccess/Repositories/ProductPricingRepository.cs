@@ -59,6 +59,7 @@ namespace PointOS.DataAccess.Repositories
                 RetailPrice = p.RetailPrice,
                 CreatedOn = p.CreatedOn,
                 ProductId = p.ProductId,
+                Status = p.Status,
                 Product = new Product
                 {
                     Name = p.Product.Name

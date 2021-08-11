@@ -47,12 +47,12 @@ namespace PointOS.Pages.Product
 
             var response = await ApiEndpointCallService.CallApiService("Product", ProductRequest, null, Verb.Post);
 
-            Snackbar.Add(response.Message, Severity.Success, config =>
+            Snackbar.Add(response.Message, response.Success ? Severity.Success : Severity.Error, config =>
             {
                 config.ShowCloseIcon = false;
             });
 
-            MudDialog.Close(DialogResult.Ok(true));
+            if (response.Success) MudDialog.Close(DialogResult.Ok(true));
         }
 
         protected override async Task OnInitializedAsync()

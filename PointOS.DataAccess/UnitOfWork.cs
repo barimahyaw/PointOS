@@ -17,6 +17,7 @@ namespace PointOS.DataAccess
         public ITransactionRepository TransactionRepository { get; }
         public IDashboardRepository DashboardRepository { get; }
         public ICurrencyRepository CurrencyRepository { get; set; }
+        public IProductStockRepository ProductStockRepository { get; set; }
         #endregion
 
         private readonly AppDbContext _dbContext;
@@ -37,6 +38,7 @@ namespace PointOS.DataAccess
             TransactionRepository = new TransactionRepository(_dbContext);
             DashboardRepository = new DashboardRepository(_dbContext);
             CurrencyRepository = new CurrencyRepository(dbContext);
+            ProductStockRepository = new ProductStockRepository(dbContext);
         }
 
         /// <summary>

@@ -8,13 +8,13 @@ namespace PointOS.BusinessLogic
 {
     public class CurrencyBusiness : ICurrencyBusiness
     {
-        private readonly UnitOfWork _unitOfWork;
+        private readonly IUnitOfWork _unitOfWork;
 
         /// <summary>
         /// Constructor for DI
         /// </summary>
         /// <param name="unitOfWork"></param>
-        public CurrencyBusiness(UnitOfWork unitOfWork) => _unitOfWork = unitOfWork;
+        public CurrencyBusiness(IUnitOfWork unitOfWork) => _unitOfWork = unitOfWork;
 
         /// <summary>
         /// Find all currencies

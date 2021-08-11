@@ -1,0 +1,62 @@
+﻿
+<EditForm Model="@ProductPricingRequest" OnValidSubmit="@SaveChanges">
+
+
+    <DataAnnotationsValidator></DataAnnotationsValidator>
+
+
+    @if (ProductPricingRequest.Products != null)
+    {
+
+        <MudSelect Label="-- Select Product --" Strict="true" Variant="Variant.Outlined" Format="F2" @bind-Value="@ProductPricingRequest.ProductId" For="@(()=>ProductPricingRequest.ProductId)">
+            @foreach (var product in ProductPricingRequest.Products)
+                {
+                    if (!string.IsNullOrWhiteSpace(product.Value))
+                    {
+                    <MudSelectItem Value="Convert.ToInt32(product.Value)">@product.Text</MudSelectItem>
+                    }
+                }
+        </MudSelect>
+
+    }
+
+    @if (ProductPricingRequest.Currencies != null)
+    {
+
+        <MudSelect Label="-- Select Currency--" Strict="true" Variant="Variant.Outlined" Format="F2" @bind-Value="@ProductPricingRequest.CurrencyId" For="@(()=>ProductPricingRequest.CurrencyId)">
+            @foreach (var product in ProductPricingRequest.Currencies)
+                {
+                    if (!string.IsNullOrWhiteSpace(product.Value))
+                    {
+                    <MudSelectItem Value="Convert.ToInt32(product.Value)">@product.Text</MudSelectItem>
+                    }
+                }
+        </MudSelect>
+
+    }
+
+
+
+    <MudTextField @bind-Value="@ProductPricingRequest.CostPrice" Label="Cost Price" Variant="Variant.Outlined" For="@(()=>ProductPricingRequest.CostPrice)" />
+
+
+    <MudTextField @bind-Value="@ProductPricingRequest.WholeSalePrice" Label="Whole Sale Price" Variant="Variant.Outlined" For="@(()=>ProductPricingRequest.WholeSalePrice)" />
+
+    <MudTextField @bind-Value="@ProductPricingRequest.RetailPrice" Label="Retail Sale" Variant="Variant.Outlined" For="@(()=>ProductPricingRequest.RetailPrice)" />
+
+    <MudText>
+        <b>Status</b>
+    </MudText>
+    <MudText Typo="Typo.body2">
+        Set the Status of the Product to Active/Inactive.
+    </MudText>
+    <MudSwitch @bind-Checked="@FriendSwitch" Color="Color.Secondary" />
+
+
+    <MudCardActions>
+        @*<MudButton OnClick="@Cancel">Cancel</MudButton>*@
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto" ButtonType="ButtonType.Submit">Save</MudButton>
+    </MudCardActions>
+
+
+</EditForm>

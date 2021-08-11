@@ -3,6 +3,11 @@
     public enum TransactionType
     {
         Sales = 1,
+        Order,
+        Supplier,
+        Rent,
+        Repair,
+        Buy,
         Payment
     }
 }

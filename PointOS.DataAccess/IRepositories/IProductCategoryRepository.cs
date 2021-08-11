@@ -63,6 +63,6 @@ namespace PointOS.DataAccess.IRepositories
         /// </summary>
         /// <param name="companyId"></param>
         /// <returns></returns>
-        public int TotalProductCategories(int companyId);
+        public int TotalProductTypes(int companyId);
     }
 }

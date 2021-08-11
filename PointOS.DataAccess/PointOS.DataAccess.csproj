@@ -16,11 +16,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Entities\Entities\" />
+    <ProjectReference Include="..\PointOS.Common\PointOS.Common.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PointOS.Common\PointOS.Common.csproj" />
+    <Folder Include="Entities\Entities\" />
   </ItemGroup>
 
 </Project>

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PointOS.DataAccess;
 
 namespace PointOS.DataAccess.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210811123915_ChangedDbSetNames")]
+    partial class ChangedDbSetNames
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -367,53 +369,19 @@ namespace PointOS.DataAccess.Migrations
                     b.Property<int>("ProductCategoryId")
                         .HasColumnType("int");
 
-                    b.Property<bool>("Status")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CreatedUserId");
-
-                    b.HasIndex("ProductCategoryId");
-
-                    b.ToTable("Products");
-                });
-
-            modelBuilder.Entity("PointOS.DataAccess.Entities.ProductCategory", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("CompanyId")
+                    b.Property<int?>("ProductTypeId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreatedUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<Guid>("GuidId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CompanyId");
-
                     b.HasIndex("CreatedUserId");
 
-                    b.ToTable("ProductCategories");
+                    b.HasIndex("ProductTypeId");
+
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("PointOS.DataAccess.Entities.ProductPricing", b =>
@@ -476,9 +444,6 @@ namespace PointOS.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<Guid>("GuidId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
@@ -500,6 +465,43 @@ namespace PointOS.DataAccess.Migrations
                     b.HasIndex("ProductId");
 
                     b.ToTable("ProductStocks");
+                });
+
+            modelBuilder.Entity("PointOS.DataAccess.Entities.ProductCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CompanyId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<Guid>("GuidId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
+
+                    b.HasIndex("CreatedUserId");
+
+                    b.ToTable("ProductCategories");
                 });
 
             modelBuilder.Entity("PointOS.DataAccess.Entities.Sales", b =>
@@ -670,32 +672,11 @@ namespace PointOS.DataAccess.Migrations
 
                     b.HasOne("PointOS.DataAccess.Entities.ProductCategory", "ProductCategory")
                         .WithMany("Products")
-                        .HasForeignKey("ProductCategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ProductTypeId");
 
                     b.Navigation("CreatedUser");
 
                     b.Navigation("ProductCategory");
-                });
-
-            modelBuilder.Entity("PointOS.DataAccess.Entities.ProductCategory", b =>
-                {
-                    b.HasOne("PointOS.DataAccess.Entities.Company", "Company")
-                        .WithMany("ProductTypes")
-                        .HasForeignKey("CompanyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("PointOS.DataAccess.Entities.ApplicationUser", "CreatedUser")
-                        .WithMany()
-                        .HasForeignKey("CreatedUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Company");
-
-                    b.Navigation("CreatedUser");
                 });
 
             modelBuilder.Entity("PointOS.DataAccess.Entities.ProductPricing", b =>
@@ -750,6 +731,25 @@ namespace PointOS.DataAccess.Migrations
                     b.Navigation("Product");
                 });
 
+            modelBuilder.Entity("PointOS.DataAccess.Entities.ProductCategory", b =>
+                {
+                    b.HasOne("PointOS.DataAccess.Entities.Company", "Company")
+                        .WithMany("ProductCategories")
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PointOS.DataAccess.Entities.ApplicationUser", "CreatedUser")
+                        .WithMany()
+                        .HasForeignKey("CreatedUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Company");
+
+                    b.Navigation("CreatedUser");
+                });
+
             modelBuilder.Entity("PointOS.DataAccess.Entities.Sales", b =>
                 {
                     b.HasOne("PointOS.DataAccess.Entities.ProductPricing", "ProductPricing")
@@ -788,7 +788,7 @@ namespace PointOS.DataAccess.Migrations
                 {
                     b.Navigation("Branches");
 
-                    b.Navigation("ProductTypes");
+                    b.Navigation("ProductCategories");
                 });
 
             modelBuilder.Entity("PointOS.DataAccess.Entities.Product", b =>
@@ -798,14 +798,14 @@ namespace PointOS.DataAccess.Migrations
                     b.Navigation("ProductQuantity");
                 });
 
-            modelBuilder.Entity("PointOS.DataAccess.Entities.ProductCategory", b =>
-                {
-                    b.Navigation("Products");
-                });
-
             modelBuilder.Entity("PointOS.DataAccess.Entities.ProductPricing", b =>
                 {
                     b.Navigation("Transactions");
+                });
+
+            modelBuilder.Entity("PointOS.DataAccess.Entities.ProductCategory", b =>
+                {
+                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("PointOS.DataAccess.Entities.Transactions", b =>

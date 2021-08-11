@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using Blazored.SessionStorage;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using MudBlazor;
 using PointOS.Common.DTO.Request;
+using PointOS.Common.DTO.Sessions;
 using PointOS.Common.Enums;
 using PointOS.Services;
 using System.Security.Claims;
@@ -11,6 +13,8 @@ namespace PointOS.Pages.Branch
 {
     public partial class Branch
     {
+        [Inject]
+        protected ISessionStorageService SessionStorageService { get; set; }
         private BranchRequest BranchRequest { get; set; } = new BranchRequest();
 
         [Inject]
@@ -37,7 +41,9 @@ namespace PointOS.Pages.Branch
 
             BranchRequest.CreatedBy = authState.User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
-            BranchRequest.CompanyId = 1002;
+            var session = await SessionStorageService.GetItemAsync<UserSession>("UserSession");
+
+            BranchRequest.CompanyId = session.CompanyId;
 
             var result = await ApiEndpointCallService.CallApiService("Branch", BranchRequest, null, Verb.Post);
 
@@ -46,7 +52,12 @@ namespace PointOS.Pages.Branch
             Snackbar.Add(result.Message, result.Success ? Severity.Success : Severity.Error, config => config.ShowCloseIcon = false);
 
             MudDialog.Close(DialogResult.Ok(true));
-
         }
+
+        [CascadingParameter]
+        private MudDialogInstance MudDialog { get; set; }
+
+        private void Submit() => MudDialog.Close(DialogResult.Ok(true));
+        private void Cancel() => MudDialog.Cancel();
     }
 }

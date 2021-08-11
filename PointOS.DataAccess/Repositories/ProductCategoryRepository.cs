@@ -105,7 +105,7 @@ namespace PointOS.DataAccess.Repositories
         /// </summary>
         /// <param name="companyId"></param>
         /// <returns></returns>
-        public int TotalProductCategories(int companyId)
+        public int TotalProductTypes(int companyId)
             => GetQueryable().Count(b => b.CompanyId == companyId);
     }
 }

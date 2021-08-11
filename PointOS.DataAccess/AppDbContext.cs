@@ -20,5 +20,6 @@ namespace PointOS.DataAccess
         public DbSet<Transactions> Transactions { get; set; }
         public DbSet<Sales> Sales { get; set; }
         public DbSet<Currency> Currencies { get; set; }
+        public DbSet<ProductStock> ProductStocks { get; set; }
     }
 }

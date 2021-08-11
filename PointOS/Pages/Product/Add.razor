@@ -24,15 +24,15 @@
                     </MudItem>
                 }
 
-                @*<MudItem xs="4" md="4" sm="4" lg="4" xl="4">
-                        <MudTextField @bind-Value="@ProductRequest.ProductPricingRequest.CostPrice" Label="Cost Price" Variant="Variant.Outlined" For="@(()=>ProductRequest.ProductPricingRequest.CostPrice)" />
-                    </MudItem>
-                    <MudItem xs="4" md="4" sm="4" lg="4" xl="4">
-                        <MudTextField @bind-Value="@ProductRequest.ProductPricingRequest.WholeSalePrice" Label="Whole Sale Price" Variant="Variant.Outlined" For="@(()=>ProductRequest.ProductPricingRequest.WholeSalePrice)" />
-                    </MudItem>
-                    <MudItem xs="4" md="4" sm="4" lg="4" xl="4">
-                        <MudTextField @bind-Value="@ProductRequest.ProductPricingRequest.RetailPrice" Label="Retail Sale" Variant="Variant.Outlined" For="@(()=>ProductRequest.ProductPricingRequest.RetailPrice)" />
-                    </MudItem>*@
+                <MudItem xs="4" md="4" sm="4" lg="4" xl="4">
+                    <MudTextField @bind-Value="@ProductRequest.CostPrice" Label="Cost Price" Variant="Variant.Outlined" For="@(()=>ProductRequest.CostPrice)" />
+                </MudItem>
+                <MudItem xs="4" md="4" sm="4" lg="4" xl="4">
+                    <MudTextField @bind-Value="@ProductRequest.WholeSalePrice" Label="Whole Sale Price" Variant="Variant.Outlined" For="@(()=>ProductRequest.WholeSalePrice)" />
+                </MudItem>
+                <MudItem xs="4" md="4" sm="4" lg="4" xl="4">
+                    <MudTextField @bind-Value="@ProductRequest.RetailPrice" Label="Retail Sale" Variant="Variant.Outlined" For="@(()=>ProductRequest.RetailPrice)" />
+                </MudItem>
 
                 <MudItem xs="12" md="12" sm="12" lg="12" xl="12">
                     <MudText>
@@ -42,6 +42,13 @@
                         Set the Status of the Product to Active/Inactive.
                     </MudText>
                     <MudSwitch @bind-Checked="@FriendSwitch" Color="Color.Secondary" />
+                </MudItem>
+
+                <MudItem xs="6" md="6" sm="6" lg="6" xl="6">
+                    <MudTextField @bind-Value="@ProductRequest.Quantity" Label="Quantity" Variant="Variant.Outlined" For="@(()=>ProductRequest.Quantity)" />
+                </MudItem>
+                <MudItem xs="6" md="6" sm="6" lg="6" xl="6">
+                    <MudTextField @bind-Value="@ProductRequest.CurrencyId" Label="CurrencyId" Variant="Variant.Outlined" For="@(()=>ProductRequest.CurrencyId)" />
                 </MudItem>
             </MudGrid>
             <MudCardActions>

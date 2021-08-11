@@ -22,5 +22,6 @@ namespace PointOS.DataAccess.Entities
         public DateTime CreatedOn { get; set; }
 
         public ICollection<ProductPricing> ProductPricing { get; set; }
+        public ICollection<ProductStock> ProductQuantity { get; set; }
     }
 }

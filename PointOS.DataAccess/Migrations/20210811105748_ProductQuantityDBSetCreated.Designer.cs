@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PointOS.DataAccess;
 
 namespace PointOS.DataAccess.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210811105748_ProductQuantityDBSetCreated")]
+    partial class ProductQuantityDbSetCreated
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -476,9 +478,6 @@ namespace PointOS.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<Guid>("GuidId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
@@ -499,7 +498,7 @@ namespace PointOS.DataAccess.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductStocks");
+                    b.ToTable("ProductQuantities");
                 });
 
             modelBuilder.Entity("PointOS.DataAccess.Entities.Sales", b =>
@@ -682,7 +681,7 @@ namespace PointOS.DataAccess.Migrations
             modelBuilder.Entity("PointOS.DataAccess.Entities.ProductCategory", b =>
                 {
                     b.HasOne("PointOS.DataAccess.Entities.Company", "Company")
-                        .WithMany("ProductTypes")
+                        .WithMany("ProductCategories")
                         .HasForeignKey("CompanyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -738,7 +737,7 @@ namespace PointOS.DataAccess.Migrations
                         .HasForeignKey("ModifiedUserId");
 
                     b.HasOne("PointOS.DataAccess.Entities.Product", "Product")
-                        .WithMany("ProductQuantity")
+                        .WithMany("ProductStock")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -788,14 +787,14 @@ namespace PointOS.DataAccess.Migrations
                 {
                     b.Navigation("Branches");
 
-                    b.Navigation("ProductTypes");
+                    b.Navigation("ProductCategories");
                 });
 
             modelBuilder.Entity("PointOS.DataAccess.Entities.Product", b =>
                 {
                     b.Navigation("ProductPricing");
 
-                    b.Navigation("ProductQuantity");
+                    b.Navigation("ProductStock");
                 });
 
             modelBuilder.Entity("PointOS.DataAccess.Entities.ProductCategory", b =>

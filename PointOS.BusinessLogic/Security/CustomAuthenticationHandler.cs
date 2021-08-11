@@ -48,7 +48,7 @@ namespace PointOS.BusinessLogic.Security
 
                 var credentials = token.Claims.ToArray();
 
-                var userName  = credentials[0].ToString().Split(":")[2].Trim();
+                var userName = credentials[0].ToString().Split(":")[2].Trim();
                 var password = credentials[1].ToString().Split(":")[2].Trim();
                 var serialNumber = credentials[2].ToString().Split(":")[2].Trim();
 

@@ -1,9 +1,9 @@
 ﻿@page "/branches"
-@using PointOS.DataAdapters
+@using PointOS.Services
 
 <MudText Typo="Typo.h5" Color="Color.Primary" Class="mb-4">Branches (Retail/Wholesale Shops)</MudText>
 
-<SfGrid @ref="Grid" TValue="@BranchResponse" AllowPaging="true" AllowSorting="true" Toolbar="@(new List<string>() {"Search"})">
+<SfGrid TValue="@BranchResponse" AllowPaging="true" AllowSorting="true" Toolbar="@(new List<string>() {"Search"})">
     <Syncfusion.Blazor.Data.SfDataManager Adaptor="Adaptors.CustomAdaptor" AdaptorInstance="@typeof(BranchAdapter)"></Syncfusion.Blazor.Data.SfDataManager>
     <GridPageSettings PageCount="3" PageSize="5" PageSizes="@PagerDropDown"></GridPageSettings>
     <GridSortSettings AllowUnsort="false"></GridSortSettings>
@@ -28,7 +28,6 @@
 
 @code
 {
-    SfGrid<BranchResponse> Grid;
     [Inject]
     private IDialogService DialogService { get; set; }
     public string[] PagerDropDown { get; set; } = { "All", "5", "10", "15", "20" };
@@ -37,10 +36,5 @@
     private void OpenDialog()
     {
         DialogService.Show<Branch>("Add Branch");
-    }
-
-    private void Refresh()
-    {
-        Grid.Refresh();
     }
 }

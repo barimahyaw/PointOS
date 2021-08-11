@@ -33,5 +33,12 @@ namespace PointOS.BusinessLogic.Interfaces
         /// </summary>
         /// <returns>list of products</returns>
         Task<ListResponse<ProductResponse>> FindAllAsync(int companyId, int skip, int take);
+
+        /// <summary>
+        /// Gets all products by company Id
+        /// </summary>
+        /// <param name="companyId"></param>
+        /// <returns></returns>
+        Task<ListResponse<ProductResponse>> FindAllAsync(int companyId);
     }
 }

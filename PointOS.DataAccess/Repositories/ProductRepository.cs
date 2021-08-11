@@ -35,8 +35,10 @@ namespace PointOS.DataAccess.Repositories
         /// </summary>
         /// <returns>list of products</returns>
         public async Task<IList<Product>> FindAllAsync(int companyId, int skip, int take)
-            => await GetQueryable().Where(p=>p.ProductCategory.CompanyId == companyId)
-                .Select(p=>new Product
+            => await GetQueryable().Where(p => p.ProductCategory.CompanyId == companyId)
+                .Skip(skip)
+                .Take(take)
+                .Select(p => new Product
                 {
                     Name = p.Name,
                     CreatedOn = p.CreatedOn,
@@ -56,7 +58,7 @@ namespace PointOS.DataAccess.Repositories
                         Name = p.ProductCategory.Name
                     }
                 })
-                .Skip(skip).Take(take).ToListAsync();
+                .ToListAsync();
 
         /// <summary>
         /// Finds a product record by it's integer Id
@@ -71,7 +73,7 @@ namespace PointOS.DataAccess.Repositories
         /// <param name="name"></param>
         /// <param name="categoryId"></param>
         /// <returns>a record of product</returns>
-        public async Task<Product> FindByNameAndCategoryIdAsync(string name, int categoryId) 
+        public async Task<Product> FindByNameAndCategoryIdAsync(string name, int categoryId)
             => await GetQueryable().FirstOrDefaultAsync(p => p.Name == name && p.ProductCategoryId == categoryId);
 
         /// <summary>
@@ -88,5 +90,13 @@ namespace PointOS.DataAccess.Repositories
         /// <returns></returns>
         public int TotalProducts(int companyId)
             => GetQueryable().Count(p => p.ProductCategory.CompanyId == companyId);
+
+        /// <summary>
+        /// Gets all products by company Id
+        /// </summary>
+        /// <param name="companyId"></param>
+        /// <returns></returns>
+        public async Task<List<Product>> FindAllAsync(int companyId)
+            => await GetQueryable().Where(p => p.ProductCategory.CompanyId == companyId).ToListAsync();
     }
 }

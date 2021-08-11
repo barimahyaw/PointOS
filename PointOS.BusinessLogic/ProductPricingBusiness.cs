@@ -32,7 +32,8 @@ namespace PointOS.BusinessLogic
                 CostPrice = request.CostPrice,
                 RetailPrice = request.RetailPrice,
                 WholeSalePrice = request.WholeSalePrice,
-                Status = request.Status
+                Status = request.Status,
+                CurrencyId = request.CurrencyId
             };
 
             switch (request.Operation)
