@@ -80,6 +80,16 @@ namespace PointOS.BusinessLogic
                     break;
                 case TransactionType.Payment:
                     break;
+                case TransactionType.Order:
+                    break;
+                case TransactionType.Supplier:
+                    break;
+                case TransactionType.Rent:
+                    break;
+                case TransactionType.Repair:
+                    break;
+                case TransactionType.Buy:
+                    break;
                 default:
                     goto case TransactionType.Sales;
             }
