@@ -16,52 +16,7 @@
                 </MudCard>
             </MudItem>
             <MudItem xs="12" sm="8" md="9">
-                <MudCard Elevation="25">
-                    <MudCardContent style="background-color: #EEEEEE; min-height: 527px">
-                        <MudItem style="margin-top: 170px;">
-                            <MudText Align="Align.Center" Color="Color.Default">
-                                <MudIcon Icon="@Icons.Material.Sharp.AddShoppingCart" Style="font-size: 4rem;" />
-                            </MudText>
-                            <MudText Typo="Typo.h6" Align="Align.Center" Color="Color.Default"><b>CART EMPTY</b></MudText>
-                            <MudText Typo="Typo.subtitle2" Align="Align.Center" Color="Color.Default">
-                                Scan a product barcode or add a product from the list
-                            </MudText>
-                        </MudItem>
-                    </MudCardContent>
-                    <MudCardActions>
-                        <MudItem xs="4" sm="4" md="4">
-                            <MudText Typo="Typo.body1" Align="Align.Left">Sub Total (excl.)</MudText>
-                            <MudText Typo="Typo.body1" Align="Align.Left">Tax</MudText>
-                            <MudText Typo="Typo.body1" Align="Align.Left"><b>Total</b></MudText>
-                        </MudItem>
-                        <MudItem xs="4" sm="4" md="4">
-                            <MudText Typo="Typo.body1" Align="Align.Right">$0.00</MudText>
-                            <MudText Typo="Typo.body1" Align="Align.Right">$0.00</MudText>
-                            <MudText Typo="Typo.body1" Align="Align.Right"><b>$0.00</b></MudText>
-                        </MudItem>
-                        <MudItem xs="4" sm="4" md="4">
-                            <MudText Typo="Typo.body1" Align="Align.Center"><b>0 items</b></MudText>
-                        </MudItem>
-
-                    </MudCardActions>
-                    <MudCardActions>
-                        <MudItem xs="4" sm="4" md="4">
-                            <MudButton Variant="Variant.Filled" Color="Color.Default" Size="Size.Large" FullWidth="true" StartIcon="@Icons.Material.Outlined.Cancel">
-                                <MudText Color="Color.Error"><b>Cancel </b></MudText>
-                            </MudButton>
-                        </MudItem>
-                        <MudItem xs="4" sm="4" md="4">
-                            <MudButton Variant="Variant.Filled" Color="Color.Default" Size="Size.Large" FullWidth="true" StartIcon="@Icons.Material.Outlined.Save" @onclick="@OpenDialog">
-                                <MudText Color="Color.Default"><b>Save </b></MudText>
-                            </MudButton>
-                        </MudItem>
-                        <MudItem xs="4" sm="4" md="4">
-                            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Success" Size="Size.Large" FullWidth="true" StartIcon="@Icons.Material.Outlined.Check" @onclick="@OpenDialog">
-                                <b>Checkout</b>
-                            </MudButton>
-                        </MudItem>
-                    </MudCardActions>
-                </MudCard>
+                <RetailCart />
 
             </MudItem>
         </MudGrid>
@@ -94,19 +49,3 @@
         </MudItem>
     </MudTabPanel>
 </MudTabs>
-
-@code
-{ [Inject]
-    private IDialogService DialogService { get; set; }
-    public string[] PagerDropDown { get; set; } = { "All", "5", "10", "15", "20" };
-
-
-    private void OpenDialog()
-    {
-        var parameters = new DialogParameters();
-        parameters.Add("ContentText", "There is no product in the Cart");
-
-        var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
-
-        DialogService.Show<PointOS.Pages.Utilities.Dialog>("Cart Empty", parameters, options);
-    } }
