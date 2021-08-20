@@ -12,9 +12,9 @@
     }
 </style>
 
-
-<SfGrid TValue="@ProductResponse" AllowPaging="true" AllowSorting="true" Toolbar="@(new List<string>() {"Search"})" class="e-grid e-gridheader e-columnheader">
+<SfGrid TValue="ProductResponse" AllowPaging="true" AllowSorting="true" Toolbar="@(new List<string>() {"Search"})" class="e-grid e-gridheader e-columnheader">
     <SfDataManager Adaptor="Adaptors.CustomAdaptor" AdaptorInstance="@typeof(ProductAdapter)"></SfDataManager>
+    <GridEvents RowSelected="ActionBeginHandler" TValue="ProductResponse"></GridEvents>
     <GridPageSettings PageCount="3" PageSize="5" PageSizes="@PagerDropDown"></GridPageSettings>
     <GridSortSettings AllowUnsort="false"></GridSortSettings>
     <GridEditSettings AllowAdding="true" AllowDeleting="true" AllowEditing="true"></GridEditSettings>
@@ -24,9 +24,9 @@
         <GridColumn Width="80" HeaderText="#">
             <Template>
                 @{
-                    var employeeInfo = (context as ProductResponse);
+                    var product = context as ProductResponse;
                     <div class="image">
-                        <MudAvatar Image="@AvatarImageLink" Style="height:60px; width:60px;">
+                        <MudAvatar Image="@product?.PhotoPath" Style="height: 60px; width: 60px;">
                             @if (AvatarImageLink == null)
                             {
                                 <MudIcon Icon="@AvatarIcon" Size="Size.Large"></MudIcon>}
@@ -42,18 +42,30 @@
                     <MudText Typo="Typo.body2" Align="Align.Left"><b>@product?.Name</b></MudText>
                     <MudText Typo="Typo.body2" Color="Color.Dark" Align="Align.Left">@product?.ProductCategory</MudText>
 
-                    <MudText Typo="Typo.body2" Color="Color.Error" Align="Align.Left">Stock: @product?.Status</MudText>
-                    <MudText Typo="Typo.body2" Color="Color.Info" Align="Align.Left">ID: @product?.Id</MudText>
+
+
+                    if (product?.Stock < 10)
+                    {
+                        <MudText Typo="Typo.body2" Color="Color.Error" Align="Align.Left">Stock: @product.Stock</MudText>
+                    }
+                    if (product?.Stock >= 10)
+                    {
+                        <MudText Typo="Typo.body2" Color="Color.Default" Align="Align.Left">Stock: @product.Stock</MudText>
+                    }
+
+
+                    @*<MudText Typo="Typo.body2" Color="Color.Error" Align="Align.Left">Stock: @product?.Stock</MudText>*@
+                    <MudText Typo="Typo.body2" Color="Color.Info" Align="Align.Left">ID: @product?.Id | Price: @product?.CurrentRetailPrice</MudText>
 
                 }
             </Template>
         </GridColumn>
+        <GridColumn>
+            <GridCommandColumns>
+                <GridCommandColumn Type="CommandButtonType.Delete" ButtonOption="@(new CommandButtonOptions { IconCss = "e-icons e-add", CssClass = "e-flat" })"></GridCommandColumn>
+            </GridCommandColumns>
+        </GridColumn>
+
     </GridColumns>
 </SfGrid>
 
-@code
-{
-    public string AvatarImageLink { get; set; } = "images/avatar_jonny.jpg";
-    public string AvatarIcon { get; set; } = Icons.Material.Outlined.SentimentVeryDissatisfied;
-    public string[] PagerDropDown { get; set; } = { "All", "5", "10", "15", "20" };
-}
