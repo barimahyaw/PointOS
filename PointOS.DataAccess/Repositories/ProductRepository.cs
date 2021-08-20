@@ -56,7 +56,12 @@ namespace PointOS.DataAccess.Repositories
                     {
                         //CompanyId = p.ProductCategory.CompanyId,
                         Name = p.ProductCategory.Name
-                    }
+                    },
+                    ProductPricing = p.ProductPricing.ToList(),
+                    ProductQuantity = p.ProductQuantity.Select(q => new ProductStock
+                    {
+                        Quantity = q.Quantity
+                    }).ToList()
                 })
                 .ToListAsync();
 
@@ -65,7 +70,32 @@ namespace PointOS.DataAccess.Repositories
         /// </summary>
         /// <param name="id"></param>
         /// <returns>a record of product</returns>
-        public async Task<Product> FindById(int id) => await GetQueryable().FirstOrDefaultAsync(p => p.Id == id);
+        public async Task<Product> FindById(int id) 
+            => await GetQueryable().Select(p => new Product
+            {
+                Name = p.Name,
+                CreatedOn = p.CreatedOn,
+                CreatedUserId = p.CreatedUserId,
+                Status = p.Status,
+                Id = p.Id,
+                CreatedUser = new ApplicationUser
+                {
+                    FirstName = p.CreatedUser.FirstName,
+                    MiddleName = p.CreatedUser.MiddleName,
+                    LastName = p.CreatedUser.LastName
+                },
+                //ProductPricing = p.ProductPricing.Where(x=>x.Status).ToList(),
+                ProductCategory = new ProductCategory
+                {
+                    //CompanyId = p.ProductCategory.CompanyId,
+                    Name = p.ProductCategory.Name
+                },
+                ProductPricing = p.ProductPricing.ToList(),
+                ProductQuantity = p.ProductQuantity.Select(q => new ProductStock
+                {
+                    Quantity = q.Quantity
+                }).ToList()
+            }).FirstOrDefaultAsync(p => p.Id == id);
 
         /// <summary>
         /// Finds a product record by it's name and product category id

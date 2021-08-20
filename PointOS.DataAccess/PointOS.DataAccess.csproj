@@ -19,8 +19,4 @@
     <ProjectReference Include="..\PointOS.Common\PointOS.Common.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Entities\Entities\" />
-  </ItemGroup>
-
 </Project>
