@@ -17,5 +17,6 @@ namespace PointOS.Common.DTO.Response
         public double Tax { get; set; }
         public int Quantity { get; set; } = 1;
         public string PhotoPath { get; set; }
+        public int ProductPricingId { get; set; }
     }
 }

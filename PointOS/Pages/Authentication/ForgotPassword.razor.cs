@@ -17,7 +17,7 @@ namespace PointOS.Pages.Authentication
         private NavigationManager NavigationManager { get; set; }
 
         [Inject]
-        private ISnackbar Snackbar { get; set; }
+        private ISnackbar SnackBar { get; set; }
 
         public ForgotPasswordRequest ForgotPasswordRequest { get; set; } = new ForgotPasswordRequest();
 
@@ -52,7 +52,7 @@ namespace PointOS.Pages.Authentication
 
                 await EmailService.SendEmail(emailRequest);
 
-                Snackbar.Add("Password reset Link sent to your work email successfully.", Severity.Success, config => config.ShowCloseIcon = true);
+                SnackBar.Add("Password reset Link sent to your work email successfully.", Severity.Success, config => config.ShowCloseIcon = true);
 
                 NavigationManager.NavigateTo("/");
             }
@@ -60,7 +60,7 @@ namespace PointOS.Pages.Authentication
             {
                 IsOverlayVisible = false;
                 ButtonSubmitText = "Reset Password";
-                Snackbar.Add(result.Message, Severity.Error, config => config.ShowCloseIcon = false);
+                SnackBar.Add(result.Message, Severity.Error, config => config.ShowCloseIcon = false);
                 ForgotPasswordRequest.EmailAddress = string.Empty;
             }
         }

@@ -107,19 +107,27 @@ namespace PointOS.BusinessLogic
             var trans = new Transactions
             {
                 //GuidId = Guid.NewGuid(),
-                TransactionType = TransactionType.Sales.GetAttributeStringValue(),
+                TransactionType = TransactionType.Sales.ToString(),
                 TransactionId = transactionId,
                 Amount = requests.Sum(x => x.Amount),
                 PaymentType = paymentType.GetAttributeStringValue(),
                 CreatedUserId = userId,
-                CreatedOn = DateTime.UtcNow
+                CreatedOn = DateTime.UtcNow,
+
             };
 
             await _unitOfWork.TransactionRepository.AddAsync(trans);
 
             var numRow = await _unitOfWork.SaveChangesAsync();
 
-            return numRow > 0 ? new ResponseHeader { Success = true } : new ResponseHeader();
+            return numRow > 0 ? new ResponseHeader
+            {
+                Success = true,
+                Message = $"{trans.TransactionType} transaction completed successfully."
+            } : new ResponseHeader
+            {
+                Message = $"{trans.TransactionType} transaction failed. Try again later."
+            };
         }
 
         /// <summary>

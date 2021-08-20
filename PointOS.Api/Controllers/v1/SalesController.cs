@@ -25,10 +25,7 @@ namespace PointOS.Api.Controllers.v1
         /// 
         /// </summary>
         /// <param name="transactionBusiness"></param>
-        public SalesController(ITransactionBusiness transactionBusiness)
-        {
-            _transactionBusiness = transactionBusiness;
-        }
+        public SalesController(ITransactionBusiness transactionBusiness) => _transactionBusiness = transactionBusiness;
 
         /// <summary>
         /// Saves a sales transaction record(s)

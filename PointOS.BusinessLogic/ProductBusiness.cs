@@ -194,8 +194,9 @@ namespace PointOS.BusinessLogic
                 CreatedBy = entity.CreatedUser == null ? string.Empty
                     : $"{entity.CreatedUser.FirstName} {entity.CreatedUser.MiddleName} {entity.CreatedUser.LastName}",
                 CurrentRetailPrice = entity.ProductPricing.FirstOrDefault()?.RetailPrice ?? 0,
-                PreviousRetailPrice = entity.ProductPricing.Take(2).OrderByDescending(o=>o.Id).FirstOrDefault()?.RetailPrice ?? 0,
-                Stock = entity.ProductQuantity.Sum(q=>q.Quantity)
+                PreviousRetailPrice = entity.ProductPricing.Take(2).OrderByDescending(o => o.Id).FirstOrDefault()?.RetailPrice ?? 0,
+                ProductPricingId = entity.ProductPricing.FirstOrDefault()?.Id ?? 0,
+                Stock = entity.ProductQuantity.Sum(q => q.Quantity)
             };
             return response;
         }
