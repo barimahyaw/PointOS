@@ -1,54 +1,50 @@
 ﻿<MudCard Elevation="25">
 
-    @if (true)
+    @if (Products.Count > 0)
     {
-<MudCardHeader>
-    <CardHeaderContent>
-        <MudText>Products List</MudText>
-    </CardHeaderContent>
-</MudCardHeader>
-                    <MudSimpleTable Elevation="0" Hover="true">
-                        <tbody>
-                            @foreach (var report in earningReports.OrderBy(x => x.Name))
-                            {
-
-    <tr>
-        <td>
-            <div class="d-flex flex-row">
-                <MudItem xs="4" sm="4" md="4">
-                    <div class="d-flex flex-row">
-                        <MudAvatar Image="@report.Avatar" Style="height:60px; width:60px;" />
-                        <div class="ml-6">
-                            <MudText Typo="Typo.body2"><b>@report.Name</b></MudText>
-                            @*<MudText Typo="Typo.subtitle2">@report.Name</MudText>*@
-                            <MudText Typo="Typo.body2">@report.Title</MudText>
-                            <MudText Typo="Typo.body1" Color="Color.Info">$ @report.RetailPrice</MudText>
-                        </div>
+<MudCardContent style="background-color: #EEEEEE; ">
+    <MudSimpleTable Elevation="0" Hover="true">
+        <tbody>
+            @foreach (var product in Products)
+            {
+                product.ProductPrice = product.CurrentRetailPrice * product.Quantity;
+                product.Tax = 0.01 * product.ProductPrice;
+<tr>
+    <td>
+        <div class="d-flex flex-row">
+            <MudItem xs="4" sm="4" md="4">
+                <div class="d-flex flex-row">
+                    <MudAvatar Image="@product.PhotoPath" Style="height:60px; width:60px;" />
+                    <div class="ml-6">
+                        <MudText Typo="Typo.body2"><b>@product.Name</b></MudText> @*<MudText Typo="Typo.subtitle2">@product.Name</MudText>*@
+                        <MudText Typo="Typo.body2">@product.ProductCategory</MudText>
+                        <MudText Typo="Typo.body1" Color="Color.Info">$ @Math.Round(product.CurrentRetailPrice, 2).ToString("N")</MudText>
                     </div>
-                </MudItem>
-                <MudItem xs="4" sm="4" md="4">
-                    <MudText Typo="Typo.body1" Align="Align.Right">$ @(report.RetailPrice * report.Quantity)</MudText>
-                </MudItem>
-                <MudItem xs="2" sm="2" md="2">
+                </div>
+            </MudItem>
+            <MudItem xs="4" sm="4" md="4">
+
+                <MudText Typo="Typo.body1" Align="Align.Right">$ @Math.Round(product.ProductPrice, 2).ToString("N")</MudText>
+            </MudItem>
+            <MudItem xs="2" sm="2" md="2">
 
 
 
-                </MudItem>
-                <MudItem xs="2" sm="2" md="2">
+            </MudItem>
+            <MudItem xs="2" sm="2" md="2">
 
-                    <MudNumericField @bind-Value="@report.Quantity" Variant="Variant.Filled" Min="0" />
+                <MudNumericField @bind-Value="@product.Quantity" Variant="Variant.Filled" Min="1" Max="@product.Stock" />
 
-                </MudItem>
-            </div>
-        </td>
-        @*<td><MudChip Label="true" Color="@report.Severity" Size="Size.Small" Class="ml-auto mud-elevation-25">@report.SeverityTitle</MudChip></td>*@
-        @*<td><MudText>@report.Salary</MudText></td>*@
-    </tr>}
+            </MudItem>
+        </div>
+    </td>
+</tr>}
 
-                        </tbody>
-                    </MudSimpleTable>}
+        </tbody>
+    </MudSimpleTable>
+</MudCardContent>}
 
-    @if (1 == 2)
+    @if (Products.Count == 0)
     {
 <MudCardContent style="background-color: #EEEEEE; min-height: 527px">
     <MudItem style="margin-top: 170px;">
@@ -69,71 +65,40 @@
             <MudText Typo="Typo.body1" Align="Align.Left"><b>Total</b></MudText>
         </MudItem>
         <MudItem xs="4" sm="4" md="4">
-            <MudText Typo="Typo.body1" Align="Align.Right">$0.00</MudText>
-            <MudText Typo="Typo.body1" Align="Align.Right">$0.00</MudText>
-            <MudText Typo="Typo.body1" Align="Align.Right"><b>$0.00</b></MudText>
+            @{ SubTotal = Math.Round(Products.Sum(e => e.ProductPrice), 2);
+                Tax = Math.Round(Products.Sum(e => e.Tax), 2); }
+            <MudText Typo="Typo.body1" Align="Align.Right">$ @SubTotal.ToString("N")</MudText>
+            <MudText Typo="Typo.body1" Align="Align.Right">$ @Tax</MudText>
+            <MudText Typo="Typo.body1" Align="Align.Right"><b>$ @((SubTotal + Tax).ToString("N"))</b></MudText>
         </MudItem>
         <MudItem xs="2" sm="2" md="2">
 
         </MudItem>
         <MudItem xs="2" sm="2" md="2">
-            <MudText Typo="Typo.body1" Align="Align.Left"><b>@earningReports.Sum(e => e.Quantity) items</b></MudText>
+            <MudText Typo="Typo.body1" Align="Align.Left"><b>@Products.Sum(e => e.Quantity) items</b></MudText>
         </MudItem>
 
     </MudCardActions>
     <MudCardActions>
         <MudItem xs="4" sm="4" md="4">
-            <MudButton Variant="Variant.Filled" Color="Color.Default" Size="Size.Large" FullWidth="true" StartIcon="@Icons.Material.Outlined.Cancel" Class="red-text">
+            <MudButton Variant="Variant.Filled" Color="Color.Default" Size="Size.Large" FullWidth="true" StartIcon="@Icons.Material.Outlined.Cancel" Class="red-text" @onclick="@ResetCart">
                 <MudText><b>Cancel </b></MudText>
             </MudButton>
         </MudItem>
         <MudItem xs="4" sm="4" md="4">
-            <MudButton Variant="Variant.Filled" Color="Color.Default" Size="Size.Large" FullWidth="true" StartIcon="@Icons.Material.Outlined.Save" @onclick="@OpenDialog">
+            <MudButton Variant="Variant.Filled" Color="Color.Default" Size="Size.Large" FullWidth="true" StartIcon="@Icons.Material.Outlined.Save" @onclick="@Save">
                 <MudText Color="Color.Default"><b>Save </b></MudText>
             </MudButton>
         </MudItem>
         <MudItem xs="4" sm="4" md="4">
-            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Success" Size="Size.Large" FullWidth="true" StartIcon="@Icons.Material.Outlined.Check" @onclick="@OpenDialog">
+            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Success" Size="Size.Large" FullWidth="true" StartIcon="@Icons.Material.Outlined.Check" @onclick="@Checkout">
                 <b>Checkout</b>
             </MudButton>
         </MudItem>
+
     </MudCardActions>
 </MudCard>
 
 
 @code
-{ [Inject]
-    private IDialogService DialogService { get; set; }
-    public string[] PagerDropDown { get; set; } = { "All", "5", "10", "15", "20" };
-
-    public int Item { get; set; }
-    private void OpenDialog()
-    {
-        var parameters = new DialogParameters();
-        parameters.Add("ContentText", "There is no product in the Cart");
-
-        var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
-
-        DialogService.Show<Utilities.Dialog>("Cart Empty", parameters, options);
-    }
-
-    EarningReport[] earningReports = new EarningReport[]
-    {
-        new EarningReport { Name = "Lunees", Title = "Reactor Engineer", Avatar = "https://avatars2.githubusercontent.com/u/71094850?s=460&u=66c16f5bb7d27dc751f6759a82a3a070c8c7fe4b&v=4", Salary = "$0.99", Severity = Color.Success, SeverityTitle = "Low"},
-        new EarningReport { Name = "Mikes-gh", Title = "Developer", Avatar = "https://avatars.githubusercontent.com/u/16208742?s=120&v=4", Salary = "$19.12K", Severity = Color.Secondary, SeverityTitle = "Medium"},
-        new EarningReport { Name = "Garderoben", Title = "CSS Magician", Avatar = "https://avatars2.githubusercontent.com/u/10367109?s=460&amp;u=2abf95f9e01132e8e2915def42895ffe99c5d2c6&amp;v=4", Salary = "$1337", Severity = Color.Primary, SeverityTitle = "High"},
-
-                                                                                                        };
-
-    class EarningReport
-    {
-
-        public string Avatar;
-        public string Name;
-        public string Title;
-        public Color Severity;
-        public string SeverityTitle;
-        public string Salary;
-        public int Quantity = 1;
-        public double RetailPrice = 56.70;
-    } }
+{  }
