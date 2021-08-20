@@ -32,7 +32,6 @@ namespace PointOS.Pages.Sales
             DialogService.Show<Utilities.Dialog>(header, parameters, options);
         }
 
-
         public void Save() { }
 
         private void Checkout()
