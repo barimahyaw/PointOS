@@ -33,9 +33,12 @@ namespace PointOS.Pages.Sales
             DialogService.Show<Utilities.Dialog>(header, parameters, options);
         }
 
-        public void Save() { }
+        public void Save()
+        {
+            Dialog("Not Implemented", "Save order is currently under construction");
+        }
 
-        private void Checkout()
+        private async Task Checkout()
         {
             if (Products.Count <= 0)
             {
@@ -43,10 +46,14 @@ namespace PointOS.Pages.Sales
             }
             else
             {
-                var parameters = new DialogParameters();
-                parameters.Add("Products", Products);
+                var parameters = new DialogParameters { { "Products", Products } };
                 var options = new DialogOptions { DisableBackdropClick = true };
-                DialogService.Show<Checkout>("Summary", parameters, options);
+
+                var dialog = DialogService.Show<Checkout>("Summary", parameters, options);
+
+                var result = await dialog.Result;
+
+                if (!result.Cancelled) await ResetCart();
             }
         }
 
@@ -63,5 +70,6 @@ namespace PointOS.Pages.Sales
         /// </summary>
         /// <returns></returns>
         protected async Task ResetCart() => await ProductsChanged.InvokeAsync();
+
     }
 }

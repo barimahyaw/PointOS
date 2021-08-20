@@ -43,11 +43,7 @@ namespace PointOS.Pages.Sales
 
             IsTranCompleted = false;
 
-            if (result.Success)
-            {
-                MudDialog.Close(DialogResult.Ok(true));
-                Products = new List<ProductResponse>();
-            }
+            if (result.Success) MudDialog.Close(DialogResult.Ok(true));
         }
         private void Cancel() => MudDialog.Cancel();
 
@@ -55,5 +51,6 @@ namespace PointOS.Pages.Sales
         public IList<ProductResponse> Products { get; set; } = new List<ProductResponse>();
 
         protected ProductRequest ProductRequest { get; set; } = new ProductRequest();
+
     }
 }

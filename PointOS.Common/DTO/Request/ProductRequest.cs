@@ -18,8 +18,8 @@ namespace PointOS.Common.DTO.Request
         public IEnumerable<SelectListItem> ProductCategories { get; set; }
 
         public int Quantity { get; set; }
-
-
+        [Required]
+        public string PaymentType { get; set; }
         [Required]
         [Display(Name = "Cost Price")]
         [Range(1, double.MaxValue, ErrorMessage = "Provide a Valid Cost Price")]

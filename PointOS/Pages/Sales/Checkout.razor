@@ -86,8 +86,14 @@
                         </MudSelect>
                     </MudItem>
                     <MudItem xs="6" md="6" sm="6" lg="6" xl="6">
-                        <MudSelect Label="Payment Method" Strict="true" Variant="Variant.Outlined" Format="F2" @bind-Value="@ProductRequest.ProductCategoryId" For="@(()=>ProductRequest.ProductCategoryId)">
-
+                        <MudSelect Label="Payment Method" Strict="true" Variant="Variant.Outlined" Format="F2" @bind-Value="@ProductRequest.PaymentType" For="@(()=>ProductRequest.PaymentType)">
+                            @foreach (var name in Enum.GetNames(typeof(Common.Enums.PaymentType)))
+                            {
+                                if (!string.IsNullOrWhiteSpace(name))
+                                {
+                                    <MudSelectItem Value="name">@name</MudSelectItem>
+                                }
+                            }
                         </MudSelect>
                     </MudItem>
                 </MudGrid>
