@@ -147,11 +147,12 @@ namespace PointOS.BusinessLogic
                 Message = string.Format(Status.NotFound.GetAttributeStringValue(), nameof(Product))
             }, null);
 
+            var responseBodyList = entities.Select(ProductEntity);
             return new ListResponse<ProductResponse>(new ResponseHeader
             {
                 Success = true,
                 ReferenceNumber = _unitOfWork.ProductRepository.TotalProducts(companyId).ToString()
-            }, entities.Select(ProductEntity));
+            }, responseBodyList);
         }
 
         /// <summary>
@@ -191,7 +192,10 @@ namespace PointOS.BusinessLogic
                 ProductCategoryId = entity.ProductCategoryId,
                 CreatedOn = entity.CreatedOn,
                 CreatedBy = entity.CreatedUser == null ? string.Empty
-                    : $"{entity.CreatedUser.FirstName} {entity.CreatedUser.MiddleName} {entity.CreatedUser.LastName}"
+                    : $"{entity.CreatedUser.FirstName} {entity.CreatedUser.MiddleName} {entity.CreatedUser.LastName}",
+                CurrentRetailPrice = entity.ProductPricing.FirstOrDefault()?.RetailPrice ?? 0,
+                PreviousRetailPrice = entity.ProductPricing.Take(2).OrderByDescending(o=>o.Id).FirstOrDefault()?.RetailPrice ?? 0,
+                Stock = entity.ProductQuantity.Sum(q=>q.Quantity)
             };
             return response;
         }

@@ -30,7 +30,7 @@ namespace PointOS.Api.Controllers.v1
         /// <returns>a list of products</returns>
         [HttpGet]
         public async Task<ListResponse<ProductResponse>> Get(int companyId, int skip, int take = 5)
-            => await _productBusiness.FindAllAsync(companyId,skip,take);
+            => await _productBusiness.FindAllAsync(companyId, skip, take);
 
         /// <summary>
         /// Gets all Product records by company Id
@@ -45,8 +45,8 @@ namespace PointOS.Api.Controllers.v1
         /// </summary>
         /// <param name="id"></param>
         /// <returns>a record of product</returns>
-        [HttpGet("{id}")]
-        public async Task<SingleResponse<ProductResponse>> Get(int id) 
+        [HttpGet("get")]
+        public async Task<SingleResponse<ProductResponse>> Get(int id)
             => await _productBusiness.FindById(id);
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace PointOS.Api.Controllers.v1
         /// <param name="guidValue"></param>
         /// <returns>a record of product</returns>
         [HttpGet("{guidValue}")]
-        public async Task<SingleResponse<ProductResponse>> Get(Guid guidValue) 
+        public async Task<SingleResponse<ProductResponse>> Get(Guid guidValue)
             => await _productBusiness.FindById(guidValue);
 
         /// <summary>
