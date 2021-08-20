@@ -2,6 +2,7 @@
 using MudBlazor;
 using PointOS.Common.DTO.Response;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace PointOS.Pages.Sales
 {
@@ -44,12 +45,23 @@ namespace PointOS.Pages.Sales
             {
                 var parameters = new DialogParameters();
                 parameters.Add("Products", Products);
-                DialogService.Show<Checkout>("Summary", parameters);
+                var options = new DialogOptions { DisableBackdropClick = true };
+                DialogService.Show<Checkout>("Summary", parameters, options);
             }
         }
 
-        public void ResetCart() => Products = new List<ProductResponse>();
+        //public void ResetCart() => Products = new List<ProductResponse>();
 
         public void RefreshState() => StateHasChanged();
+
+
+        [Parameter]
+        public EventCallback ProductsChanged { get; set; }
+
+        /// <summary>
+        /// invoke event call back ProductsChanged
+        /// </summary>
+        /// <returns></returns>
+        protected async Task ResetCart() => await ProductsChanged.InvokeAsync();
     }
 }

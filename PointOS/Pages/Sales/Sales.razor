@@ -16,7 +16,7 @@
                 </MudCard>
             </MudItem>
             <MudItem xs="12" sm="8" md="9">
-                <RetailCart Products="@Products" />
+                <RetailCart Products="@Products" ProductsChanged="ClearProducts"/>
 
             </MudItem>
         </MudGrid>
@@ -49,11 +49,4 @@
         </MudItem>
     </MudTabPanel>
 </MudTabs>
-@code
-{ [Parameter]
-    public IList<ProductResponse> Products { get; set; } = new List<ProductResponse>();
 
-    public void Refresh()
-    {
-        StateHasChanged();
-    } }

@@ -1,5 +1,5 @@
 ﻿
-<EditForm Model="@ProductRequest" OnValidSubmit="@SaveChanges">
+<EditForm Model="@ProductRequest" OnSubmit="@SaveChanges">
     <MudDialog>
 
         <DialogContent>
@@ -121,3 +121,8 @@
         </DialogContent>
     </MudDialog>
 </EditForm>
+
+@if (IsTranCompleted)
+{
+    <FormOverlay />
+}
