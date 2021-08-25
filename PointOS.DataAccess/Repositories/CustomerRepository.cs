@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
 using PointOS.DataAccess.Entities;
 using PointOS.DataAccess.IRepositories;
 using System.Collections.Generic;
@@ -74,25 +75,41 @@ namespace PointOS.DataAccess.Repositories
         /// <param name="take"></param>
         /// <returns></returns>
         public async Task<List<Customer>> FindAllAsync(int companyId, int skip, int take)
-            => await _dbContext.Sales.AsNoTrackingWithIdentityResolution()
-                .Where(c => c.ProductPricing.Product.ProductCategory.CompanyId == companyId)
-                .Skip(skip)
-                .Take(take)
-                .Select(c => new Customer
-                {
-                    Id = c.Customer.Id,
-                    GuidId = c.Customer.GuidId,
-                    NationalIdCardNumber = c.Customer.NationalIdCardNumber,
-                    FirstName = c.Customer.FirstName,
-                    MiddleName = c.Customer.MiddleName,
-                    LastName = c.Customer.LastName,
-                    PhoneNumber = c.Customer.PhoneNumber,
-                    EmailAddress = c.Customer.EmailAddress,
-                    Address = c.Customer.Address,
-                    CreatedOn = c.Customer.CreatedOn,
-                    ModifiedOn = c.Customer.ModifiedOn
-                })
-                .ToListAsync();
+        {
+            //try
+            //{
+            //    //var listAsync = await _dbContext.Sales.AsNoTrackingWithIdentityResolution()
+            //    //    .Where(c => c.ProductPricing.Product.ProductCategory.CompanyId == companyId)
+            //    //    .Skip(skip)
+            //    //    .Take(take)
+            //    //    .Select(c => new Customer
+            //    //    {
+            //    //        Id = c.Customer.Id,
+            //    //        GuidId = c.Customer.GuidId,
+            //    //        NationalIdCardNumber = c.Customer.NationalIdCardNumber,
+            //    //        FirstName = c.Customer.FirstName,
+            //    //        MiddleName = c.Customer.MiddleName,
+            //    //        LastName = c.Customer.LastName,
+            //    //        PhoneNumber = c.Customer.PhoneNumber,
+            //    //        EmailAddress = c.Customer.EmailAddress,
+            //    //        Address = c.Customer.Address,
+            //    //        CreatedOn = c.Customer.CreatedOn,
+            //    //        ModifiedOn = c.Customer.ModifiedOn
+            //    //    })
+            //    //    .ToListAsync();
+
+            //    //return listAsync;
+
+
+            //}
+            //catch (Exception e)
+            //{
+            //    Console.WriteLine(e);
+            //    throw;
+            //}
+
+            return await GetQueryable().Skip(skip).Take(take).ToListAsync();
+        }
 
         /// <summary>
         /// Attach changes made to a Customer's record into repository

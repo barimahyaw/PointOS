@@ -29,7 +29,7 @@ namespace PointOS.DataAdapters
 
             var response = await _apiEndpointCallService.CallApiGetService("Customer/GetByCompany", null, param);
 
-            var result = JsonConvert.DeserializeObject<ListResponse<BranchResponse>>(response.ToString());
+            var result = JsonConvert.DeserializeObject<ListResponse<CustomerResponse>>(response.ToString());
 
             var dataResult = new DataResult
             {

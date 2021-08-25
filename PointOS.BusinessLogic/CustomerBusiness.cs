@@ -30,7 +30,6 @@ namespace PointOS.BusinessLogic
         {
             var customer = new Customer
             {
-                GuidId = Guid.NewGuid(),
                 FirstName = request.FirstName,
                 MiddleName = request.MiddleName,
                 LastName = request.LastName,
@@ -43,11 +42,16 @@ namespace PointOS.BusinessLogic
             switch (request.CrudOperation)
             {
                 case CrudOperation.Create:
+                    customer.CreatedUerId = request.CreatedBy;
+                    customer.CreatedOn = DateTime.UtcNow;
+                    customer.GuidId = Guid.NewGuid();
                     await _unitOfWork.CustomerRepository.Add(customer);
                     break;
                 case CrudOperation.Read:
                     break;
                 case CrudOperation.Update:
+                    customer.ModifiedUerId = request.CreatedBy;
+                    customer.ModifiedOn = DateTime.UtcNow;
                     await _unitOfWork.CustomerRepository.UpdateAsync(customer);
                     break;
                 case CrudOperation.Delete:

@@ -1,0 +1,53 @@
+﻿<EditForm Model="@CustomerRequest" OnValidSubmit="@SaveChanges">
+    <MudDialog>
+        <DialogContent>
+
+            <DataAnnotationsValidator></DataAnnotationsValidator>
+
+            <MudGrid>
+                <MudItem xs="12" md="12" sm="12" lg="12" xl="12">
+                    <MudTextField @bind-Value="@CustomerRequest.NationalIdCardNumber" Label="National Id Card Number" Variant="Variant.Outlined" For="@(()=>CustomerRequest.NationalIdCardNumber)" />
+                </MudItem>
+
+
+                <MudItem xs="12" md="12" sm="12" lg="12" xl="12">
+                    <MudTextField @bind-Value="@CustomerRequest.FirstName" Label="First Name" Variant="Variant.Outlined" For="@(()=>CustomerRequest.FirstName)" />
+                </MudItem>
+                <MudItem xs="12" md="12" sm="12" lg="12" xl="12">
+                    <MudTextField @bind-Value="@CustomerRequest.MiddleName" Label="Middle (Other) Name(s)" Variant="Variant.Outlined" For="@(()=>CustomerRequest.MiddleName)" />
+                </MudItem>
+                <MudItem xs="12" md="12" sm="12" lg="12" xl="12">
+                    <MudTextField @bind-Value="@CustomerRequest.LastName" Label="Last Name" Variant="Variant.Outlined" For="@(()=>CustomerRequest.LastName)" />
+                </MudItem>
+
+                <MudItem xs="12" md="12" sm="12" lg="12" xl="12">
+                    <MudTextField @bind-Value="@CustomerRequest.PhoneNumber" Label="Phone Number" Variant="Variant.Outlined" For="@(()=>CustomerRequest.PhoneNumber)" />
+                </MudItem>
+                <MudItem xs="12" md="12" sm="12" lg="12" xl="12">
+                    <MudTextField @bind-Value="@CustomerRequest.EmailAddress" Label="Email Address" Variant="Variant.Outlined" For="@(()=>CustomerRequest.EmailAddress)" />
+                </MudItem>
+
+                <MudItem xs="12" md="12" sm="12" lg="12" xl="12">
+                    <MudTextField @bind-Value="@CustomerRequest.Address" Label="House/Work Address" Variant="Variant.Outlined" For="@(()=>CustomerRequest.Address)" />
+                </MudItem>
+
+                <MudItem xs="12" md="12" sm="12" lg="12" xl="12">
+                    <MudText Typo="Typo.body2">
+                        Set the Status of the Product to Active/Inactive.
+                    </MudText>
+                    <MudSwitch @bind-Checked="@FriendSwitch" Color="Color.Secondary" />
+                </MudItem>
+
+            </MudGrid>
+            <MudCardActions>
+
+            </MudCardActions>
+
+
+        </DialogContent>
+        <DialogActions>
+            <MudButton OnClick="@Cancel">Cancel</MudButton>
+            <MudButton Color="Color.Primary" Variant="Variant.Filled" ButtonType="ButtonType.Submit">Save</MudButton>
+        </DialogActions>
+    </MudDialog>
+</EditForm>

@@ -133,6 +133,47 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="T:PointOS.Api.Controllers.v1.CustomerController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:PointOS.Api.Controllers.v1.CustomerController.#ctor(PointOS.BusinessLogic.Interfaces.ICustomerBusiness)">
+            <summary>
+            
+            </summary>
+            <param name="customerBusiness"></param>
+        </member>
+        <member name="M:PointOS.Api.Controllers.v1.CustomerController.Post(PointOS.Common.DTO.Request.CustomerRequest)">
+            <summary>
+            Saves a customer's record
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PointOS.Api.Controllers.v1.CustomerController.Put(PointOS.Common.DTO.Request.CustomerRequest)">
+            <summary>
+            Updates a customer's record
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PointOS.Api.Controllers.v1.CustomerController.GetByPhoneNumber(System.String)">
+            <summary>
+            Gets customer by phone Number
+            </summary>
+            <param name="phoneNumber"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PointOS.Api.Controllers.v1.CustomerController.GetByCompany(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Gets customer by company Id
+            </summary>
+            <param name="companyId"></param>
+            <param name="skip"></param>
+            <param name="take"></param>
+            <returns></returns>
+        </member>
         <member name="T:PointOS.Api.Controllers.v1.NotificationController">
             <summary>
             
