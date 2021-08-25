@@ -20,12 +20,18 @@ namespace PointOS.Api.Controllers.v1
     public class SalesController : ControllerBase
     {
         private readonly ITransactionBusiness _transactionBusiness;
+        private readonly ISalesBusiness _salesBusiness;
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="transactionBusiness"></param>
-        public SalesController(ITransactionBusiness transactionBusiness) => _transactionBusiness = transactionBusiness;
+        /// <param name="salesBusiness"></param>
+        public SalesController(ITransactionBusiness transactionBusiness, ISalesBusiness salesBusiness)
+        {
+            _transactionBusiness = transactionBusiness;
+            _salesBusiness = salesBusiness;
+        }
 
         /// <summary>
         /// Saves a sales transaction record(s)
@@ -46,8 +52,15 @@ namespace PointOS.Api.Controllers.v1
         /// <returns></returns>
         [HttpGet]
         public async Task<SingleResponse<SaleTransactionResponse>> Get(string transactionId)
-        {
-            return await _transactionBusiness.Find(transactionId, TransactionType.Sales);
-        }
+            => await _transactionBusiness.Find(transactionId, TransactionType.Sales);
+
+        /// <summary>
+        /// Gets a sales details by company Id
+        /// </summary>
+        /// <param name="companyId"></param>
+        /// <returns></returns>
+        [HttpGet("getByCompany")]
+        public async Task<ListResponse<SalesResponse>> GetByCompany(int companyId)
+            => await _salesBusiness.FindByCompany(companyId);
     }
 }

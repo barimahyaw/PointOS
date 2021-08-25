@@ -49,14 +49,30 @@ namespace PointOS.DataAccess.Repositories
         public async Task<IList<SalesResponse>> FindByTransactionId(string transactionId)
             => await GetQueryable()
                 .Where(s => s.TransactionId == transactionId)
-                .Select(s => new SalesResponse
-                {
-                    Product = s.ProductPricing.Product.Name,
-                    CostPrice = s.ProductPricing.CostPrice,
-                    ProductCategory = s.ProductPricing.Product.ProductCategory.Name,
-                    Quantity = s.Quantity,
-                    RetailPrice = s.ProductPricing.RetailPrice
-                })
+                .Select(s => SalesResponseEntity(s))
                 .ToListAsync();
+
+        /// <summary>
+        /// Gets all sales by company Id
+        /// </summary>
+        /// <param name="companyId"></param>
+        /// <returns></returns>
+        public async Task<IList<SalesResponse>> FindByCompanyId(int companyId)
+            => await GetQueryable()
+                .Where(s => s.ProductPricing.Product.ProductCategory.CompanyId == companyId)
+                .Select(s => SalesResponseEntity(s))
+                .ToListAsync();
+
+        private static SalesResponse SalesResponseEntity(Sales s)
+        {
+            return new SalesResponse
+            {
+                Product = s.ProductPricing.Product.Name,
+                CostPrice = s.ProductPricing.CostPrice,
+                ProductCategory = s.ProductPricing.Product.ProductCategory.Name,
+                Quantity = s.Quantity,
+                RetailPrice = s.ProductPricing.RetailPrice
+            };
+        }
     }
 }

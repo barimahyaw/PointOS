@@ -311,11 +311,12 @@
             
             </summary>
         </member>
-        <member name="M:PointOS.Api.Controllers.v1.SalesController.#ctor(PointOS.BusinessLogic.Interfaces.ITransactionBusiness)">
+        <member name="M:PointOS.Api.Controllers.v1.SalesController.#ctor(PointOS.BusinessLogic.Interfaces.ITransactionBusiness,PointOS.BusinessLogic.Interfaces.ISalesBusiness)">
             <summary>
             
             </summary>
             <param name="transactionBusiness"></param>
+            <param name="salesBusiness"></param>
         </member>
         <member name="M:PointOS.Api.Controllers.v1.SalesController.Post(System.Collections.Generic.IList{PointOS.Common.DTO.Request.TransactionRequest})">
             <summary>
@@ -329,6 +330,13 @@
             Gets a sale transaction details by transaction Id
             </summary>
             <param name="transactionId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PointOS.Api.Controllers.v1.SalesController.GetByCompany(System.Int32)">
+            <summary>
+            Gets a sales details by company Id
+            </summary>
+            <param name="companyId"></param>
             <returns></returns>
         </member>
         <member name="T:PointOS.Api.Program">

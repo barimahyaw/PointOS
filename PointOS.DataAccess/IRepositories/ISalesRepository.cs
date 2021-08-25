@@ -25,5 +25,12 @@ namespace PointOS.DataAccess.IRepositories
         /// <param name="transactionId"></param>
         /// <returns></returns>
         Task<IList<SalesResponse>> FindByTransactionId(string transactionId);
+
+        /// <summary>
+        /// Gets all sales by company Id
+        /// </summary>
+        /// <param name="companyId"></param>
+        /// <returns></returns>
+        Task<IList<SalesResponse>> FindByCompanyId(int companyId);
     }
 }
