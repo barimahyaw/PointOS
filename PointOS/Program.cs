@@ -49,6 +49,7 @@ namespace PointOS
             builder.Services.AddScoped<ProductCategoryAdapter>();
             builder.Services.AddScoped<ProductAdapter>();
             builder.Services.AddScoped<PricingAdapter>();
+            builder.Services.AddScoped<CustomerAdapter>();
 
             await builder.Build().RunAsync();
         }

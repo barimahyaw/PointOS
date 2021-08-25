@@ -70,10 +70,14 @@ namespace PointOS.DataAccess.Repositories
         /// Gets customers' details by company Id
         /// </summary>
         /// <param name="companyId"></param>
+        /// <param name="skip"></param>
+        /// <param name="take"></param>
         /// <returns></returns>
-        public async Task<List<Customer>> FindAllAsync(int companyId)
+        public async Task<List<Customer>> FindAllAsync(int companyId, int skip, int take)
             => await _dbContext.Sales.AsNoTrackingWithIdentityResolution()
                 .Where(c => c.ProductPricing.Product.ProductCategory.CompanyId == companyId)
+                .Skip(skip)
+                .Take(take)
                 .Select(c => new Customer
                 {
                     Id = c.Customer.Id,

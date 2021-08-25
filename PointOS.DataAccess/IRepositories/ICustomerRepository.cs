@@ -32,8 +32,10 @@ namespace PointOS.DataAccess.IRepositories
         /// Gets customers' details by company Id
         /// </summary>
         /// <param name="companyId"></param>
+        /// <param name="skip"></param>
+        /// <param name="take"></param>
         /// <returns></returns>
-        Task<List<Customer>> FindAllAsync(int companyId);
+        Task<List<Customer>> FindAllAsync(int companyId, int skip, int take);
 
         /// <summary>
         /// Attach changes made to a Customer's record into repository

@@ -53,5 +53,16 @@ namespace PointOS.Api.Controllers.v1
         [HttpGet]
         public async Task<SingleResponse<CustomerResponse>> GetByPhoneNumber(string phoneNumber) =>
             await _customerBusiness.FindAsync(phoneNumber);
+
+        /// <summary>
+        /// Gets customer by company Id
+        /// </summary>
+        /// <param name="companyId"></param>
+        /// <param name="skip"></param>
+        /// <param name="take"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ListResponse<CustomerResponse>> GetByCompany(int companyId, int skip = 0, int take = 5) =>
+            await _customerBusiness.FindAllAsync(companyId, skip, take);
     }
 }

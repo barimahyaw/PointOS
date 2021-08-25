@@ -24,7 +24,9 @@ namespace PointOS.BusinessLogic.Interfaces
         /// Gets Customer details by company Id
         /// </summary>
         /// <param name="companyId"></param>
+        /// <param name="skip"></param>
+        /// <param name="take"></param>
         /// <returns></returns>
-        Task<ListResponse<CustomerResponse>> FindAllAsync(int companyId);
+        Task<ListResponse<CustomerResponse>> FindAllAsync(int companyId, int skip, int take);
     }
 }

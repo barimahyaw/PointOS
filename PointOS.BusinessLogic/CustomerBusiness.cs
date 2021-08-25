@@ -91,10 +91,12 @@ namespace PointOS.BusinessLogic
         /// Gets Customer details by company Id
         /// </summary>
         /// <param name="companyId"></param>
+        /// <param name="skip"></param>
+        /// <param name="take"></param>
         /// <returns></returns>
-        public async Task<ListResponse<CustomerResponse>> FindAllAsync(int companyId)
+        public async Task<ListResponse<CustomerResponse>> FindAllAsync(int companyId, int skip, int take)
         {
-            var customers = await _unitOfWork.CustomerRepository.FindAllAsync(companyId);
+            var customers = await _unitOfWork.CustomerRepository.FindAllAsync(companyId, skip, take);
 
             if (customers == null) return new ListResponse<CustomerResponse>(new ResponseHeader
             {
