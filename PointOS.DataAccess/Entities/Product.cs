@@ -10,6 +10,8 @@ namespace PointOS.DataAccess.Entities
         [Required]
         [MaxLength(50)]
         public string Name { get; set; }
+        [MaxLength(255)]
+        public string PhotoUrl { get; set; }
         public bool Status { get; set; }
         [Required]
         public Guid GuidId { get; set; }

@@ -65,8 +65,8 @@ namespace PointOS.Pages.Authentication
 
                 if (string.IsNullOrWhiteSpace(returnUrl) && result.Data.CompanyId != 0)
                     NavigationManager.NavigateTo("/Personal/Dashboard");
-                else if(!string.IsNullOrWhiteSpace(returnUrl) && result.Data.CompanyId == 0)
-                    NavigationManager.NavigateTo("/CompanyBranches");
+                else 
+                    NavigationManager.NavigateTo("/branches");
 
                 ButtonSubmitText = "Sign In";
                 Snackbar.Add(result.Message, Severity.Success, config => config.ShowCloseIcon = true);

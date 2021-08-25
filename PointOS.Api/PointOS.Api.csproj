@@ -24,5 +24,12 @@
     <ProjectReference Include="..\PointOS.BusinessLogic\PointOS.BusinessLogic.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ResourceStorage\Companies\" />
+    <Folder Include="ResourceStorage\Documents\" />
+    <Folder Include="ResourceStorage\Employees\" />
+    <Folder Include="ResourceStorage\Products\" />
+  </ItemGroup>
+
 
 </Project>

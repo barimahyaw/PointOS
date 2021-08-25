@@ -5,17 +5,16 @@
 <MudCard Elevation="0" Square="true" Class="@Class" Style="@Style">
     <MudCardHeader>
         <CardHeaderAvatar>
-            <MudAvatar Image="images/avatar_jonny.jpg" />
+            <MudAvatar Image="images/userAvatar.png" />
         </CardHeaderAvatar>
         <CardHeaderContent>
             <MudText Typo="Typo.body2">@FullName</MudText>
-            <MudText Typo="Typo.caption">IT Consultant</MudText>
+            <MudText Typo="Typo.caption">Administrator</MudText>
         </CardHeaderContent>
     </MudCardHeader>
 </MudCard>
 
-@code {
-    [Inject]
+@code { [Inject]
     protected ISessionStorageService SessionStorageService { get; set; }
 
     [Parameter] public string Class { get; set; }
@@ -29,6 +28,4 @@
         var session = await SessionStorageService.GetItemAsync<UserSession>("UserSession");
 
         FullName = session.FullName;
-    }
-
-}
+    } }

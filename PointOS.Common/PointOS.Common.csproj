@@ -5,7 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Attributes\" />
     <Folder Include="Extensions\" />
   </ItemGroup>
 

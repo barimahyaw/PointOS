@@ -1,4 +1,7 @@
-﻿
+﻿@using System.IO
+@using Microsoft.AspNetCore.Http.Internal
+@using PointOS.Common.Helpers.IHelpers
+
 <EditForm Model="@ProductRequest" OnValidSubmit="@SaveChanges">
     <MudDialog>
         <DialogContent>
@@ -9,6 +12,7 @@
                 <MudItem xs="12" md="12" sm="12" lg="12" xl="12">
                     <MudTextField @bind-Value="@ProductRequest.Name" Label="Name" Variant="Variant.Outlined" For="@(()=>ProductRequest.Name)" />
                 </MudItem>
+
                 @if (ProductRequest.ProductCategories != null)
                 {
                     <MudItem xs="12" md="12" sm="12" lg="12" xl="12">
@@ -23,7 +27,7 @@
                         </MudSelect>
                     </MudItem>
                 }
-                
+
 
 
                 <MudItem xs="4" md="4" sm="4" lg="4" xl="4">
@@ -36,14 +40,26 @@
                     <MudTextField @bind-Value="@ProductRequest.RetailPrice" Label="Retail Sale" Variant="Variant.Outlined" For="@(()=>ProductRequest.RetailPrice)" />
                 </MudItem>
 
-                <MudItem xs="12" md="12" sm="12" lg="12" xl="12">
-                    <MudText>
-                        <b>Status</b>
-                    </MudText>
+                <MudItem xs="6" md="6" sm="6" lg="6" xl="6">
                     <MudText Typo="Typo.body2">
-                        Set the Status of the Product to Active/Inactive.
+                        Is Status Active/Inactive.
                     </MudText>
                     <MudSwitch @bind-Checked="@FriendSwitch" Color="Color.Secondary" />
+                </MudItem>
+                <MudItem xs="6" md="6" sm="6" lg="6" xl="6">
+                    <InputFile id="fileInput112" OnChange="UploadFiles" hidden accept=".jpg, .jpeg, .png"  @bind-Value="@ProductRequest.Photo"/>
+
+                    <MudButton HtmlTag="label"
+                               Variant="Variant.Filled"
+                               Color="Color.Primary"
+                               StartIcon="@Icons.Filled.CloudUpload"
+                               for="fileInput112" FullWidth="true">
+                        @if (string.IsNullOrWhiteSpace(_uploadButtonText))
+                        {
+                            _uploadButtonText = "Upload Product Photo";
+                        }
+                        @_uploadButtonText
+                    </MudButton>
                 </MudItem>
 
                 <MudItem xs="6" md="6" sm="6" lg="6" xl="6">
@@ -65,3 +81,34 @@
         </DialogActions>
     </MudDialog>
 </EditForm>
+
+@code
+{
+    private string _uploadButtonText;
+    //[Inject] private IUtils _utils { get; set; }
+    private void UploadFiles(InputFileChangeEventArgs e)
+    {
+        //var entries = e.GetMultipleFiles();
+
+        var file = e.File;
+        var ms = new MemoryStream();
+
+
+        ProductRequest.Photo = null;
+
+        _uploadButtonText = e.File.Name;
+
+        //if (file.Size > _utils.GetUploadDocumentMaximumSize())
+        //{
+        //    //Do your validations here
+        //    Snackbar.Configuration.PositionClass = Defaults.Classes.Position.TopCenter;
+        //    Snackbar.Add(file.Size.ToString(), Severity.Error);
+        //    Snackbar.Add(_utils.GetUploadDocumentMaximumSize().ToString(), Severity.Error);
+        //    Snackbar.Add($"Files starting with letter {entries.FirstOrDefault().Name.Substring(0, 1)} are not recommended", Severity.Warning);
+        //    Snackbar.Add($"This file has the extension {entries.FirstOrDefault().Name.Split(".").Last()}", Severity.Info);
+        //}
+
+
+        //TODO upload the files to the server
+    }
+}

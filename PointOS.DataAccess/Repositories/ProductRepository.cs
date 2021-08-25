@@ -41,6 +41,7 @@ namespace PointOS.DataAccess.Repositories
                 .Select(p => new Product
                 {
                     Name = p.Name,
+                    PhotoUrl = p.PhotoUrl,
                     CreatedOn = p.CreatedOn,
                     CreatedUserId = p.CreatedUserId,
                     Status = p.Status,

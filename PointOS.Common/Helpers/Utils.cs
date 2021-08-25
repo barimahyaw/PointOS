@@ -1,7 +1,7 @@
-﻿using eViSeM.Common.Enums;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using PointOS.Common.DTO.Request;
+using PointOS.Common.Enums;
 using PointOS.Common.Helpers.IHelpers;
 using PointOS.Common.Settings;
 using System;
@@ -16,8 +16,10 @@ namespace PointOS.Common.Helpers
         private readonly ConnectionStrings _connectionStrings;
         private readonly StaticFilesPath _staticFilesPath;
         private readonly EmailSettings _emailSettings;
-        public Utils(IOptions<ConnectionStrings> connectionStrings, IOptions<StaticFilesPath> staticFilesPath, IOptions<EmailSettings> emailSettings)
+        private readonly UploadDocumentSettings _uploadDocumentSettings;
+        public Utils(IOptions<ConnectionStrings> connectionStrings, IOptions<StaticFilesPath> staticFilesPath, IOptions<EmailSettings> emailSettings, IOptions<UploadDocumentSettings> uploadDocumentSettings)
         {
+            _uploadDocumentSettings = uploadDocumentSettings.Value;
             _emailSettings = emailSettings.Value;
             _staticFilesPath = staticFilesPath.Value;
             _connectionStrings = connectionStrings.Value;
@@ -35,6 +37,15 @@ namespace PointOS.Common.Helpers
         /// <returns></returns>
         public string GetAntiVirusPath() => _staticFilesPath.AntiVirus;
 
+        public int GetUploadDocumentMaximumSize() => _uploadDocumentSettings.MaximumSize;
+
+        /// <summary>
+        /// Generate unique file name for uploaded documents
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns>Generated unique file name as a string</returns>
+        public string GetUniqueFileName(IFormFile file) => $"{Guid.NewGuid()}_{file.FileName}";
+
         /// <summary>
         /// Upload documents/pictures and all kinds of files in a specify folder
         /// </summary>
@@ -43,12 +54,15 @@ namespace PointOS.Common.Helpers
         /// <returns>Nothing</returns>
         public async Task<string> UploadFile(IFormFile file, FileUploadFolder folder)
         {
-            var uniqueFileName = Guid.NewGuid() + "_" + file.FileName;
+            //var uniqueFileName = Guid.NewGuid() + "_" + file.FileName;
+            var uniqueFileName = GetUniqueFileName(file);
+
             var folderName = folder switch
             {
-                FileUploadFolder.CompanyLogos => "CompanyLogos",
+                FileUploadFolder.CompanyLogos => "Companies",
                 FileUploadFolder.Documents => "Documents",
-                FileUploadFolder.EmployeesPhoto => "EmployeesPhoto",
+                FileUploadFolder.EmployeesPhoto => "Employees",
+                FileUploadFolder.ProductsPhoto => "Products",
                 _ => string.Empty
             };
 
@@ -58,6 +72,27 @@ namespace PointOS.Common.Helpers
             await file.CopyToAsync(fileStream);
 
             return uniqueFileName;
+        }
+
+        /// <summary>
+        /// Gets documents/pictures and all kinds of files uploaded specify path directory
+        /// </summary>
+        /// <param name="folder"></param>
+        /// <returns></returns>
+        public string FilePath(FileUploadFolder folder)
+        {
+            var folderName = folder switch
+            {
+                FileUploadFolder.CompanyLogos => "Companies",
+                FileUploadFolder.Documents => "Documents",
+                FileUploadFolder.EmployeesPhoto => "Employees",
+                FileUploadFolder.ProductsPhoto => "Products",
+                _ => string.Empty
+            };
+
+            var path = Path.Combine(_staticFilesPath.UploadsPath, folderName);
+
+            return path;
         }
 
         /// <summary>

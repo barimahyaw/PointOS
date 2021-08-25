@@ -20,5 +20,8 @@ namespace PointOS.Common.DTO.Request
         public string EmailAddress { get; set; }
 
         public CrudOperation Operation { get; set; }
+
+        [Required]
+        public string Branch { get; set; }
     }
 }

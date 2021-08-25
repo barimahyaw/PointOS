@@ -40,6 +40,7 @@ namespace PointOS
             builder.Services.AddMudServices();
 
             builder.Services.AddSingleton<IRestUtility, RestUtility>();
+            builder.Services.AddSingleton<IUtils, Utils>();
 
             builder.Services.AddSyncfusionBlazor();
             Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("NDgyOTI2QDMxMzkyZTMyMmUzMENhQjJ5N0syU0lvTm5LYi9waW1FKy9OSlZyMHBINzA1dmlZK2MyZkZnNU09");

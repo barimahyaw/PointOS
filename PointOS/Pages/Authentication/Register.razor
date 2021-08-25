@@ -1,4 +1,4 @@
-﻿@page "/authentication/register"
+﻿@page "/account/register"
 @layout LoginLayout
 @*@inherits AuthenticationBase*@
 
@@ -20,6 +20,16 @@
     <MudTextField T="string" Label="First Name" Variant="Variant.Outlined" @bind-Value="@UserRegistrationRequest.FirstName" For="@(()=>UserRegistrationRequest.FirstName)"></MudTextField>
     <MudTextField T="string" Label="Middle Name" Variant="Variant.Outlined" @bind-Value="@UserRegistrationRequest.MiddleName"></MudTextField>
     <MudTextField T="string" Label="Surname" Variant="Variant.Outlined" @bind-Value="@UserRegistrationRequest.Surname" For="@(()=>UserRegistrationRequest.Surname)"></MudTextField>
+
+    <MudSelect Label="Gender (Sex)" Strict="true" Variant="Variant.Outlined" Format="F2" @bind-Value="@UserRegistrationRequest.Gender" For="@(()=>UserRegistrationRequest.Gender)">
+        @foreach (var name in Enum.GetNames(typeof(Common.Enums.Gender)))
+        {
+            if (!string.IsNullOrWhiteSpace(name))
+            {
+<MudSelectItem Value="name">@name</MudSelectItem>}
+                    }
+    </MudSelect>
+
     <MudTextField T="string" Label="Phone Number" Variant="Variant.Outlined" @bind-Value="@UserRegistrationRequest.PhoneNumber" For="@(()=>UserRegistrationRequest.PhoneNumber)"></MudTextField>
 
     <MudTextField @bind-Value="@UserRegistrationRequest.Password" Label="Password" Variant="Variant.Outlined" InputType="@PasswordInput" Adornment="Adornment.End"

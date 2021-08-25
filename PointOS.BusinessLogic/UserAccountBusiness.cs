@@ -52,7 +52,12 @@ namespace PointOS.BusinessLogic
                 FirstName = request.FirstName,
                 MiddleName = request.MiddleName,
                 LastName = request.Surname,
-                Gender = (int)request.Gender,
+                Gender = request.Gender switch
+                {
+                    "Male" => 1,
+                    "Female" => 2,
+                    _ => 3
+                },
                 PhoneNumber = request.PhoneNumber,
                 IsActive = true,
                 CreatedOn = DateTime.UtcNow

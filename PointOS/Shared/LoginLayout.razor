@@ -12,7 +12,23 @@
         </MudPaper>
         @*<MudAlert Severity="Severity.Info" Class="mt-8 mud-width-full" Style="max-width:500px;" Elevation="25">No authentication is required, click sign in.</MudAlert>*@
 
+        <CascadingAuthenticationState>
+            <AuthorizeView>
+                <NotAuthorized>
+                    @if (!IsRegister)
+                    {
+<a href="/company/register" @onclick="@SetIsRegister">
+    <MudAlert Severity="Severity.Info" Class="mt-8 mud-width-full" Style="max-width:500px;" Elevation="25">Not a Customer? Get Started Today.</MudAlert>
+</a>}
+                </NotAuthorized>
+            </AuthorizeView>
+        </CascadingAuthenticationState>
+
     </div>
 </MudContainer>
 
-@code { private MudTheme _currentTheme = new MudBlazorAdminDashboard(); }
+@code { private MudTheme _currentTheme = new MudBlazorAdminDashboard();
+    
+    private bool IsRegister { get; set; }
+
+    private void SetIsRegister() => IsRegister = true; }

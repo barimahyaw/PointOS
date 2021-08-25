@@ -52,18 +52,7 @@ namespace PointOS.Api.Controllers.v1
         //[ValidateAntiForgeryToken]
         [AllowAnonymous]
         public async Task<ResponseHeader> Register(UserRegistrationRequest request)
-        {
-            var response = await _userAccountBusiness.AddUser(request);
-
-            //var confirmLink = Url.Action("ConfirmAccount", "Account",
-            //    new { userId = response.ReferenceNumber, token = response.Message }, Request.Scheme);
-
-            //confirmLink = $"Kindly click on the link below to activate your account.</br> {confirmLink}";
-
-            //_utils.EmailSender(request.EmailAddress, "Account Email Confirmation", confirmLink);
-
-            return response;
-        }
+            => await _userAccountBusiness.AddUser(request);
 
         /// <summary>
         /// Confirm User Account Email

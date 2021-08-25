@@ -124,6 +124,18 @@ namespace PointOS.Common.Extensions
             return attribute == null ? string.Empty : attribute.StringValue;
         }
 
+        /// <summary>
+        /// Gets the integer value attribute of an enum field value.
+        /// </summary>
+        /// <param name="enumValue">The enum value.</param>
+        /// <returns>The integer value of the enum field value</returns>
+        public static int GetAttributeIntegerValue(this Enum enumValue)
+        {
+            var attribute = enumValue.GetAttributeOfType<IntegerValueAttribute>();
+
+            return attribute?.IntegerValue ?? 0;
+        }
+
         ///// <summary>
         ///// Gets the table name attribute of an enum field value.
         ///// </summary>

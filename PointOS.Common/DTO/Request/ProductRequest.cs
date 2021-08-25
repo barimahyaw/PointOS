@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -10,6 +11,7 @@ namespace PointOS.Common.DTO.Request
         [MaxLength(50)]
         [Display(Name = "Name")]
         public string Name { get; set; }
+        public IFormFile Photo { get; set; }
         public bool Status { get; set; }
         [Required]
         [Display(Name = "Product Category")]
@@ -18,7 +20,7 @@ namespace PointOS.Common.DTO.Request
         public IEnumerable<SelectListItem> ProductCategories { get; set; }
 
         public int Quantity { get; set; }
-        [Required]
+        //[Required]
         public string PaymentType { get; set; }
         [Required]
         [Display(Name = "Cost Price")]

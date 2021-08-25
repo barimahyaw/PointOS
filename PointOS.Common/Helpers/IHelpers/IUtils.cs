@@ -1,6 +1,6 @@
-﻿using eViSeM.Common.Enums;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using PointOS.Common.DTO.Request;
+using PointOS.Common.Enums;
 using System.Threading.Tasks;
 
 namespace PointOS.Common.Helpers.IHelpers
@@ -19,6 +19,15 @@ namespace PointOS.Common.Helpers.IHelpers
         /// <returns></returns>
         string GetAntiVirusPath();
 
+        int GetUploadDocumentMaximumSize();
+
+        /// <summary>
+        /// Generate unique file name for uploaded documents
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns>Generated unique file name as a string</returns>
+        string GetUniqueFileName(IFormFile file);
+
         /// <summary>
         /// Upload documents/pictures and all kinds of files in a specify folder
         /// </summary>
@@ -26,6 +35,13 @@ namespace PointOS.Common.Helpers.IHelpers
         /// <param name="folder"></param>
         /// <returns>Nothing</returns>
         Task<string> UploadFile(IFormFile file, FileUploadFolder folder);
+
+        /// <summary>
+        /// Gets documents/pictures and all kinds of files uploaded specify path directory
+        /// </summary>
+        /// <param name="folder"></param>
+        /// <returns></returns>
+        string FilePath(FileUploadFolder folder);
 
         /// <summary>
         /// Generate unique Ticket numbers

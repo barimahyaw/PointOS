@@ -10,9 +10,6 @@ namespace PointOS.Pages.Sales
     {
         [Inject]
         private IDialogService DialogService { get; set; }
-        public string[] PagerDropDown { get; set; } = { "All", "5", "10", "15", "20" };
-
-        public bool IsCartEmpty { get; set; }
         public double SubTotal { get; set; }
         public double Tax { get; set; } = 0.0;
 
@@ -59,7 +56,7 @@ namespace PointOS.Pages.Sales
 
         //public void ResetCart() => Products = new List<ProductResponse>();
 
-        public void RefreshState() => StateHasChanged();
+        //public void RefreshState() => StateHasChanged();
 
 
         [Parameter]

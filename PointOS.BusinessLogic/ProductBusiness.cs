@@ -4,6 +4,7 @@ using PointOS.Common.DTO.Request;
 using PointOS.Common.DTO.Response;
 using PointOS.Common.Enums;
 using PointOS.Common.Extensions;
+using PointOS.Common.Helpers.IHelpers;
 using PointOS.DataAccess;
 using PointOS.DataAccess.Entities;
 using System;
@@ -16,11 +17,13 @@ namespace PointOS.BusinessLogic
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IProductValidator _productValidator;
+        private readonly IUtils _utils;
 
-        public ProductBusiness(IUnitOfWork unitOfWork, IProductValidator productValidator)
+        public ProductBusiness(IUnitOfWork unitOfWork, IProductValidator productValidator, IUtils utils)
         {
             _unitOfWork = unitOfWork;
             _productValidator = productValidator;
+            _utils = utils;
         }
 
         /// <summary>
@@ -37,6 +40,7 @@ namespace PointOS.BusinessLogic
             {
                 GuidId = Guid.NewGuid(),
                 Name = request.Name,
+                PhotoUrl = _utils.GetUniqueFileName(request.Photo),
                 Status = true,
                 CreatedOn = DateTime.UtcNow,
                 ProductCategoryId = request.ProductCategoryId,
@@ -84,8 +88,11 @@ namespace PointOS.BusinessLogic
                 // commit all db changes
                 tran.Commit();
 
+                // upload file after tran successfully committed
+                await _utils.UploadFile(request.Photo, FileUploadFolder.ProductsPhoto);
+
                 return result != 0 ? new ResponseHeader { StatusCode = 201, Message = $"Record created for {request.Name}", Success = true }
-                    : new ResponseHeader { Message = "" };
+                    : new ResponseHeader { Message = "Sorry, transaction failed. Try again later!" };
             }
             catch
             {
@@ -164,7 +171,7 @@ namespace PointOS.BusinessLogic
         {
             var entities = await _unitOfWork.ProductRepository.FindAllAsync(companyId);
 
-            if (entities == null) return new ListResponse<ProductResponse>(new ResponseHeader
+             if (entities == null) return new ListResponse<ProductResponse>(new ResponseHeader
             {
                 Message = string.Format(Status.NotFound.GetAttributeStringValue(), nameof(Product))
             }, null);

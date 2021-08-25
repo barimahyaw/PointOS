@@ -36,6 +36,10 @@ namespace PointOS.Pages.Company
 
         protected void NextPage() => IsCompanyVisible = false;
 
+        protected void BackPage() => IsCompanyVisible = true;
+
+        protected void Cancel() => NavigationManager.NavigateTo("/");
+
         protected async Task SubmitRegistration()
         {
             IsOverlayVisible = true;

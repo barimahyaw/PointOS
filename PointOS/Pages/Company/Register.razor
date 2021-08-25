@@ -6,8 +6,15 @@
 
 <EditForm Model="@CompanyRegistrationRequest" OnValidSubmit="@SubmitRegistration">
     <DataAnnotationsValidator></DataAnnotationsValidator>
-    <MudText Typo="Typo.h4" GutterBottom="true">Sign Up</MudText>
-    <MudText>Already have an account? <MudLink Href="/authentication/login">Sign In</MudLink></MudText>
+    @if (IsCompanyVisible)
+    {
+<MudText Typo="Typo.h6" GutterBottom="true">Tell us a bit about your company</MudText> @*<MudText>Already have an account? <MudLink Href="/authentication/login">Sign In</MudLink></MudText>*@}
+
+
+
+    @if (!IsCompanyVisible)
+    {
+<MudText Typo="Typo.h6" GutterBottom="true">Create an administrative user account</MudText>}
 
     @if (!string.IsNullOrWhiteSpace(ErrorMessage))
     {
@@ -21,13 +28,20 @@
 
                     <MudTextField T="string" Label="Name of Company" Variant="Variant.Outlined" Class="my-4" @bind-Value="@CompanyRegistrationRequest.CompanyRequest.Name" For="@(()=>CompanyRegistrationRequest.CompanyRequest.Name)"></MudTextField>
 
-                                        <MudTextField T="string" Label="Phone Number" Variant="Variant.Outlined" Class="my-4" @bind-Value="@CompanyRegistrationRequest.CompanyRequest.PhoneNumber" For="@(()=>CompanyRegistrationRequest.CompanyRequest.PhoneNumber)"></MudTextField>
+                                        <MudTextField T="string" Label="HQ (Default Branch) Name" Variant="Variant.Outlined" Class="my-4" @bind-Value="@CompanyRegistrationRequest.CompanyRequest.Branch" For="@(()=>CompanyRegistrationRequest.CompanyRequest.Branch)"></MudTextField>
 
-                                                            <MudTextField T="string" Label="Altinative Phone Number" Variant="Variant.Outlined" Class="my-4" @bind-Value="@CompanyRegistrationRequest.CompanyRequest.AltPhoneNumber" For="@(()=>CompanyRegistrationRequest.CompanyRequest.AltPhoneNumber)"></MudTextField>
+                                                            <MudTextField T="string" Label="Phone Number" Variant="Variant.Outlined" Class="my-4" @bind-Value="@CompanyRegistrationRequest.CompanyRequest.PhoneNumber" For="@(()=>CompanyRegistrationRequest.CompanyRequest.PhoneNumber)"></MudTextField>
 
+                                                                                <MudTextField T="string" Label="Altinative Phone Number" Variant="Variant.Outlined" Class="my-4" @bind-Value="@CompanyRegistrationRequest.CompanyRequest.AltPhoneNumber" For="@(()=>CompanyRegistrationRequest.CompanyRequest.AltPhoneNumber)"></MudTextField>
 
-
-                                                                                <MudButton Variant="Variant.Filled" Color="Color.Primary" Size="Size.Large" FullWidth="true" @onclick="@NextPage">Next</MudButton>}
+                                                                                                    <MudGrid>
+                                                                                                        <MudItem xs="6" sm="6" md="6">
+                                                                                                            <MudButton OnClick="@Cancel" Size="Size.Large" FullWidth="true" StartIcon="@Icons.Material.Outlined.ArrowBack" Color="Color.Default">Back to Login</MudButton>
+                                                                                                        </MudItem>
+                                                                                                        <MudItem xs="6" sm="6" md="6">
+                                                                                                            <MudButton Variant="Variant.Filled" EndIcon="@Icons.Material.Outlined.ArrowForward" Color="Color.Primary" Size="Size.Large" FullWidth="true" @onclick="@NextPage">Next</MudButton>
+                                                                                                        </MudItem>
+                                                                                                    </MudGrid>}
 
 
 
@@ -38,7 +52,17 @@
                     <MudTextField T="string" Label="First Name" Variant="Variant.Outlined" Class="my-4" @bind-Value="@CompanyRegistrationRequest.UserRegistrationRequest.FirstName" For="@(()=>CompanyRegistrationRequest.UserRegistrationRequest.FirstName)"></MudTextField>
                                         <MudTextField T="string" Label="Middle Name" Variant="Variant.Outlined" Class="my-4" @bind-Value="@CompanyRegistrationRequest.UserRegistrationRequest.MiddleName"></MudTextField>
                                                             <MudTextField T="string" Label="Surname" Variant="Variant.Outlined" @bind-Value="@CompanyRegistrationRequest.UserRegistrationRequest.Surname" For="@(()=>CompanyRegistrationRequest.UserRegistrationRequest.Surname)"></MudTextField>
-                                                                                <MudTextField T="string" Label="Phone Number" Variant="Variant.Outlined" Class="my-4" @bind-Value="@CompanyRegistrationRequest.UserRegistrationRequest.PhoneNumber" For="@(()=>CompanyRegistrationRequest.UserRegistrationRequest.PhoneNumber)"></MudTextField>
+        <MudTextField T="string" Label="Phone Number" Variant="Variant.Outlined" Class="my-4" @bind-Value="@CompanyRegistrationRequest.UserRegistrationRequest.PhoneNumber" For="@(()=>CompanyRegistrationRequest.UserRegistrationRequest.PhoneNumber)"></MudTextField>
+
+        <MudSelect Label="Gender (Sex)" Strict="true" Variant="Variant.Outlined" Format="F2" @bind-Value="@CompanyRegistrationRequest.UserRegistrationRequest.Gender" For="@(()=>CompanyRegistrationRequest.UserRegistrationRequest.Gender)">
+            @foreach (var name in Enum.GetNames(typeof(Common.Enums.Gender)))
+            {
+                if (!string.IsNullOrWhiteSpace(name))
+                {  
+                    <MudSelectItem Value="name">@name</MudSelectItem>
+                }
+            }
+        </MudSelect>
 
                                                                                                     <MudTextField Class="my-4" @bind-Value="@CompanyRegistrationRequest.UserRegistrationRequest.Password" Label="Password" Variant="Variant.Outlined" InputType="@PasswordInput" Adornment="Adornment.End"
                                                                                                                   AdornmentIcon="@PasswordInputIcon" OnAdornmentClick="@TogglePasswordVisibility" For="@(()=>CompanyRegistrationRequest.UserRegistrationRequest.Password)" />
@@ -47,7 +71,17 @@
 
                                                                                                                                             <MudCheckBox @bind-Checked="@AgreeToTerms" Label="I agree to the terms and privacy" Color="Color.Primary" Class="ml-n1 my-3"></MudCheckBox> var submitBtnTxt = string.IsNullOrWhiteSpace(ButtonSubmitText) ? "Register" : ButtonSubmitText;
 
-                                                                                                                        <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Disabled="@(!AgreeToTerms)" Size="Size.Large" FullWidth="true">@submitBtnTxt</MudButton>}
+
+
+
+                                                                                                                        <MudGrid>
+                                                                                                                            <MudItem xs="6" sm="6" md="6">
+                                                                                                                                <MudButton OnClick="@BackPage" Size="Size.Large" FullWidth="true" StartIcon="@Icons.Material.Outlined.ArrowBack" Color="Color.Default">Back</MudButton>
+                                                                                                                            </MudItem>
+                                                                                                                            <MudItem xs="6" sm="6" md="6">
+                                                                                                                                <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Disabled="@(!AgreeToTerms)" Size="Size.Large" FullWidth="true" StartIcon="@Icons.Material.Outlined.Save">@submitBtnTxt</MudButton>
+                                                                                                                            </MudItem>
+                                                                                                                        </MudGrid>}
     @if (IsOverlayVisible)
     {
 <FormOverlay />}

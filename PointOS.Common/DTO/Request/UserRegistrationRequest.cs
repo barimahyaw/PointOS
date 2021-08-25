@@ -31,7 +31,7 @@ namespace PointOS.Common.DTO.Request
         [Display(Name = "Confirm Password")]
         public string ConfirmPassword { get; set; }
 
-        public Gender Gender { get; set; }
+        public string Gender { get; set; }
 
         [ConcurrencyCheck]
         [Required(ErrorMessage = "Phone No. is Required")]
