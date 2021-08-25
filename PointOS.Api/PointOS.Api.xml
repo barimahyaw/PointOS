@@ -332,11 +332,13 @@
             <param name="transactionId"></param>
             <returns></returns>
         </member>
-        <member name="M:PointOS.Api.Controllers.v1.SalesController.GetByCompany(System.Int32)">
+        <member name="M:PointOS.Api.Controllers.v1.SalesController.GetByCompany(System.Int32,System.Int32,System.Int32)">
             <summary>
             Gets a sales details by company Id
             </summary>
             <param name="companyId"></param>
+            <param name="skip"></param>
+            <param name="take"></param>
             <returns></returns>
         </member>
         <member name="T:PointOS.Api.Program">

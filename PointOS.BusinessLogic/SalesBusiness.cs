@@ -28,7 +28,11 @@ namespace PointOS.BusinessLogic
             return new ListResponse<SalesResponse>
             {
                 ResponseBodyList = sales,
-                ResponseHeader = new ResponseHeader { Success = true }
+                ResponseHeader = new ResponseHeader
+                {
+                    Success = true,
+                    ReferenceNumber = sales.Count.ToString()
+                }
             };
         }
     }

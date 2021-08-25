@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using PointOS.Common.DTO.Response;
 using PointOS.DataAccess.Entities;
 using PointOS.DataAccess.IRepositories;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using PointOS.Common.DTO.Response;
 
 namespace PointOS.DataAccess.Repositories
 {
@@ -49,7 +49,14 @@ namespace PointOS.DataAccess.Repositories
         public async Task<IList<SalesResponse>> FindByTransactionId(string transactionId)
             => await GetQueryable()
                 .Where(s => s.TransactionId == transactionId)
-                .Select(s => SalesResponseEntity(s))
+                .Select(s => new SalesResponse
+                {
+                    Product = s.ProductPricing.Product.Name,
+                    CostPrice = s.ProductPricing.CostPrice,
+                    ProductCategory = s.ProductPricing.Product.ProductCategory.Name,
+                    Quantity = s.Quantity,
+                    RetailPrice = s.ProductPricing.RetailPrice
+                })
                 .ToListAsync();
 
         /// <summary>
@@ -60,19 +67,16 @@ namespace PointOS.DataAccess.Repositories
         public async Task<IList<SalesResponse>> FindByCompanyId(int companyId)
             => await GetQueryable()
                 .Where(s => s.ProductPricing.Product.ProductCategory.CompanyId == companyId)
-                .Select(s => SalesResponseEntity(s))
+                .Select(s => new SalesResponse
+                {
+                    Id = s.Id,
+                    Product = s.ProductPricing.Product.Name,
+                    CostPrice = s.ProductPricing.CostPrice,
+                    ProductCategory = s.ProductPricing.Product.ProductCategory.Name,
+                    Quantity = s.Quantity,
+                    RetailPrice = s.ProductPricing.RetailPrice,
+                    WholeSalePrice = s.ProductPricing.WholeSalePrice
+                })
                 .ToListAsync();
-
-        private static SalesResponse SalesResponseEntity(Sales s)
-        {
-            return new SalesResponse
-            {
-                Product = s.ProductPricing.Product.Name,
-                CostPrice = s.ProductPricing.CostPrice,
-                ProductCategory = s.ProductPricing.Product.ProductCategory.Name,
-                Quantity = s.Quantity,
-                RetailPrice = s.ProductPricing.RetailPrice
-            };
-        }
     }
 }

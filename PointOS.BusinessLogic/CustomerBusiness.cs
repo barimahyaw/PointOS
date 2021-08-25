@@ -79,7 +79,8 @@ namespace PointOS.BusinessLogic
 
             if (customer == null) return new SingleResponse<CustomerResponse>(new ResponseHeader
             {
-                Message = string.Format(Status.NotFound.GetAttributeStringValue(), nameof(Customer))
+                Message = string.Format(Status.NotFound.GetAttributeStringValue(), nameof(Customer)),
+                ReferenceNumber = 1.ToString()
             }, null);
 
             var response = new SingleResponse<CustomerResponse>
@@ -109,7 +110,11 @@ namespace PointOS.BusinessLogic
 
             return new ListResponse<CustomerResponse>
             {
-                ResponseHeader = new ResponseHeader { Success = true },
+                ResponseHeader = new ResponseHeader
+                {
+                    Success = true,
+                    ReferenceNumber = customers.Count.ToString()
+                },
                 ResponseBodyList = customers.Select(CustomerResponseEntity)
             };
         }

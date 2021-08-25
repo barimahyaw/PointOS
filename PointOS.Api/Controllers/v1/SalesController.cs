@@ -58,9 +58,11 @@ namespace PointOS.Api.Controllers.v1
         /// Gets a sales details by company Id
         /// </summary>
         /// <param name="companyId"></param>
+        /// <param name="skip"></param>
+        /// <param name="take"></param>
         /// <returns></returns>
         [HttpGet("getByCompany")]
-        public async Task<ListResponse<SalesResponse>> GetByCompany(int companyId)
+        public async Task<ListResponse<SalesResponse>> GetByCompany(int companyId, int skip = 0, int take = 5)
             => await _salesBusiness.FindByCompany(companyId);
     }
 }

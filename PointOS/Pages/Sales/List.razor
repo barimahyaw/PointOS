@@ -1,17 +1,22 @@
-﻿<SfGrid TValue="@CustomerResponse" AllowPaging="true" AllowSorting="true" Toolbar="@(new List<string>() {"Search"})">
-    <SfDataManager Adaptor="Adaptors.CustomAdaptor" AdaptorInstance="@typeof(CustomerAdapter)"></SfDataManager>
+﻿@*<MudText Typo="Typo.h5" Color="Color.Primary" Class="mb-4">Products List</MudText>*@
+
+<SfGrid TValue="@SalesResponse" AllowPaging="true" AllowSorting="true" Toolbar="@(new List<string>() {"Search"})">
+    <SfDataManager Adaptor="Adaptors.CustomAdaptor" AdaptorInstance="@typeof(SalesAdapter)"></SfDataManager>
     <GridPageSettings PageCount="3" PageSize="5" PageSizes="@PagerDropDown"></GridPageSettings>
     <GridSortSettings AllowUnsort="false"></GridSortSettings>
     <GridEditSettings AllowAdding="true" AllowDeleting="true" AllowEditing="true"></GridEditSettings>
     <GridSelectionSettings CheckboxOnly="true" PersistSelection="true" Type="SelectionType.Multiple"></GridSelectionSettings>
     <GridColumns>
         <GridColumn Type="ColumnType.CheckBox" AllowFiltering="false" AllowSorting="false" Width="60"></GridColumn>
-        <GridColumn Field="@nameof(CustomerResponse.Id)" HeaderText="Id" Visible="false" IsPrimaryKey="true"></GridColumn>
-        <GridColumn Field="@nameof(CustomerResponse.FullName)" HeaderText="Name"></GridColumn>
-        <GridColumn Field="@nameof(CustomerResponse.PhoneNumber)" HeaderText="Phone Number"></GridColumn>
-        <GridColumn Field="@nameof(CustomerResponse.EmailAddress)" HeaderText="Email Address"></GridColumn>
-        <GridColumn Field="@nameof(CustomerResponse.Address)" HeaderText="House/Work Address"></GridColumn>
-        <GridColumn Field="@nameof(CustomerResponse.CreatedOn)" HeaderText="Created On"></GridColumn>
+        <GridColumn Field="@nameof(SalesResponse.Id)" HeaderText="Id" Visible="false" IsPrimaryKey="true"></GridColumn>
+        <GridColumn Field="@nameof(SalesResponse.Product)" HeaderText="Product"></GridColumn>
+        <GridColumn Field="@nameof(SalesResponse.ProductCategory)" HeaderText="Product Category"></GridColumn>
+        <GridColumn Field="@nameof(SalesResponse.CostPrice)" HeaderText="Cost Price"></GridColumn>
+        <GridColumn Field="@nameof(SalesResponse.RetailPrice)" HeaderText="Retail Price"></GridColumn>
+        <GridColumn Field="@nameof(SalesResponse.Quantity)" HeaderText="Quantity"></GridColumn>
+        <GridColumn Field="@nameof(SalesResponse.RetailAmount)" HeaderText="Total Amount"></GridColumn>
+        @*<GridColumn Field="@nameof(SalesResponse.CreatedBy)" HeaderText="Created By"></GridColumn>
+            <GridColumn Field="@nameof(SalesResponse.CreatedOn)" HeaderText="Created On"></GridColumn>*@
         @*<GridColumn Field="@nameof(ProductResponse.ModifiedBy)" HeaderText="Modified By"></GridColumn>
             <GridColumn Field="@nameof(ProductResponse.ModifiedOn)" HeaderText="Modified On"></GridColumn>*@
         <GridColumn HeaderText="Manage Records" Width="150">
@@ -20,20 +25,11 @@
                 <GridCommandColumn Type="CommandButtonType.Delete" ButtonOption="@(new CommandButtonOptions() {IconCss = "e-icons e-delete", CssClass = "e-flat"})"></GridCommandColumn>
                 <GridCommandColumn Type="CommandButtonType.Save" ButtonOption="@(new CommandButtonOptions() {IconCss = "e-icons e-save", CssClass = "e-flat"})"></GridCommandColumn>
                 <GridCommandColumn Type="CommandButtonType.Cancel" ButtonOption="@(new CommandButtonOptions() {IconCss = "e-icons e-cancel-icon", CssClass = "e-flat"})"></GridCommandColumn>
-                <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Add" Color="Color.Primary" Class="ml-auto" @onclick="@OpenDialog">Add</MudButton>
             </GridCommandColumns>
         </GridColumn>
     </GridColumns>
 </SfGrid>
 @code
 {
-    [Inject]
-    private IDialogService DialogService { get; set; }
     public string[] PagerDropDown { get; set; } = { "All", "5", "10", "15", "20" };
-
-
-    private void OpenDialog()
-    {
-        DialogService.Show<Add>("Add Customer");
-    }
 }

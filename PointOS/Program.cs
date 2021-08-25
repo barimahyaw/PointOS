@@ -50,6 +50,7 @@ namespace PointOS
             builder.Services.AddScoped<ProductAdapter>();
             builder.Services.AddScoped<PricingAdapter>();
             builder.Services.AddScoped<CustomerAdapter>();
+            builder.Services.AddScoped<SalesAdapter>();
 
             await builder.Build().RunAsync();
         }
