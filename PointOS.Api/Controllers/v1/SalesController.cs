@@ -63,6 +63,6 @@ namespace PointOS.Api.Controllers.v1
         /// <returns></returns>
         [HttpGet("getByCompany")]
         public async Task<ListResponse<SalesResponse>> GetByCompany(int companyId, int skip = 0, int take = 5)
-            => await _salesBusiness.FindByCompany(companyId);
+            => await _salesBusiness.FindByCompany(companyId, skip, take);
     }
 }

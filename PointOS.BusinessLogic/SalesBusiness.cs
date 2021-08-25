@@ -15,10 +15,12 @@ namespace PointOS.BusinessLogic
         /// Gets Sales details by company Id
         /// </summary>
         /// <param name="companyId"></param>
+        /// <param name="skip"></param>
+        /// <param name="take"></param>
         /// <returns></returns>
-        public async Task<ListResponse<SalesResponse>> FindByCompany(int companyId)
+        public async Task<ListResponse<SalesResponse>> FindByCompany(int companyId, int skip , int take)
         {
-            var sales = await _unitOfWork.SalesRepository.FindByCompanyId(companyId);
+            var sales = await _unitOfWork.SalesRepository.FindByCompanyId(companyId,skip,take);
 
             if (sales == null) return new ListResponse<SalesResponse>(new ResponseHeader
             {
@@ -31,7 +33,7 @@ namespace PointOS.BusinessLogic
                 ResponseHeader = new ResponseHeader
                 {
                     Success = true,
-                    ReferenceNumber = sales.Count.ToString()
+                    ReferenceNumber = _unitOfWork.SalesRepository.TotalSalesNumber(companyId).ToString()
                 }
             };
         }

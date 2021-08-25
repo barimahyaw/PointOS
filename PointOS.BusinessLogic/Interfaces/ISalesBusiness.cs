@@ -1,5 +1,5 @@
-﻿using System.Threading.Tasks;
-using PointOS.Common.DTO.Response;
+﻿using PointOS.Common.DTO.Response;
+using System.Threading.Tasks;
 
 namespace PointOS.BusinessLogic.Interfaces
 {
@@ -9,7 +9,9 @@ namespace PointOS.BusinessLogic.Interfaces
         /// Gets Sales details by company Id
         /// </summary>
         /// <param name="companyId"></param>
+        /// <param name="skip"></param>
+        /// <param name="take"></param>
         /// <returns></returns>
-        Task<ListResponse<SalesResponse>> FindByCompany(int companyId);
+        Task<ListResponse<SalesResponse>> FindByCompany(int companyId, int skip, int take);
     }
 }

@@ -30,7 +30,16 @@ namespace PointOS.DataAccess.IRepositories
         /// Gets all sales by company Id
         /// </summary>
         /// <param name="companyId"></param>
+        /// <param name="skip"></param>
+        /// <param name="take"></param>
         /// <returns></returns>
-        Task<IList<SalesResponse>> FindByCompanyId(int companyId);
+        Task<IList<SalesResponse>> FindByCompanyId(int companyId, int skip, int take);
+
+        /// <summary>
+        /// Gets the total number of sales by company Id
+        /// </summary>
+        /// <param name="companyId"></param>
+        /// <returns></returns>
+        public int TotalSalesNumber(int companyId);
     }
 }

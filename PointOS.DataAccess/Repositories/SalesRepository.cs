@@ -63,10 +63,14 @@ namespace PointOS.DataAccess.Repositories
         /// Gets all sales by company Id
         /// </summary>
         /// <param name="companyId"></param>
+        /// <param name="skip"></param>
+        /// <param name="take"></param>
         /// <returns></returns>
-        public async Task<IList<SalesResponse>> FindByCompanyId(int companyId)
+        public async Task<IList<SalesResponse>> FindByCompanyId(int companyId, int skip, int take)
             => await GetQueryable()
                 .Where(s => s.ProductPricing.Product.ProductCategory.CompanyId == companyId)
+                .Skip(skip)
+                .Take(take)
                 .Select(s => new SalesResponse
                 {
                     Id = s.Id,
@@ -78,5 +82,13 @@ namespace PointOS.DataAccess.Repositories
                     WholeSalePrice = s.ProductPricing.WholeSalePrice
                 })
                 .ToListAsync();
+
+        /// <summary>
+        /// Gets the total number of sales by company Id
+        /// </summary>
+        /// <param name="companyId"></param>
+        /// <returns></returns>
+        public int TotalSalesNumber(int companyId)
+            => GetQueryable().Count(s => s.ProductPricing.Product.ProductCategory.CompanyId == companyId);
     }
 }
