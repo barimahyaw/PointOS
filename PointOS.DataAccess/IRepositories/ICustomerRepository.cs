@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using PointOS.DataAccess.Entities;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using PointOS.DataAccess.Entities;
 
 namespace PointOS.DataAccess.IRepositories
 {
@@ -27,6 +27,13 @@ namespace PointOS.DataAccess.IRepositories
         /// <param name="id"></param>
         /// <returns></returns>
         Task<Customer> FindAsync(int id);
+
+        /// <summary>
+        /// Gets customers' details by company Id
+        /// </summary>
+        /// <param name="companyId"></param>
+        /// <returns></returns>
+        Task<List<Customer>> FindAllAsync(int companyId);
 
         /// <summary>
         /// Attach changes made to a Customer's record into repository

@@ -67,6 +67,30 @@ namespace PointOS.DataAccess.Repositories
             => await GetQueryable().FirstOrDefaultAsync(c => c.Id == id);
 
         /// <summary>
+        /// Gets customers' details by company Id
+        /// </summary>
+        /// <param name="companyId"></param>
+        /// <returns></returns>
+        public async Task<List<Customer>> FindAllAsync(int companyId)
+            => await _dbContext.Sales.AsNoTrackingWithIdentityResolution()
+                .Where(c => c.ProductPricing.Product.ProductCategory.CompanyId == companyId)
+                .Select(c => new Customer
+                {
+                    Id = c.Customer.Id,
+                    GuidId = c.Customer.GuidId,
+                    NationalIdCardNumber = c.Customer.NationalIdCardNumber,
+                    FirstName = c.Customer.FirstName,
+                    MiddleName = c.Customer.MiddleName,
+                    LastName = c.Customer.LastName,
+                    PhoneNumber = c.Customer.PhoneNumber,
+                    EmailAddress = c.Customer.EmailAddress,
+                    Address = c.Customer.Address,
+                    CreatedOn = c.Customer.CreatedOn,
+                    ModifiedOn = c.Customer.ModifiedOn
+                })
+                .ToListAsync();
+
+        /// <summary>
         /// Attach changes made to a Customer's record into repository
         /// </summary>
         /// <param name="customer"></param>
