@@ -60,7 +60,6 @@ namespace PointOS.Api.Controllers.v1
         /// <param name="take"></param>
         /// <returns></returns>
         [HttpGet]
-        [AllowAnonymous]
         public async Task<ListResponse<BranchResponse>> Get(int companyId, int skip = 0, int take = 5) =>
             await _businessBusiness.FindByCompanyIdAsync(companyId, skip, take);
     }
