@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 
 namespace PointOS.DataAccess.Entities
 {
@@ -17,5 +18,7 @@ namespace PointOS.DataAccess.Entities
         public int Quantity { get; set; }
         public int ProductPricingId { get; set; }
         public ProductPricing ProductPricing { get; set; }
+        public int? CustomerId { get; set; }
+        public Customer Customer { get; set; }
     }
 }
