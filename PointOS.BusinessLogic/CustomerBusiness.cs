@@ -6,6 +6,7 @@ using PointOS.Common.Extensions;
 using PointOS.DataAccess;
 using PointOS.DataAccess.Entities;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace PointOS.BusinessLogic
@@ -84,6 +85,27 @@ namespace PointOS.BusinessLogic
             };
 
             return response;
+        }
+
+        /// <summary>
+        /// Gets Customer details by company Id
+        /// </summary>
+        /// <param name="companyId"></param>
+        /// <returns></returns>
+        public async Task<ListResponse<CustomerResponse>> FindAllAsync(int companyId)
+        {
+            var customers = await _unitOfWork.CustomerRepository.FindAllAsync(companyId);
+
+            if (customers == null) return new ListResponse<CustomerResponse>(new ResponseHeader
+            {
+                Message = string.Format(Status.NotFound.GetAttributeStringValue(), nameof(Customer))
+            }, null);
+
+            return new ListResponse<CustomerResponse>
+            {
+                ResponseHeader = new ResponseHeader { Success = true },
+                ResponseBodyList = customers.Select(CustomerResponseEntity)
+            };
         }
 
         /// <summary>

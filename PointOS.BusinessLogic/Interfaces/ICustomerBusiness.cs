@@ -1,6 +1,6 @@
-﻿using System.Threading.Tasks;
-using PointOS.Common.DTO.Request;
+﻿using PointOS.Common.DTO.Request;
 using PointOS.Common.DTO.Response;
+using System.Threading.Tasks;
 
 namespace PointOS.BusinessLogic.Interfaces
 {
@@ -19,5 +19,12 @@ namespace PointOS.BusinessLogic.Interfaces
         /// <param name="phoneNumber"></param>
         /// <returns></returns>
         Task<SingleResponse<CustomerResponse>> FindAsync(string phoneNumber);
+
+        /// <summary>
+        /// Gets Customer details by company Id
+        /// </summary>
+        /// <param name="companyId"></param>
+        /// <returns></returns>
+        Task<ListResponse<CustomerResponse>> FindAllAsync(int companyId);
     }
 }
