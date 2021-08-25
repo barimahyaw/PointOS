@@ -92,5 +92,27 @@ namespace PointOS.Common.Extensions
 
             return items;
         }
+
+        /// <summary>
+        /// Dropdown extension method for Customer
+        /// </summary>
+        /// <param name="customer"></param>
+        /// <param name="selected"></param>
+        /// <returns></returns>
+        public static IEnumerable<SelectListItem> GetCustomers(this IEnumerable<CustomerResponse> customer,
+            int selected)
+        {
+            var items = customer.OrderBy(c => c.Id)
+                .Select(c => new SelectListItem
+                {
+                    Selected = c.Id == selected,
+                    Text = c.FullName,
+                    Value = c.Id.ToString()
+                }).ToList();
+
+            items.Insert(0, new SelectListItem { Text = "-- Select Customer --", Value = "", Selected = true });
+
+            return items;
+        }
     }
 }
