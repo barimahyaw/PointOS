@@ -1,8 +1,16 @@
-﻿using PointOS.DataAccess;
+﻿using PointOS.BusinessLogic.Interfaces;
+using PointOS.Common.DTO.Request;
+using PointOS.Common.DTO.Response;
+using PointOS.Common.Enums;
+using PointOS.Common.Extensions;
+using PointOS.DataAccess;
+using PointOS.DataAccess.Entities;
+using System;
+using System.Threading.Tasks;
 
 namespace PointOS.BusinessLogic
 {
-    public class CustomerBusiness
+    public class CustomerBusiness : ICustomerBusiness
     {
         private readonly IUnitOfWork _unitOfWork;
 
@@ -12,14 +20,94 @@ namespace PointOS.BusinessLogic
         /// <param name="unitOfWork"></param>
         public CustomerBusiness(IUnitOfWork unitOfWork) => _unitOfWork = unitOfWork;
 
-        ///// <summary>
-        ///// Gets customer's id and names by phone number to populate customer drop down
-        ///// </summary>
-        ///// <param name="phoneNumber"></param>
-        ///// <returns></returns>
-        //public async Task<Customer> FindAsync(string phoneNumber)
-        //{
+        /// <summary>
+        /// Saves a customer record
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns>number of records affected</returns>
+        public async Task<ResponseHeader> SaveAsync(CustomerRequest request)
+        {
+            var customer = new Customer
+            {
+                GuidId = Guid.NewGuid(),
+                FirstName = request.FirstName,
+                MiddleName = request.MiddleName,
+                LastName = request.LastName,
+                PhoneNumber = request.PhoneNumber,
+                EmailAddress = request.EmailAddress,
+                NationalIdCardNumber = request.NationalIdCardNumber,
+                Address = request.Address
+            };
 
-        //}
+            switch (request.CrudOperation)
+            {
+                case CrudOperation.Create:
+                    await _unitOfWork.CustomerRepository.Add(customer);
+                    break;
+                case CrudOperation.Read:
+                    break;
+                case CrudOperation.Update:
+                    await _unitOfWork.CustomerRepository.UpdateAsync(customer);
+                    break;
+                case CrudOperation.Delete:
+                    break;
+                default:
+                    goto case CrudOperation.Create;
+            }
+
+            var numRows = await _unitOfWork.SaveChangesAsync();
+
+            var operation = request.CrudOperation == CrudOperation.Create ? "created" : "updated";
+
+            return numRows != 0 ? new ResponseHeader { StatusCode = 201, Message = $"Record {operation} for customer, {request.FirstName}", Success = true }
+                : new ResponseHeader { Message = "Sorry, operation failed. Try again later!" };
+        }
+
+        /// <summary>
+        /// Gets customer's id and names by phone number to populate customer drop down
+        /// </summary>
+        /// <param name="phoneNumber"></param>
+        /// <returns></returns>
+        public async Task<SingleResponse<CustomerResponse>> FindAsync(string phoneNumber)
+        {
+            var customer = await _unitOfWork.CustomerRepository.FindAsync(phoneNumber);
+
+            if (customer == null) return new SingleResponse<CustomerResponse>(new ResponseHeader
+            {
+                Message = string.Format(Status.NotFound.GetAttributeStringValue(), nameof(Customer))
+            }, null);
+
+            var response = new SingleResponse<CustomerResponse>
+            {
+                ResponseBody = CustomerResponseEntity(customer),
+                ResponseHeader = new ResponseHeader { Success = true }
+            };
+
+            return response;
+        }
+
+        /// <summary>
+        /// Prepares a single customer record
+        /// </summary>
+        /// <param name="customer"></param>
+        /// <returns></returns>
+        private static CustomerResponse CustomerResponseEntity(Customer customer)
+        {
+            var response = new CustomerResponse
+            {
+                Id = customer.Id,
+                GuidId = customer.GuidId,
+                NationalIdCardNumber = customer.NationalIdCardNumber,
+                FirstName = customer.FirstName,
+                MiddleName = customer.MiddleName,
+                LastName = customer.LastName,
+                PhoneNumber = customer.PhoneNumber,
+                EmailAddress = customer.EmailAddress,
+                Address = customer.Address,
+                CreatedBy = customer.CreatedUerId,
+                CreatedOn = customer.CreatedOn
+            };
+            return response;
+        }
     }
 }

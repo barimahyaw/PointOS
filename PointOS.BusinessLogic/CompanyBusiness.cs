@@ -13,10 +13,7 @@ namespace PointOS.BusinessLogic
     {
         private readonly IUnitOfWork _unitOfWork;
 
-        public CompanyBusiness(IUnitOfWork unitOfWork)
-        {
-            _unitOfWork = unitOfWork;
-        }
+        public CompanyBusiness(IUnitOfWork unitOfWork) => _unitOfWork = unitOfWork;
 
         //public async Task<TransactionRequest> Find(string transactionId)
         //{

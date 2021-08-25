@@ -171,7 +171,7 @@ namespace PointOS.BusinessLogic
         {
             var entities = await _unitOfWork.ProductRepository.FindAllAsync(companyId);
 
-             if (entities == null) return new ListResponse<ProductResponse>(new ResponseHeader
+            if (entities == null) return new ListResponse<ProductResponse>(new ResponseHeader
             {
                 Message = string.Format(Status.NotFound.GetAttributeStringValue(), nameof(Product))
             }, null);

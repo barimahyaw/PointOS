@@ -14,10 +14,7 @@ namespace PointOS.BusinessLogic
     {
         private readonly IUnitOfWork _unitOfWork;
 
-        public BranchBusiness(IUnitOfWork unitOfWork)
-        {
-            _unitOfWork = unitOfWork;
-        }
+        public BranchBusiness(IUnitOfWork unitOfWork) => _unitOfWork = unitOfWork;
 
         /// <summary>
         /// Saves a company branch's record
