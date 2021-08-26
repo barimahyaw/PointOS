@@ -58,9 +58,10 @@ namespace PointOS.Api.Controllers.v1
         /// <param name="companyId"></param>
         /// <param name="skip"></param>
         /// <param name="take"></param>
+        /// <param name="orderBy"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ListResponse<BranchResponse>> Get(int companyId, int skip = 0, int take = 5) =>
-            await _businessBusiness.FindByCompanyIdAsync(companyId, skip, take);
+        public async Task<ListResponse<BranchResponse>> Get(int companyId, int skip = 0, int take = 5, string orderBy = "Id") =>
+            await _businessBusiness.FindByCompanyIdAsync(companyId, skip, take, orderBy);
     }
 }

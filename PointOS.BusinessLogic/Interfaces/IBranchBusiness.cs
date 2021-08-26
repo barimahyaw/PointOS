@@ -19,7 +19,8 @@ namespace PointOS.BusinessLogic.Interfaces
         /// <param name="companyId"></param>
         /// <param name="skip"></param>
         /// <param name="take"></param>
+        /// <param name="orderBy"></param>
         /// <returns></returns>
-        Task<ListResponse<BranchResponse>> FindByCompanyIdAsync(int companyId, int skip, int take);
+        Task<ListResponse<BranchResponse>> FindByCompanyIdAsync(int companyId, int skip, int take, string orderBy);
     }
 }

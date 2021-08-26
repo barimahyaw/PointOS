@@ -4,14 +4,18 @@
 
 <SfGrid TValue="@BranchResponse" AllowPaging="true" AllowSorting="true" Toolbar="@(new List<string>() {"Search"})">
     <Syncfusion.Blazor.Data.SfDataManager Adaptor="Adaptors.CustomAdaptor" AdaptorInstance="@typeof(BranchAdapter)"></Syncfusion.Blazor.Data.SfDataManager>
-    <GridPageSettings PageCount="3" PageSize="5" PageSizes="@PagerDropDown"></GridPageSettings>
-    <GridSortSettings AllowUnsort="false"></GridSortSettings>
+    <GridPageSettings PageCount="5" PageSize="5" PageSizes="@PagerDropDown"></GridPageSettings>
+    <GridSortSettings AllowUnsort="false">
+        <GridSortColumns>
+            <GridSortColumn Field="Id"></GridSortColumn>
+        </GridSortColumns>
+    </GridSortSettings>
     <GridEditSettings AllowAdding="true" AllowDeleting="true" AllowEditing="true"></GridEditSettings>
     <GridColumns>
         <GridColumn Type="ColumnType.CheckBox" AllowFiltering="false" AllowSorting="false" Width="60"></GridColumn>
         <GridColumn Field="@nameof(BranchResponse.Id)" Visible="false" HeaderText="Id"></GridColumn>
         <GridColumn Field="@nameof(BranchResponse.Name)" HeaderText="Name"></GridColumn>
-        <GridColumn Field="@nameof(BranchResponse.CreatedBy)" HeaderText="Created By"></GridColumn>
+        <GridColumn Field="@nameof(BranchResponse.CreatedBy)" HeaderText="Created By" AllowSorting="false"></GridColumn>
         <GridColumn Field="@nameof(BranchResponse.CreatedOn)" HeaderText="Created On"></GridColumn>
         <GridColumn HeaderText="Manage Records" Width="150">
             <GridCommandColumns>

@@ -24,8 +24,9 @@ namespace PointOS.DataAccess.IRepositories
         /// <param name="companyId"></param>
         /// <param name="skip"></param>
         /// <param name="take"></param>
+        /// <param name="orderBy"></param>
         /// <returns></returns>
-        Task<List<Branch>> FindByCompanyIdAsync(int companyId, int skip, int take);
+        Task<List<Branch>> FindByCompanyIdAsync(int companyId, int skip, int take, string orderBy);
 
         /// <summary>
         /// Gets the total number of branches by company Id

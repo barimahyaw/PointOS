@@ -4,6 +4,7 @@ using PointOS.DataAccess.IRepositories;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Linq.Dynamic.Core;
 
 namespace PointOS.DataAccess.Repositories
 {
@@ -46,10 +47,27 @@ namespace PointOS.DataAccess.Repositories
         /// <param name="companyId"></param>
         /// <param name="skip"></param>
         /// <param name="take"></param>
+        /// <param name="orderBy"></param>
         /// <returns></returns>
-        public async Task<List<Branch>> FindByCompanyIdAsync(int companyId, int skip, int take) =>
-            await GetQueryable().Include(b => b.CreatedUser)
-                .Where(b => b.CompanyId == companyId).Skip(skip).Take(take).ToListAsync();
+        public async Task<List<Branch>> FindByCompanyIdAsync(int companyId, int skip, int take, string orderBy) =>
+            await GetQueryable()
+                .Where(b => b.CompanyId == companyId)
+                .OrderBy(orderBy)
+                .Skip(skip)
+                .Take(take)
+                .Select(b=> new Branch
+                {
+                    Id = b.Id,
+                    Name = b.Name,
+                    CreatedOn = b.CreatedOn,
+                    CreatedUser = new ApplicationUser
+                    {
+                        FirstName = b.CreatedUser.FirstName,
+                        MiddleName = b.CreatedUser.MiddleName,
+                        LastName = b.CreatedUser.LastName
+                    }
+                })
+                .ToListAsync();
 
         /// <summary>
         /// Gets the total number of branches by company Id

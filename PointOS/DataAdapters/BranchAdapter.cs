@@ -1,12 +1,13 @@
-﻿using System;
-using System.Threading.Tasks;
-using Blazored.SessionStorage;
+﻿using Blazored.SessionStorage;
 using Newtonsoft.Json;
 using PointOS.Common.DTO.Response;
 using PointOS.Common.DTO.Sessions;
 using PointOS.Services;
 using Syncfusion.Blazor;
 using Syncfusion.Blazor.Data;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace PointOS.DataAdapters
 {
@@ -25,7 +26,15 @@ namespace PointOS.DataAdapters
         {
             var session = await _sessionStorageService.GetItemAsync<UserSession>("UserSession");
 
-            var param = $"?companyId={session.CompanyId}&skip={dataManagerRequest.Skip}&take={dataManagerRequest.Take}";
+            string orderByString = null;
+
+            if (dataManagerRequest.Sorted != null)
+            {
+                var sortList = dataManagerRequest.Sorted;
+                orderByString = string.Join(",", sortList.Select(s => $"{s.Name} {s.Direction}"));
+            }
+
+            var param = $"?companyId={session.CompanyId}&skip={dataManagerRequest.Skip}&take={dataManagerRequest.Take}&orderBy={orderByString}";
 
             var response = await _apiEndpointCallService.CallApiGetService("Branch", null, param);
 
@@ -33,7 +42,7 @@ namespace PointOS.DataAdapters
 
             var dataResult = new DataResult
             {
-                Result = result.ResponseBodyList,
+                Result = result.ResponseBodyList.OrderBy(x=>x.CreatedBy),
                 Count = Convert.ToInt32(result.ResponseHeader.ReferenceNumber)
             };
 

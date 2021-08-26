@@ -65,10 +65,11 @@ namespace PointOS.BusinessLogic
         /// <param name="companyId"></param>
         /// <param name="skip"></param>
         /// <param name="take"></param>
+        /// <param name="orderBy"></param>
         /// <returns></returns>
-        public async Task<ListResponse<BranchResponse>> FindByCompanyIdAsync(int companyId, int skip, int take)
+        public async Task<ListResponse<BranchResponse>> FindByCompanyIdAsync(int companyId, int skip, int take, string orderBy)
         {
-            var result = await _unitOfWork.BranchRepository.FindByCompanyIdAsync(companyId, skip, take);
+            var result = await _unitOfWork.BranchRepository.FindByCompanyIdAsync(companyId, skip, take, orderBy);
 
             if (result.Count == 0) return new ListResponse<BranchResponse> { ResponseHeader = new ResponseHeader { Message = "No Record/Result found" } };
 
@@ -83,7 +84,7 @@ namespace PointOS.BusinessLogic
                 }),
                 ResponseHeader = new ResponseHeader
                 {
-                    Success = true, 
+                    Success = true,
                     ReferenceNumber = _unitOfWork.BranchRepository.TotalBranchesNumber(companyId).ToString()
                 }
             };
