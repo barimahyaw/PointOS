@@ -11,6 +11,7 @@ namespace PointOS.Common.DTO.Request
         [MaxLength(50)]
         [Display(Name = "Name")]
         public string Name { get; set; }
+        //change to byte array
         public IFormFile Photo { get; set; }
         public bool Status { get; set; }
         [Required]
