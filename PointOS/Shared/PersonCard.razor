@@ -27,5 +27,5 @@
     {
         var session = await SessionStorageService.GetItemAsync<UserSession>("UserSession");
 
-        FullName = session.FullName;
+        FullName = session == null ? string.Empty : session.FullName;
     } }

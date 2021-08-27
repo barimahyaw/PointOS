@@ -55,6 +55,15 @@ namespace PointOS.Api.Controllers.v1
             await _customerBusiness.FindAsync(phoneNumber);
 
         /// <summary>
+        /// Gets customer by phone Number
+        /// </summary>
+        /// <param name="phoneNumber"></param>
+        /// <returns></returns>
+        [HttpGet("getAllLikePhoneNumber")]
+        public async Task<ListResponse<CustomerResponse>> GetAllLikePhoneNumber(string phoneNumber) =>
+            await _customerBusiness.FindAllAsync(phoneNumber);
+
+        /// <summary>
         /// Gets customer by company Id
         /// </summary>
         /// <param name="companyId"></param>

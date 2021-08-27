@@ -93,6 +93,28 @@ namespace PointOS.BusinessLogic
         }
 
         /// <summary>
+        /// Gets customers by their PhoneNumber like phoneNumber to populate customer auto complete
+        /// </summary>
+        /// <param name="phoneNumber"></param>
+        /// <returns></returns>
+        public async Task<ListResponse<CustomerResponse>> FindAllAsync(string phoneNumber)
+        {
+            var customers = await _unitOfWork.CustomerRepository.FindAllContainPhoneNumberAsync(phoneNumber);
+
+
+            if (customers == null) return new ListResponse<CustomerResponse>(new ResponseHeader
+            {
+                Message = string.Format(Status.NotFound.GetAttributeStringValue(), nameof(Customer))
+            }, null);
+
+            return new ListResponse<CustomerResponse>
+            {
+                ResponseHeader = new ResponseHeader { Success = true },
+                ResponseBodyList = customers.Select(CustomerResponseEntity)
+            };
+        }
+
+        /// <summary>
         /// Gets Customer details by company Id
         /// </summary>
         /// <param name="companyId"></param>

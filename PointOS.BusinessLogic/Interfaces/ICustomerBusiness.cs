@@ -21,6 +21,13 @@ namespace PointOS.BusinessLogic.Interfaces
         Task<SingleResponse<CustomerResponse>> FindAsync(string phoneNumber);
 
         /// <summary>
+        /// Gets customers by their PhoneNumber like phoneNumber to populate customer auto complete
+        /// </summary>
+        /// <param name="phoneNumber"></param>
+        /// <returns></returns>
+        Task<ListResponse<CustomerResponse>> FindAllAsync(string phoneNumber);
+
+        /// <summary>
         /// Gets Customer details by company Id
         /// </summary>
         /// <param name="companyId"></param>

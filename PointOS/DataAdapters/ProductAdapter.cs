@@ -6,6 +6,7 @@ using PointOS.Services;
 using Syncfusion.Blazor;
 using Syncfusion.Blazor.Data;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace PointOS.DataAdapters
@@ -25,7 +26,15 @@ namespace PointOS.DataAdapters
         {
             var session = await _sessionStorageService.GetItemAsync<UserSession>("UserSession");
 
-            var param = $"?companyId={session.CompanyId}&skip={dataManagerRequest.Skip}&take={dataManagerRequest.Take}";
+            string searchString = null;
+
+            if (dataManagerRequest.Search != null)
+            {
+                var searchList = dataManagerRequest.Search;
+                searchString = string.Join(",", searchList.Select(s => $"{s.Key}"));
+            }
+
+            var param = $"?companyId={session.CompanyId}&skip={dataManagerRequest.Skip}&take={dataManagerRequest.Take}&search={searchString}";
 
             var response = await _apiEndpointCallService.CallApiGetService("Product", null, param);
 

@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using PointOS.DataAccess.Entities;
 using PointOS.DataAccess.IRepositories;
 using System.Collections.Generic;
@@ -40,6 +39,24 @@ namespace PointOS.DataAccess.Repositories
                     LastName = c.LastName
                 })
                 .FirstOrDefaultAsync(c => c.PhoneNumber == phoneNumber);
+
+        /// <summary>
+        /// Gets customers by their PhoneNumber like phoneNumber to populate customer auto complete
+        /// </summary>
+        /// <param name="phoneNumber"></param>
+        /// <returns></returns>
+        public async Task<List<Customer>> FindAllContainPhoneNumberAsync(string phoneNumber)
+            => await GetQueryable()
+                .Where(c => c.PhoneNumber.Contains(phoneNumber))
+                .Select(c => new Customer
+                {
+                    //Id = c.Id,
+                    //FirstName = c.FirstName,
+                    //MiddleName = c.MiddleName,
+                    //LastName = c.LastName,
+                    PhoneNumber = c.PhoneNumber
+                })
+                .ToListAsync();
 
         /// <summary>
         /// Gets customer's id and names by firstName or lastName to populate customer drop down

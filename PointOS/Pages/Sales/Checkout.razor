@@ -65,33 +65,45 @@
 
             </MudCardActions>
             <MudCardContent>
-                @if (ProductRequest.ProductCategories != null)
-                {
-                    <MudItem xs="12" md="12" sm="12" lg="12" xl="12">
-                        <MudSelect Label="-- Select Product Category --" Strict="true" Variant="Variant.Outlined" Format="F2" @bind-Value="@ProductRequest.ProductCategoryId" For="@(()=>ProductRequest.ProductCategoryId)">
-                            @foreach (var productCategory in ProductRequest.ProductCategories)
-                                {
-                                    if (!string.IsNullOrWhiteSpace(productCategory.Value))
+                @*@if (ProductRequest.ProductCategories != null)
+                    {
+                        <MudItem xs="12" md="12" sm="12" lg="12" xl="12">
+                            <MudSelect Label="-- Select Product Category --" Strict="true" Variant="Variant.Outlined" Format="F2" @bind-Value="@ProductRequest.ProductCategoryId" For="@(()=>ProductRequest.ProductCategoryId)">
+                                @foreach (var productCategory in ProductRequest.ProductCategories)
                                     {
-                                    <MudSelectItem Value="Convert.ToInt32(productCategory.Value)">@productCategory.Text</MudSelectItem>
+                                        if (!string.IsNullOrWhiteSpace(productCategory.Value))
+                                        {
+                                        <MudSelectItem Value="Convert.ToInt32(productCategory.Value)">@productCategory.Text</MudSelectItem>
+                                        }
                                     }
-                                }
-                        </MudSelect>
-                    </MudItem>
-                }
+                            </MudSelect>
+                        </MudItem>
+                    }*@
                 <MudGrid xs="12" md="12" sm="12" lg="12" xl="12">
                     <MudItem xs="6" md="6" sm="6" lg="6" xl="6">
-                        <MudSelect Label="Customer" Strict="true" Variant="Variant.Outlined" Format="F2" @bind-Value="@ProductRequest.ProductCategoryId" For="@(()=>ProductRequest.ProductCategoryId)">
+                        @*<MudSelect Label="Customer" Strict="true" Variant="Variant.Outlined" Format="F2" @bind-Value="@ProductRequest.ProductCategoryId" For="@(()=>ProductRequest.ProductCategoryId)">
 
-                        </MudSelect>
+                            </MudSelect>*@
+
+                        <MudAutocomplete T="string" Label="Customer" @bind-Value="@value1" SearchFunc="@Search2"
+                                         ResetValueOnEmptyText="@resetValueOnEmptyText"
+                                         CoerceText="@coerceText" CoerceValue="@coerceValue"
+                                         AdornmentIcon="@Icons.Material.Filled.Search" AdornmentColor="Color.Primary" Variant="Variant.Outlined" OnInternalInputChanged="@SetCustomer" />
                     </MudItem>
                     <MudItem xs="6" md="6" sm="6" lg="6" xl="6">
-                        <MudSelect Label="Payment Method" Strict="true" Variant="Variant.Outlined" Format="F2" @bind-Value="@ProductRequest.PaymentType" For="@(()=>ProductRequest.PaymentType)">
+                        <MudSelect Label="Payment Method" Strict="true" Variant="Variant.Outlined" Format="F2" @bind-Value="@ProductRequest.PaymentType" For="@(()=>ProductRequest.PaymentType)" @onselect="selectChange">
                             @foreach (var name in Enum.GetNames(typeof(Common.Enums.PaymentType)))
                             {
                                 if (!string.IsNullOrWhiteSpace(name))
                                 {
-                                    <MudSelectItem Value="name">@name</MudSelectItem>
+                                    if (name == "MobileMoney")
+                                    {
+                                        <MudSelectItem Value="name">Mobile Money</MudSelectItem>
+                                    }
+                                    else
+                                    {
+                                        <MudSelectItem Value="name">@name</MudSelectItem>
+                                    }
                                 }
                             }
                         </MudSelect>
@@ -131,4 +143,18 @@
 @if (IsTranCompleted)
 {
     <FormOverlay />
+}
+
+@code
+{
+    private bool resetValueOnEmptyText;
+    private bool coerceText;
+    private bool coerceValue;
+    private string value1, value2;
+
+
+    void selectChange(EventArgs args)
+    {
+        var value = args;
+    }
 }

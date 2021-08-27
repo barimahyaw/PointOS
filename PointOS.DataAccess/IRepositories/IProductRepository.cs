@@ -54,5 +54,14 @@ namespace PointOS.DataAccess.IRepositories
         /// <param name="companyId"></param>
         /// <returns></returns>
         public Task<List<Product>> FindAllAsync(int companyId);
+
+        /// <summary>
+        /// Gets all products where product name is like/contain name
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="skip"></param>
+        /// <param name="take"></param>
+        /// <returns></returns>
+        Task<List<Product>> FindAllAsync(string name, int skip, int take);
     }
 }

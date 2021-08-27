@@ -145,9 +145,11 @@ namespace PointOS.BusinessLogic
         /// Finds all Product records by company Id within a skip and take parameter
         /// </summary>
         /// <returns>a list of products</returns>
-        public async Task<ListResponse<ProductResponse>> FindAllAsync(int companyId, int skip, int take)
+        public async Task<ListResponse<ProductResponse>> FindAllAsync(int companyId, int skip, int take, string search)
         {
-            var entities = await _unitOfWork.ProductRepository.FindAllAsync(companyId, skip, take);
+            var entities = string.IsNullOrWhiteSpace(search)
+                ? await _unitOfWork.ProductRepository.FindAllAsync(companyId, skip, take)
+                : await _unitOfWork.ProductRepository.FindAllAsync(search, skip, take);
 
             if (entities == null) return new ListResponse<ProductResponse>(new ResponseHeader
             {

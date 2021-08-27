@@ -35,7 +35,8 @@ namespace PointOS.DataAccess.Repositories
         /// </summary>
         /// <returns>list of products</returns>
         public async Task<IList<Product>> FindAllAsync(int companyId, int skip, int take)
-            => await GetQueryable().Where(p => p.ProductCategory.CompanyId == companyId)
+            => await GetQueryable()
+                .Where(p => p.ProductCategory.CompanyId == companyId)
                 .Skip(skip)
                 .Take(take)
                 .Select(p => new Product
@@ -71,7 +72,7 @@ namespace PointOS.DataAccess.Repositories
         /// </summary>
         /// <param name="id"></param>
         /// <returns>a record of product</returns>
-        public async Task<Product> FindById(int id) 
+        public async Task<Product> FindById(int id)
             => await GetQueryable().Select(p => new Product
             {
                 Name = p.Name,
@@ -129,5 +130,45 @@ namespace PointOS.DataAccess.Repositories
         /// <returns></returns>
         public async Task<List<Product>> FindAllAsync(int companyId)
             => await GetQueryable().Where(p => p.ProductCategory.CompanyId == companyId).ToListAsync();
+
+        /// <summary>
+        /// Gets all products where product name is like/contain name
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="skip"></param>
+        /// <param name="take"></param>
+        /// <returns></returns>
+        public async Task<List<Product>> FindAllAsync(string name, int skip, int take)
+            => await GetQueryable()
+                .Where(p => p.Name.Contains(name))
+                .Skip(skip)
+                .Take(take)
+                .Select(p => new Product
+                {
+                    Name = p.Name,
+                    PhotoUrl = p.PhotoUrl,
+                    CreatedOn = p.CreatedOn,
+                    CreatedUserId = p.CreatedUserId,
+                    Status = p.Status,
+                    Id = p.Id,
+                    CreatedUser = new ApplicationUser
+                    {
+                        FirstName = p.CreatedUser.FirstName,
+                        MiddleName = p.CreatedUser.MiddleName,
+                        LastName = p.CreatedUser.LastName
+                    },
+                    //ProductPricing = p.ProductPricing.Where(x=>x.Status).ToList(),
+                    ProductCategory = new ProductCategory
+                    {
+                        //CompanyId = p.ProductCategory.CompanyId,
+                        Name = p.ProductCategory.Name
+                    },
+                    ProductPricing = p.ProductPricing.ToList(),
+                    ProductQuantity = p.ProductQuantity.Select(q => new ProductStock
+                    {
+                        Quantity = q.Quantity
+                    }).ToList()
+                })
+                .ToListAsync();
     }
 }

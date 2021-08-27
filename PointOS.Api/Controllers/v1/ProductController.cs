@@ -29,8 +29,8 @@ namespace PointOS.Api.Controllers.v1
         /// </summary>
         /// <returns>a list of products</returns>
         [HttpGet]
-        public async Task<ListResponse<ProductResponse>> Get(int companyId, int skip, int take = 5)
-            => await _productBusiness.FindAllAsync(companyId, skip, take);
+        public async Task<ListResponse<ProductResponse>> Get(int companyId, string search, int skip, int take = 5)
+            => await _productBusiness.FindAllAsync(companyId, skip, take, search);
 
         /// <summary>
         /// Gets all Product records by company Id

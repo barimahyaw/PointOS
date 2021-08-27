@@ -14,6 +14,13 @@ namespace PointOS.DataAccess.IRepositories
         Task<Customer> FindAsync(string phoneNumber);
 
         /// <summary>
+        /// Gets customers by their PhoneNumber like phoneNumber to populate customer auto complete
+        /// </summary>
+        /// <param name="phoneNumber"></param>
+        /// <returns></returns>
+        Task<List<Customer>> FindAllContainPhoneNumberAsync(string phoneNumber);
+
+        /// <summary>
         /// Gets customer's id and names by firstName or lastName to populate customer drop down
         /// </summary>
         /// <param name="firstName"></param>

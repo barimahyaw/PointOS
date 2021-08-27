@@ -106,7 +106,7 @@
     protected ISessionStorageService SessionStorageService { get; set; }
 
     protected string Company { get; set; }
-    protected string Branch { get; set; }
+    protected string Branch { get; set; } = "POS";
 
     protected override async Task OnInitializedAsync()
     {
@@ -125,9 +125,9 @@
 
         var session = await SessionStorageService.GetItemAsync<UserSession>("UserSession");
 
-        Company = !string.IsNullOrWhiteSpace(session.Company) ? $"{session.Company} ({session.Branch})" : $"Point Of Sale ({Branch})";
+        Company = session != null ? $"{session.Company} ({session.Branch})" : $"Point Of Sale ({Branch})";
 
-        Branch = string.IsNullOrWhiteSpace(session.Branch) ? "PointOS" : session.Branch;
+        Branch = session == null ? "PointOS" : session.Branch;
     }
 
     private List<BreadcrumbItem> _items = new List<BreadcrumbItem>

@@ -166,6 +166,13 @@
             <param name="phoneNumber"></param>
             <returns></returns>
         </member>
+        <member name="M:PointOS.Api.Controllers.v1.CustomerController.GetAllLikePhoneNumber(System.String)">
+            <summary>
+            Gets customer by phone Number
+            </summary>
+            <param name="phoneNumber"></param>
+            <returns></returns>
+        </member>
         <member name="M:PointOS.Api.Controllers.v1.CustomerController.GetByCompany(System.Int32,System.Int32,System.Int32)">
             <summary>
             Gets customer by company Id
@@ -275,7 +282,7 @@
             </summary>
             <param name="productBusiness"></param>
         </member>
-        <member name="M:PointOS.Api.Controllers.v1.ProductController.Get(System.Int32,System.Int32,System.Int32)">
+        <member name="M:PointOS.Api.Controllers.v1.ProductController.Get(System.Int32,System.String,System.Int32,System.Int32)">
             <summary>
             Gets all Product records 
             </summary>

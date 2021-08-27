@@ -1,4 +1,4 @@
-﻿using Blazored.LocalStorage;
+﻿//using Blazored.LocalStorage;
 using Blazored.SessionStorage;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -17,8 +17,8 @@ namespace PointOS.Pages.Authentication
         [Inject]
         private ISessionStorageService SessionStorageService { get; set; }
 
-        [Inject]
-        public ILocalStorageService LocalStorageService { get; set; }
+        //[Inject]
+        //public ILocalStorageService LocalStorageService { get; set; }
 
         [Inject]
         private NavigationManager NavigationManager { get; set; }
@@ -29,7 +29,7 @@ namespace PointOS.Pages.Authentication
         protected override async Task OnInitializedAsync()
         {
             await SessionStorageService.RemoveItemAsync("UserSession");
-            await LocalStorageService.RemoveItemAsync("authToken");
+            //await LocalStorageService.RemoveItemAsync("authToken");
             ((AuthStateProvider)AuthenticationStateProvider).NotifyUserLogout();
 
             Snackbar.Add("Successfully Signed Out", Severity.Success, config => config.ShowCloseIcon = true);

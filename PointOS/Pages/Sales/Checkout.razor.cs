@@ -4,9 +4,11 @@ using PointOS.Common.DTO.Request;
 using PointOS.Common.DTO.Response;
 using PointOS.Common.Enums;
 using PointOS.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace PointOS.Pages.Sales
 {
@@ -52,5 +54,23 @@ namespace PointOS.Pages.Sales
 
         protected ProductRequest ProductRequest { get; set; } = new ProductRequest();
 
+        protected void SetCustomer(ChangeEventArgs eventArgs)
+        {
+            ProductRequest.CostPrice = Convert.ToDouble(eventArgs.Value);
+        }
+
+        private async Task<IEnumerable<string>> Search2(string value)
+        {
+            await Task.Delay(10);
+            var param = $"?phoneNumber={value}";
+
+            var response = await ApiEndpointCallService.CallApiGetService("Customer/GetAllLikePhoneNumber", null, param);
+
+            var result = JsonConvert.DeserializeObject<ListResponse<CustomerResponse>>(response.ToString());
+
+            var phoneNumbers = result.ResponseBodyList.Select(x => x.PhoneNumber);
+           
+            return phoneNumbers;
+        }
     }
 }
