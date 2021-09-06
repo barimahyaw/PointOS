@@ -72,5 +72,33 @@ namespace PointOS.DataAccess.Repositories
 
             return response;
         }
+
+        //public async Task<List<ProductStock>> General(int companyId)
+        //{
+        //   var result= await _dbContext.ProductStocks.AsNoTrackingWithIdentityResolution()
+        //         .Where(pS => pS.Product.ProductCategory.CompanyId == companyId)
+        //         .Select(pS => new ProductStock
+        //         {
+        //             ProductId = pS.ProductId,
+        //             Id = pS.Id,
+        //             Quantity = pS.Quantity,
+        //             Product = new Product
+        //             {
+        //                 Id = pS.ProductId,
+        //                 //Name = pS.Product.Name,
+        //                 Status = pS.Product.Status,
+        //                 ProductCategory = new ProductCategory
+        //                 {
+        //                     //CompanyId = pS.Product.ProductCategory.CompanyId,
+        //                     //Name = pS.Product.ProductCategory.Name,
+        //                     Status = pS.Product.ProductCategory.Status
+        //                 }
+        //             }
+        //         }).ToListAsync();
+
+        //   return result;
+        //}
+
+
     }
 }

@@ -60,7 +60,7 @@ namespace PointOS.DataAccess.Repositories
                 .ToListAsync();
 
         /// <summary>
-        /// Gets all sales by company Id
+        /// Gets all sales by company Id with skip and take pagination
         /// </summary>
         /// <param name="companyId"></param>
         /// <param name="skip"></param>
@@ -74,6 +74,27 @@ namespace PointOS.DataAccess.Repositories
                 .Select(s => new SalesResponse
                 {
                     Id = s.Id,
+                    Product = s.ProductPricing.Product.Name,
+                    CostPrice = s.ProductPricing.CostPrice,
+                    ProductCategory = s.ProductPricing.Product.ProductCategory.Name,
+                    Quantity = s.Quantity,
+                    RetailPrice = s.ProductPricing.RetailPrice,
+                    WholeSalePrice = s.ProductPricing.WholeSalePrice
+                })
+                .ToListAsync();
+
+        /// <summary>
+        /// Gets all sales by company Id
+        /// </summary>
+        /// <param name="companyId"></param>
+        /// <returns></returns>
+        public async Task<IList<SalesResponse>> FindByCompanyId(int companyId)
+            => await GetQueryable()
+                .Where(s => s.ProductPricing.Product.ProductCategory.CompanyId == companyId)
+                .Select(s => new SalesResponse
+                {
+                    Id = s.Id,
+                    ProductId = s.ProductPricing.Product.Id,
                     Product = s.ProductPricing.Product.Name,
                     CostPrice = s.ProductPricing.CostPrice,
                     ProductCategory = s.ProductPricing.Product.ProductCategory.Name,
