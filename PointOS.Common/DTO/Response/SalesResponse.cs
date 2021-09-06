@@ -3,6 +3,7 @@
     public class SalesResponse
     {
         public int Id { get; set; }
+        public int ProductId { get; set; }
         public string Product { get; set; }
         public string ProductCategory { get; set; }
         public double CostPrice { get; set; }
@@ -12,5 +13,6 @@
 
         public double RetailAmount => RetailPrice * Quantity;
         public double WholeSaleAmount => WholeSalePrice * Quantity;
+        public double CostAmount => CostPrice * Quantity;
     }
 }
