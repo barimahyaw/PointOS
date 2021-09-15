@@ -48,5 +48,12 @@ namespace PointOS.DataAccess.IRepositories
         /// <param name="companyId"></param>
         /// <returns></returns>
         public int TotalSalesNumber(int companyId);
+
+        /// <summary>
+        /// Gets the total quantity of a product sales by product Id
+        /// </summary>
+        /// <param name="productId"></param>
+        /// <returns></returns>
+        int TotalQuantitySales(int productId);
     }
 }

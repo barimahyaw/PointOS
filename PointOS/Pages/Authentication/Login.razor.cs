@@ -64,7 +64,7 @@ namespace PointOS.Pages.Authentication
                 }
 
                 if (string.IsNullOrWhiteSpace(returnUrl) && result.Data.CompanyId != 0)
-                    NavigationManager.NavigateTo("/Personal/Dashboard");
+                    NavigationManager.NavigateTo("/Dashboard");
                 else 
                     NavigationManager.NavigateTo("/branches");
 

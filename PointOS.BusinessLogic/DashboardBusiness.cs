@@ -26,15 +26,16 @@ namespace PointOS.BusinessLogic
             var gettingOutOfStockProducts = 0;
             var outOfStockProducts = 0;
 
-            foreach (var salesResponse in sales)
+            foreach (var productStock in from item in products 
+                select products.FirstOrDefault(p => p.Id == item.Id) into product 
+                let sale = sales.Where(s => s.ProductId == product?.Id) 
+                let count = product?.ProductQuantity.Sum(q => q.Quantity) 
+                select count - sale.Sum(s => s.Quantity))
             {
-                var product = products.FirstOrDefault(p => p.Id == salesResponse.ProductId);
-                var sale = sales.Where(s => s.ProductId == product?.Id);
-                var productStock = products.Select(p => p.ProductCategory).Count() - sale.Count();
-                if (productStock <= 10)
-                    gettingOutOfStockProducts += productStock;
+                if (productStock <= 10 && productStock > 0)
+                    gettingOutOfStockProducts++;
                 if (productStock == 0)
-                    outOfStockProducts += productStock;
+                    outOfStockProducts++;
             }
 
             var result = new GeneralDashboardResponse

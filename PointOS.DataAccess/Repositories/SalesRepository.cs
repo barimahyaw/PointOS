@@ -111,5 +111,15 @@ namespace PointOS.DataAccess.Repositories
         /// <returns></returns>
         public int TotalSalesNumber(int companyId)
             => GetQueryable().Count(s => s.ProductPricing.Product.ProductCategory.CompanyId == companyId);
+
+        /// <summary>
+        /// Gets the total quantity of a product sales by product Id
+        /// </summary>
+        /// <param name="productId"></param>
+        /// <returns></returns>
+        public int TotalQuantitySales(int productId)
+            => GetQueryable()
+                .Where(s => s.ProductPricing.Product.Id == productId)
+                .Sum(s=>s.Quantity);
     }
 }
