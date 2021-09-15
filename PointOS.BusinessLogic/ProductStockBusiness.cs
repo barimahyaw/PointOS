@@ -10,9 +10,9 @@ namespace PointOS.BusinessLogic
 {
     public class ProductStockBusiness : IProductStockBusiness
     {
-        private readonly UnitOfWork _unitOfWork;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public ProductStockBusiness(UnitOfWork unitOfWork) => _unitOfWork = unitOfWork;
+        public ProductStockBusiness(IUnitOfWork unitOfWork) => _unitOfWork = unitOfWork;
 
         /// <summary>
         /// Saves a new product's stock record
