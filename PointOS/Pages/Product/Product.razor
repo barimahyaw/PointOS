@@ -4,17 +4,35 @@
 <MudTabs Elevation="25" Color="Color.Transparent" Rounded="true" PanelClass="mt-6">
 
     <MudTabPanel Text="Products">
-        <MudCard>
-            <MudCardHeader>
-                <CardHeaderContent>
-                    <MudText>Products List</MudText>
-                </CardHeaderContent>
-            </MudCardHeader>
-            <MudCardContent>
-                <PointOS.Pages.Product.List />
-            </MudCardContent>
+        <MudGrid>
+            <MudItem xs="12" sm="4" md="3">
+                <MudCard Elevation="25">
+                    <MudCardHeader>
+                        <CardHeaderContent>
+                            <MudText>Quantity Setup</MudText>
+                        </CardHeaderContent>
+                    </MudCardHeader>
+                    <MudCardContent>
+                    
+                    </MudCardContent>
 
-        </MudCard>
+                </MudCard>
+            </MudItem>
+
+            <MudItem xs="12" sm="8" md="9">
+                <MudCard Elevation="25">
+                    <MudCardHeader>
+                        <CardHeaderContent>
+                            <MudText>Products List</MudText>
+                        </CardHeaderContent>
+                    </MudCardHeader>
+                    <MudCardContent>
+                        <PointOS.Pages.Product.List />
+                    </MudCardContent>
+
+                </MudCard>
+            </MudItem>
+        </MudGrid>
     </MudTabPanel>
     <MudTabPanel Text="Pricing">
         <MudGrid>

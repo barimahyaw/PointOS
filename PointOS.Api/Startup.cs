@@ -194,6 +194,7 @@ namespace PointOS.Api
             services.AddTransient<ICurrencyBusiness, CurrencyBusiness>();
             services.AddTransient<ICustomerBusiness, CustomerBusiness>();
             services.AddTransient<ISalesBusiness, SalesBusiness>();
+            services.AddTransient<IDashboardBusiness, DashboardBusiness>();
 
             services.AddScoped<IProductValidator, ProductValidator>();
 

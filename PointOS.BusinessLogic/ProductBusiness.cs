@@ -189,8 +189,9 @@ namespace PointOS.BusinessLogic
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        private static ProductResponse ProductEntity(Product entity)
+        private ProductResponse ProductEntity(Product entity)
         {
+            var quantitySold = _unitOfWork.SalesRepository.TotalQuantitySales(entity.Id);
             var response = new ProductResponse
             {
                 Id = entity.Id,
@@ -200,14 +201,18 @@ namespace PointOS.BusinessLogic
                 ProductCategory = entity.ProductCategory == null ? string.Empty : entity.ProductCategory.Name,
                 ProductCategoryId = entity.ProductCategoryId,
                 CreatedOn = entity.CreatedOn,
-                CreatedBy = entity.CreatedUser == null ? string.Empty
+                CreatedBy = entity.CreatedUser == null
+                    ? string.Empty
                     : $"{entity.CreatedUser.FirstName} {entity.CreatedUser.MiddleName} {entity.CreatedUser.LastName}",
-                CurrentRetailPrice = entity.ProductPricing.FirstOrDefault()?.RetailPrice ?? 0,
-                PreviousRetailPrice = entity.ProductPricing.Take(2).OrderByDescending(o => o.Id).FirstOrDefault()?.RetailPrice ?? 0,
-                ProductPricingId = entity.ProductPricing.FirstOrDefault()?.Id ?? 0,
-                Stock = entity.ProductQuantity.Sum(q => q.Quantity)
+                CurrentRetailPrice = entity.ProductPricing?.FirstOrDefault()?.RetailPrice ?? 0,
+                PreviousRetailPrice = entity.ProductPricing?.Take(2).OrderByDescending(o => o.Id).FirstOrDefault()
+                    ?.RetailPrice ?? 0,
+                ProductPricingId = entity.ProductPricing?.FirstOrDefault()?.Id ?? 0,
+                Stock = entity.ProductQuantity.Sum(q => q.Quantity) - quantitySold
             };
             return response;
         }
+
     }
 }
+

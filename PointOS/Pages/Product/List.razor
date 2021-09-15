@@ -12,18 +12,19 @@
         <GridColumn Field="@nameof(ProductResponse.ProductCategory)" HeaderText="Product Category"></GridColumn>
         <GridColumn Field="@nameof(ProductResponse.Name)" HeaderText="Product"></GridColumn>
         <GridColumn Field="@nameof(ProductResponse.Status)" HeaderText="Status"></GridColumn>
-        <GridColumn Field="@nameof(ProductResponse.CreatedBy)" HeaderText="Created By"></GridColumn>
-        <GridColumn Field="@nameof(ProductResponse.CreatedOn)" HeaderText="Created On"></GridColumn>
+        <GridColumn Field="@nameof(ProductResponse.Stock)" HeaderText="Quantity in Stock" TextAlign="TextAlign.Center"></GridColumn>
+        @*<GridColumn Field="@nameof(ProductResponse.CreatedBy)" HeaderText="Created By"></GridColumn>
+        <GridColumn Field="@nameof(ProductResponse.CreatedOn)" HeaderText="Created On"></GridColumn>*@
         @*<GridColumn Field="@nameof(ProductResponse.ModifiedBy)" HeaderText="Modified By"></GridColumn>
             <GridColumn Field="@nameof(ProductResponse.ModifiedOn)" HeaderText="Modified On"></GridColumn>*@
         <GridColumn HeaderText="Manage Records" Width="150">
-            <GridCommandColumns>
-                <GridCommandColumn Type="CommandButtonType.Edit" ButtonOption="@(new CommandButtonOptions() {IconCss = "e-icons e-edit", CssClass = "e-flat"})"></GridCommandColumn>
-                <GridCommandColumn Type="CommandButtonType.Delete" ButtonOption="@(new CommandButtonOptions() {IconCss = "e-icons e-delete", CssClass = "e-flat"})"></GridCommandColumn>
-                <GridCommandColumn Type="CommandButtonType.Save" ButtonOption="@(new CommandButtonOptions() {IconCss = "e-icons e-save", CssClass = "e-flat"})"></GridCommandColumn>
-                <GridCommandColumn Type="CommandButtonType.Cancel" ButtonOption="@(new CommandButtonOptions() {IconCss = "e-icons e-cancel-icon", CssClass = "e-flat"})"></GridCommandColumn>
-                <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Add" Color="Color.Primary" Class="ml-auto" @onclick="@OpenDialog">Add</MudButton>
-            </GridCommandColumns>
-        </GridColumn>
+                <GridCommandColumns>
+                    <GridCommandColumn Type="CommandButtonType.Edit" ButtonOption="@(new CommandButtonOptions() {IconCss = "e-icons e-edit", CssClass = "e-flat"})"></GridCommandColumn>
+                    <GridCommandColumn Type="CommandButtonType.Delete" ButtonOption="@(new CommandButtonOptions() {IconCss = "e-icons e-delete", CssClass = "e-flat"})"></GridCommandColumn>
+                    <GridCommandColumn Type="CommandButtonType.Save" ButtonOption="@(new CommandButtonOptions() {IconCss = "e-icons e-save", CssClass = "e-flat"})"></GridCommandColumn>
+                    <GridCommandColumn Type="CommandButtonType.Cancel" ButtonOption="@(new CommandButtonOptions() {IconCss = "e-icons e-cancel-icon", CssClass = "e-flat"})"></GridCommandColumn>
+                    <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Add" Color="Color.Primary" Class="ml-auto" @onclick="@OpenDialog">Add</MudButton>
+                </GridCommandColumns>
+            </GridColumn>
     </GridColumns>
 </SfGrid>

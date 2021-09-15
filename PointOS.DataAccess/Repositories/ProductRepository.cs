@@ -129,7 +129,10 @@ namespace PointOS.DataAccess.Repositories
         /// <param name="companyId"></param>
         /// <returns></returns>
         public async Task<List<Product>> FindAllAsync(int companyId)
-            => await GetQueryable().Where(p => p.ProductCategory.CompanyId == companyId).ToListAsync();
+            => await GetQueryable()
+                .Include(p=>p.ProductQuantity)
+                .Where(p => p.ProductCategory.CompanyId == companyId).ToListAsync();
+
 
         /// <summary>
         /// Gets all products where product name is like/contain name
