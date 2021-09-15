@@ -1,0 +1,43 @@
+﻿
+<EditForm Model="@ProductStockRequest" OnValidSubmit="@SaveChanges">
+
+
+    <DataAnnotationsValidator></DataAnnotationsValidator>
+
+
+    @if (ProductStockRequest.Products != null)
+    {
+
+        <MudSelect Label="-- Select Product --" Strict="true" Variant="Variant.Outlined" Format="F2" @bind-Value="@ProductStockRequest.ProductId" For="@(()=>ProductStockRequest.ProductId)">
+            @foreach (var product in ProductStockRequest.Products)
+                {
+                    if (!string.IsNullOrWhiteSpace(product.Value))
+                    {
+                    <MudSelectItem Value="Convert.ToInt32(product.Value)">@product.Text</MudSelectItem>
+                    }
+                }
+        </MudSelect>
+
+    }
+
+
+    <MudTextField @bind-Value="@ProductStockRequest.Quantity" Label="Cost Price" Variant="Variant.Outlined" For="@(()=>ProductStockRequest.Quantity)" />
+
+
+
+    @*<MudText>
+        <b>Status</b>
+    </MudText>
+    <MudText Typo="Typo.body2">
+        Set the Status of the Product to Active/Inactive.
+    </MudText>
+    <MudSwitch @bind-Checked="@FriendSwitch" Color="Color.Secondary" />*@
+
+
+    <MudCardActions>
+        @*<MudButton OnClick="@Cancel">Cancel</MudButton>*@
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto" ButtonType="ButtonType.Submit">Save</MudButton>
+    </MudCardActions>
+
+
+</EditForm>

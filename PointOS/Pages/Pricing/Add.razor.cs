@@ -80,9 +80,9 @@ namespace PointOS.Pages.Pricing
             await Task.Delay(5);
 
             // if text is null or empty, don't return values (drop-down will not open)
-            if (string.IsNullOrEmpty(value))
-                return ProductPricingRequest.Currencies;
-            return ProductPricingRequest.Currencies.Where(x => x.Text.Contains(value, StringComparison.InvariantCultureIgnoreCase));
+            return string.IsNullOrEmpty(value) ? ProductPricingRequest.Currencies 
+                : ProductPricingRequest.Currencies.Where(x => x.Text.Contains(value, 
+                    StringComparison.InvariantCultureIgnoreCase));
         }
     }
 }
