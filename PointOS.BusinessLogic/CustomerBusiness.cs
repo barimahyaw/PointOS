@@ -64,8 +64,7 @@ namespace PointOS.BusinessLogic
 
             var operation = request.CrudOperation == CrudOperation.Create ? "created" : "updated";
 
-            return numRows != 0 ? new ResponseHeader { StatusCode = 201, Message = $"Record {operation} for customer, {request.FirstName}", Success = true }
-                : new ResponseHeader { Message = "Sorry, operation failed. Try again later!" };
+            return numRows != 0 ? new ResponseHeader { StatusCode = 201, Message = $"Record {operation} for customer, {request.FirstName}", Success = true } : new ResponseHeader { Message = "Sorry, operation failed. Try again later!" };
         }
 
         /// <summary>
