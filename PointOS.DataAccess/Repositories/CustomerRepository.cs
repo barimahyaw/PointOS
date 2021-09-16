@@ -36,7 +36,8 @@ namespace PointOS.DataAccess.Repositories
                     Id = c.Id,
                     FirstName = c.FirstName,
                     MiddleName = c.MiddleName,
-                    LastName = c.LastName
+                    LastName = c.LastName,
+                    PhoneNumber = c.PhoneNumber
                 })
                 .FirstOrDefaultAsync(c => c.PhoneNumber == phoneNumber);
 
