@@ -85,13 +85,13 @@
 
                             </MudSelect>*@
 
-                        <MudAutocomplete T="string" Label="Customer" @bind-Value="@value1" SearchFunc="@Search2"
+                        <MudAutocomplete T="string" Label="Customer Number" @bind-Value="@CustomerPhoneNumber" SearchFunc="@Search2"
                                          ResetValueOnEmptyText="@resetValueOnEmptyText"
                                          CoerceText="@coerceText" CoerceValue="@coerceValue"
                                          AdornmentIcon="@Icons.Material.Filled.Search" AdornmentColor="Color.Primary" Variant="Variant.Outlined" OnInternalInputChanged="@SetCustomer" />
                     </MudItem>
                     <MudItem xs="6" md="6" sm="6" lg="6" xl="6">
-                        <MudSelect Label="Payment Method" Strict="true" Variant="Variant.Outlined" Format="F2" @bind-Value="@ProductRequest.PaymentType" For="@(()=>ProductRequest.PaymentType)" @onselect="selectChange">
+                        <MudSelect Label="Payment Method" Strict="true" Variant="Variant.Outlined" Format="F2" @bind-Value="@PaymentType" For="@(()=>PaymentType)" @onselect="selectChange">
                             @foreach (var name in Enum.GetNames(typeof(Common.Enums.PaymentType)))
                             {
                                 if (!string.IsNullOrWhiteSpace(name))
@@ -120,7 +120,7 @@
                         @{
                             if (ProductRequest.CostPrice > 0)
                             {
-                                Change = Math.Round(ProductRequest.CostPrice - SubTotal + Tax, 2);
+                                Change = Math.Round(ProductRequest.CostPrice - (SubTotal + Tax), 2);
                             }
 
                         }

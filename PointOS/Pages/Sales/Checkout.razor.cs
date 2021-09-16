@@ -18,6 +18,8 @@ namespace PointOS.Pages.Sales
         public double SubTotal { get; set; }
         public double Tax { get; set; } = 0.0;
         public double Change { get; set; } = 0.0;
+        protected string CustomerPhoneNumber { get; set; }
+        protected string PaymentType { get; set; }
 
         [CascadingParameter]
         private MudDialogInstance MudDialog { get; set; }
@@ -39,7 +41,9 @@ namespace PointOS.Pages.Sales
                     Quantity = productResponse.Quantity
                 }).ToList();
 
-            var result = await ApiEndpointCallService.CallApiService("Sales", salesTran, null, Verb.Post);
+            var param = $"?customerPhoneNumber={CustomerPhoneNumber}";
+
+            var result = await ApiEndpointCallService.CallApiService("Sales", salesTran, param, Verb.Post);
 
             SnackBar.Add(result.Message, result.Success ? Severity.Success : Severity.Error, config => config.ShowCloseIcon = false);
 
@@ -54,10 +58,7 @@ namespace PointOS.Pages.Sales
 
         protected ProductRequest ProductRequest { get; set; } = new ProductRequest();
 
-        protected void SetCustomer(ChangeEventArgs eventArgs)
-        {
-            ProductRequest.CostPrice = Convert.ToDouble(eventArgs.Value);
-        }
+        protected void SetCustomer(ChangeEventArgs eventArgs) => ProductRequest.CostPrice = Convert.ToDouble(eventArgs.Value);
 
         private async Task<IEnumerable<string>> Search2(string value)
         {

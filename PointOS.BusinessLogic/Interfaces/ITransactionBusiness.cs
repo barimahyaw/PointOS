@@ -23,7 +23,9 @@ namespace PointOS.BusinessLogic.Interfaces
         /// <param name="transactionType"></param>
         /// <param name="paymentType"></param>
         /// <param name="userId"></param>
+        /// <param name="customerPhoneNumber"></param>
         /// <returns></returns>
-        Task<ResponseHeader> SaveAsync(IList<TransactionRequest> requests, TransactionType transactionType, PaymentType paymentType, string userId);
+        Task<ResponseHeader> SaveAsync(IList<TransactionRequest> requests, TransactionType transactionType, PaymentType paymentType, 
+            string userId, string customerPhoneNumber);
     }
 }

@@ -78,8 +78,9 @@ namespace PointOS.BusinessLogic
         /// <param name="transactionType"></param>
         /// <param name="paymentType"></param>
         /// <param name="userId"></param>
+        /// <param name="customerPhoneNumber"></param>
         /// <returns></returns>
-        public async Task<ResponseHeader> SaveAsync(IList<TransactionRequest> requests, TransactionType transactionType, PaymentType paymentType, string userId)
+        public async Task<ResponseHeader> SaveAsync(IList<TransactionRequest> requests, TransactionType transactionType, PaymentType paymentType, string userId, string customerPhoneNumber)
         {
             var transactionId = _utils.GenerateTransactionTicket();
 
@@ -104,6 +105,10 @@ namespace PointOS.BusinessLogic
                     goto case TransactionType.Sales;
             }
 
+            var customer = new Customer();
+            if (!string.IsNullOrWhiteSpace(customerPhoneNumber))
+                customer = await _unitOfWork.CustomerRepository.FindAsync(customerPhoneNumber);
+
             var trans = new Transactions
             {
                 //GuidId = Guid.NewGuid(),
@@ -113,7 +118,7 @@ namespace PointOS.BusinessLogic
                 PaymentType = paymentType.GetAttributeStringValue(),
                 CreatedUserId = userId,
                 CreatedOn = DateTime.UtcNow,
-
+                CustomerId = customer.Id
             };
 
             await _unitOfWork.TransactionRepository.AddAsync(trans);

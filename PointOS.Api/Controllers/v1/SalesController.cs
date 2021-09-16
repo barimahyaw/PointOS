@@ -37,12 +37,13 @@ namespace PointOS.Api.Controllers.v1
         /// Saves a sales transaction record(s)
         /// </summary>
         /// <param name="request"></param>
+        /// <param name="customerPhoneNumber"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ResponseHeader> Post(IList<TransactionRequest> request)
+        public async Task<ResponseHeader> Post(IList<TransactionRequest> request, string customerPhoneNumber)
         {
             var user = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            return await _transactionBusiness.SaveAsync(request, TransactionType.Sales, PaymentType.Cash, user);
+            return await _transactionBusiness.SaveAsync(request, TransactionType.Sales, PaymentType.Cash, user, customerPhoneNumber);
         }
 
         /// <summary>
