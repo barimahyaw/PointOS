@@ -2,11 +2,13 @@
 <MudDivider Class="mb-4" />
 <MudNavMenu>
     <MudText Typo="Typo.subtitle2" Color="Color.Inherit" Class="ml-4 my-3">Dashboard</MudText>
-    <MudNavLink Href="/personal/dashboard" Match="NavLinkMatch.All" Icon="@Icons.Material.Outlined.Dashboard">General</MudNavLink>
-    <MudNavLink Href="/personal/account" Icon="@Icons.Material.Outlined.AccountBox">Transactions</MudNavLink>
-    <MudNavLink Href="/Sales" Icon="@Icons.Material.Outlined.AccountCircle">Sales</MudNavLink>
+    <MudNavLink Href="/dashboard/general" Match="NavLinkMatch.All" Icon="@Icons.Material.Outlined.Dashboard">General</MudNavLink>
+    <MudNavLink Href="/dashboard/transactions" Icon="@Icons.Material.Outlined.AccountTree">Transactions</MudNavLink>
+    <MudNavLink Href="/dashboard/sales" Icon="@Icons.Material.Outlined.AccountBalanceWallet">Sales</MudNavLink>
 
 
+    <MudText Typo="Typo.subtitle2" Color="Color.Inherit" Class="ml-4 my-3">Store Manager</MudText>
+    <MudNavLink Href="/Sales" Icon="@Icons.Material.Outlined.AccountCircle">Point of Sales</MudNavLink>
     @*<MudText Typo="Typo.subtitle2" Color="Color.Inherit" Class="ml-4 my-3">App Examples</MudText>
         <MudNavLink Href="application/email" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Outlined.Email">Email</MudNavLink>
         <MudNavLink Href="application/chat" Icon="@Icons.Material.Outlined.Forum">Chat</MudNavLink>
