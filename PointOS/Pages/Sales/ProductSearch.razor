@@ -44,18 +44,22 @@
 
 
 
-                    if (product?.Stock < 10)
+                    if (product?.Stock < 10 && product.Stock != 0)
                     {
-                        <MudText Typo="Typo.body2" Color="Color.Error" Align="Align.Left">Stock: @product.Stock</MudText>
+                        <MudText Typo="Typo.body2" Color="Color.Warning" Align="Align.Left">Stock: @product.Stock</MudText>
                     }
                     if (product?.Stock >= 10)
                     {
-                        <MudText Typo="Typo.body2" Color="Color.Default" Align="Align.Left">Stock: @product.Stock</MudText>
+                        <MudText Typo="Typo.body2" Color="Color.Info" Align="Align.Left">Stock: @product.Stock</MudText>
+                    }
+                    if (product?.Stock == 0)
+                    {
+                        <MudText Typo="Typo.body2" Color="Color.Error" Align="Align.Left">Stock: @product.Stock</MudText>
                     }
 
 
                     @*<MudText Typo="Typo.body2" Color="Color.Error" Align="Align.Left">Stock: @product?.Stock</MudText>*@
-                    <MudText Typo="Typo.body2" Color="Color.Info" Align="Align.Left">ID: @product?.Id | Price: @product?.CurrentRetailPrice</MudText>
+                    <MudText Typo="Typo.body2" Color="Color.Secondary" Align="Align.Left">ID: @product?.Id | Price: @product?.CurrentRetailPrice</MudText>
 
                 }
             </Template>
