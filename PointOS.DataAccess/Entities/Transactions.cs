@@ -25,5 +25,7 @@ namespace PointOS.DataAccess.Entities
         public DateTime CreatedOn { get; set; }
 
         public ICollection<Sales> Sales { get; set; }
+        public int? CustomerId { get; set; }
+        public Customer Customer { get; set; }
     }
 }

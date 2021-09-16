@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
 using PointOS.Common.DTO.Response;
 using PointOS.DataAccess.Entities;
 using PointOS.DataAccess.IRepositories;
@@ -60,7 +61,7 @@ namespace PointOS.DataAccess.Repositories
                 .ToListAsync();
 
         /// <summary>
-        /// Gets all sales by company Id with skip and take pagination
+        /// Gets all daily sales by company Id with skip and take pagination
         /// </summary>
         /// <param name="companyId"></param>
         /// <param name="skip"></param>
@@ -68,7 +69,8 @@ namespace PointOS.DataAccess.Repositories
         /// <returns></returns>
         public async Task<IList<SalesResponse>> FindByCompanyId(int companyId, int skip, int take)
             => await GetQueryable()
-                .Where(s => s.ProductPricing.Product.ProductCategory.CompanyId == companyId)
+                .Where(s => s.ProductPricing.Product.ProductCategory.CompanyId == companyId 
+                            && s.Transaction.CreatedOn.Date == DateTime.UtcNow.Date)
                 .Skip(skip)
                 .Take(take)
                 .Select(s => new SalesResponse

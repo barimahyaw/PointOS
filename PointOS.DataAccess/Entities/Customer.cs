@@ -35,6 +35,6 @@ namespace PointOS.DataAccess.Entities
         public string ModifiedUerId { get; set; }
         public ApplicationUser ModifiedUer { get; set; }
         public DateTime? ModifiedOn { get; set; }
-        public ICollection<Sales> Sales { get; set; }
+        public ICollection<Transactions> Sales { get; set; }
     }
 }

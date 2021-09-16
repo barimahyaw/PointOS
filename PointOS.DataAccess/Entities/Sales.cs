@@ -18,7 +18,5 @@ namespace PointOS.DataAccess.Entities
         public int Quantity { get; set; }
         public int ProductPricingId { get; set; }
         public ProductPricing ProductPricing { get; set; }
-        public int? CustomerId { get; set; }
-        public Customer Customer { get; set; }
     }
 }
